@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHBS Resource Hub — Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bd:#1b3a5c; --bm:#2e6494; --bl:#4a8ac2;
+  --gd:#d4a843; --gl:#e6c55e;
+  --wh:#fff; --cr:#f9f7f3;
+  --g50:#f5f5f5; --g100:#e8e8e8; --g200:#d0d0d0; --g400:#999; --g500:#6b6b6b; --g700:#3d3d3d; --g900:#1a1a1a;
+  --editor-bg:#f0ede8; --card-bg:#fff; --card-border:#ddd;
+  --accent:#2e6494; --accent-light:#e8f0fa;
+  --danger:#c0392b; --danger-light:#fde8e6;
+  --success:#27ae60; --success-light:#e8f8ef;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Source Sans 3',-apple-system,sans-serif;color:var(--g900);background:var(--editor-bg);line-height:1.4;-webkit-font-smoothing:antialiased;overflow:hidden;height:100vh}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;font-size:inherit}
+
+/* TOP BAR */
+.top-bar{background:var(--bd);color:var(--wh);padding:0 1.2rem;display:flex;align-items:center;gap:.8rem;height:48px;position:relative;z-index:200;flex-wrap:nowrap;overflow-x:auto}
+.top-bar .logo{font-weight:900;font-size:.95rem;color:var(--gl);letter-spacing:.02em;white-space:nowrap}
+.top-bar .sep{width:1px;height:24px;background:rgba(255,255,255,.15);flex-shrink:0}
+.top-bar .nav-btn{padding:6px 14px;border:1px solid rgba(255,255,255,.2);border-radius:4px;background:transparent;color:#ddd;font-size:.8rem;font-weight:600;transition:all .15s;white-space:nowrap}
+.top-bar .nav-btn:hover{border-color:var(--gl);color:var(--gl)}
+.top-bar .nav-btn.active{background:rgba(255,255,255,.1);color:var(--gl);border-color:var(--gl)}
+.top-bar .spacer{flex:1}
+.top-bar .action-btn{padding:6px 14px;border:1px solid var(--gd);border-radius:4px;background:transparent;color:var(--gd);font-size:.8rem;font-weight:700;transition:all .15s;white-space:nowrap}
+.top-bar .action-btn:hover{background:var(--gd);color:var(--bd)}
+.top-bar .action-btn.primary{background:var(--gd);color:var(--bd)}
+.top-bar .action-btn.primary:hover{background:var(--gl)}
+.top-bar .status{font-size:.72rem;color:rgba(255,255,255,.5);margin-left:4px}
+
+/* MAIN LAYOUT */
+.main-layout{display:flex;height:calc(100vh - 48px);overflow:hidden}
+.editor-panel{width:50%;min-width:420px;background:var(--editor-bg);display:flex;flex-direction:column;border-right:1px solid var(--g200);overflow:hidden}
+.editor-body{flex:1;overflow-y:auto;padding:1rem}
+.preview-panel{flex:1;background:#c8c4be;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:1.5rem}
+.preview-label{font-size:.72rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;text-align:center}
+
+/* SHEET LIST */
+.sheet-list{display:flex;flex-direction:column;gap:6px}
+.sheet-list-item{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:6px;padding:10px 14px;cursor:pointer;transition:all .12s}
+.sheet-list-item:hover{border-color:var(--accent);background:var(--accent-light)}
+.sheet-list-item .sli-icon{font-size:1.3rem;width:30px;text-align:center;flex-shrink:0}
+.sheet-list-item .sli-icon img{width:24px;height:24px;object-fit:contain}
+.sheet-list-item .sli-info{flex:1;min-width:0}
+.sheet-list-item .sli-title{font-weight:700;font-size:.88rem}
+.sheet-list-item .sli-meta{font-size:.72rem;color:var(--g500)}
+.sheet-list-item .sli-status{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--success-light);color:var(--success)}
+.sheet-list-item .sli-status.coming-soon{background:#fef3e2;color:#b8860b}
+.sheet-list-item .drag-handle{cursor:grab;color:var(--g400);font-size:1.1rem;padding:0 4px}
+.sheet-list-item.dragging{opacity:.4;border-style:dashed}
+.sheet-list-item.drag-over-above{border-top:3px solid var(--accent)}
+.sheet-list-item.drag-over-below{border-bottom:3px solid var(--accent)}
+
+/* CONTENT BLOCKS */
+.sheet-editor-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--g200)}
+.sheet-editor-header .back-btn{padding:4px 10px;border:1px solid var(--g200);border-radius:4px;background:var(--wh);font-size:.78rem;color:var(--g700);font-weight:600}
+.sheet-editor-header .back-btn:hover{border-color:var(--accent);color:var(--accent)}
+.sheet-editor-header h2{font-size:1.05rem;font-weight:700;color:var(--bd)}
+.sheet-editor-header .add-menu{margin-left:auto;position:relative}
+.sheet-editor-header .add-btn{padding:5px 14px;border:1px solid var(--accent);border-radius:4px;background:var(--accent-light);color:var(--accent);font-weight:700;font-size:.8rem}
+.sheet-editor-header .add-btn:hover{background:var(--accent);color:var(--wh)}
+.dropdown{position:absolute;top:100%;right:0;margin-top:4px;background:var(--wh);border:1px solid var(--g200);border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.12);min-width:200px;z-index:50;display:none}
+.dropdown.open{display:block}
+.dropdown-item{padding:8px 14px;font-size:.82rem;color:var(--g700);cursor:pointer;border:none;background:none;width:100%;text-align:left;font-weight:500}
+.dropdown-item:hover{background:var(--accent-light);color:var(--accent)}
+.dropdown-item:first-child{border-radius:6px 6px 0 0}
+.dropdown-item:last-child{border-radius:0 0 6px 6px}
+
+/* Block cards */
+.block-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:6px;margin-bottom:8px;overflow:hidden;transition:all .12s}
+.block-card.dragging{opacity:.4;border-style:dashed}
+.block-card.drag-over-above{border-top:3px solid var(--accent)}
+.block-card.drag-over-below{border-bottom:3px solid var(--accent)}
+.block-header{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--g50);border-bottom:1px solid var(--g100);cursor:pointer;user-select:none}
+.block-header .bh-drag{cursor:grab;color:var(--g400);font-size:.9rem}
+.block-header .bh-drag:active{cursor:grabbing}
+.block-header .bh-type{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 6px;border-radius:3px}
+.bh-type.faq{background:#e8f0fa;color:#2e6494}
+.bh-type.callout{background:#fef3e2;color:#b8860b}
+.bh-type.section{background:#e8f8ef;color:#27ae60}
+.bh-type.page-break{background:#fde8e6;color:#c0392b}
+.bh-type.col-marker{background:#f0e6f6;color:#7b2d8e}
+.bh-type.notfinding{background:var(--g100);color:var(--g500)}
+.bh-type.qr{background:#e6f3ff;color:#0066cc}
+.block-header .bh-title{flex:1;font-size:.82rem;font-weight:600;color:var(--g700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.block-header .bh-toggle{color:var(--g400);font-size:.75rem;transition:transform .15s}
+.block-header .bh-toggle.open{transform:rotate(90deg)}
+.block-header .bh-delete{color:var(--g400);font-size:.82rem;padding:2px 4px;border:none;background:none}
+.block-header .bh-delete:hover{color:var(--danger)}
+.block-header .bh-controls{display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--g400)}
+.block-header .bh-controls label{display:flex;align-items:center;gap:2px;cursor:pointer;white-space:nowrap}
+.block-header .bh-controls input[type="checkbox"]{margin:0;cursor:pointer}
+.block-header .bh-spacer-ctl{display:flex;align-items:center;gap:2px;color:var(--g400)}
+.block-header .bh-spacer-ctl input{width:32px;padding:1px 3px;border:1px solid var(--g200);border-radius:3px;font-size:.7rem;text-align:center;background:var(--wh)}
+.block-body{padding:12px;display:none}
+.block-body.open{display:block}
+
+/* Form fields */
+.field-row{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
+.field-row label{font-size:.75rem;font-weight:600;color:var(--g500);min-width:70px;padding-top:6px}
+.field-row input,.field-row textarea,.field-row select{flex:1;padding:6px 10px;border:1px solid var(--g200);border-radius:4px;font-size:.82rem;background:var(--wh);color:var(--g900)}
+.field-row input:focus,.field-row textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(46,100,148,.12)}
+.field-row textarea{min-height:60px;resize:vertical;line-height:1.4}
+.field-row .spacing-input{width:50px;flex:none;text-align:center}
+
+/* Rich text toolbar */
+.rt-toolbar{display:flex;gap:2px;padding:4px 6px;background:var(--g50);border:1px solid var(--g200);border-bottom:none;border-radius:4px 4px 0 0;flex-wrap:wrap}
+.rt-toolbar button{padding:3px 8px;border:1px solid transparent;border-radius:3px;background:none;font-size:.78rem;color:var(--g700);cursor:pointer}
+.rt-toolbar button:hover{background:var(--g200);border-color:var(--g200)}
+.rt-toolbar .sep{width:1px;background:var(--g200);margin:2px 4px}
+.rt-editor{border:1px solid var(--g200);border-radius:0 0 4px 4px;padding:8px 10px;min-height:80px;max-height:400px;overflow-y:auto;font-size:.82rem;line-height:1.5;background:var(--wh);outline:none;font-family:'Source Sans 3',-apple-system,sans-serif!important;resize:vertical}
+.rt-editor *{font-family:inherit!important}
+.rt-editor:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(46,100,148,.12)}
+.rt-editor .two-col-block{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--accent);padding:0;margin:6px 0;border-radius:4px;background:var(--g50)}
+.rt-editor .two-col-block>div{border:1px solid var(--g200);padding:6px 8px;min-height:50px;background:var(--wh)}
+.rt-editor .two-col-block>div:first-child{border-radius:4px 0 0 4px;border-right:1px dashed var(--g400)}
+.rt-editor .two-col-block>div:last-child{border-radius:0 4px 4px 0}
+
+/* Resource cards */
+.res-card{border:1px solid var(--g100);border-radius:4px;margin-bottom:6px;background:var(--wh)}
+.res-card.dragging{opacity:.4;border-style:dashed}
+.res-card.drag-over-above{border-top:3px solid var(--accent)}
+.res-card.drag-over-below{border-bottom:3px solid var(--accent)}
+.res-card-header{display:flex;align-items:center;gap:6px;padding:6px 10px;background:var(--g50);border-bottom:1px solid var(--g100)}
+.res-card-header .rc-drag{cursor:grab;color:var(--g400);font-size:.82rem}
+.res-card-header .rc-name{flex:1;font-size:.78rem;font-weight:600;color:var(--g700);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.res-card-header .rc-delete{border:none;background:none;color:var(--g400);cursor:pointer;font-size:.78rem;padding:2px}
+.res-card-header .rc-delete:hover{color:var(--danger)}
+.res-fields{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;padding:8px 10px}
+.res-fields .rf{display:flex;flex-direction:column;gap:2px}
+.res-fields .rf.full{grid-column:1/-1}
+.res-fields .rf label{font-size:.68rem;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.03em}
+.res-fields .rf input{padding:4px 8px;border:1px solid var(--g100);border-radius:3px;font-size:.78rem}
+.add-resource-btn{width:100%;padding:6px;border:1px dashed var(--g200);border-radius:4px;background:none;color:var(--accent);font-weight:600;font-size:.78rem;margin-top:4px}
+.add-resource-btn:hover{background:var(--accent-light);border-color:var(--accent)}
+
+/* QR block editor */
+.qr-items-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.qr-item-card{border:1px solid var(--g100);border-radius:4px;padding:8px 10px;background:var(--wh)}
+.qr-item-card .qr-item-fields{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}
+.qr-item-card .qr-item-fields .rf{display:flex;flex-direction:column;gap:2px}
+.qr-item-card .qr-item-fields .rf.full{grid-column:1/-1}
+.qr-item-card .qr-item-fields .rf label{font-size:.68rem;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.03em}
+.qr-item-card .qr-item-fields .rf input,.qr-item-card .qr-item-fields .rf select{padding:4px 8px;border:1px solid var(--g100);border-radius:3px;font-size:.78rem}
+.qr-item-card .qr-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.qr-item-card .qr-item-header span{font-size:.78rem;font-weight:600;color:var(--g700)}
+.qr-item-card .qr-item-header button{border:none;background:none;color:var(--g400);cursor:pointer;font-size:.78rem}
+.qr-item-card .qr-item-header button:hover{color:var(--danger)}
+.qr-img-preview{margin-top:4px;max-width:60px;max-height:60px;border:1px solid var(--g200);border-radius:3px}
+
+/* Welcome / load screen */
+.welcome-screen{text-align:center;padding:3rem 2rem}
+.welcome-screen h2{font-size:1.2rem;color:var(--bd);margin-bottom:.5rem}
+.welcome-screen p{color:var(--g500);margin-bottom:1.5rem;font-size:.88rem}
+.welcome-screen .welcome-actions{display:flex;flex-direction:column;gap:10px;align-items:center}
+.welcome-screen .welcome-btn{padding:10px 24px;border:2px solid var(--accent);border-radius:6px;background:var(--accent-light);color:var(--accent);font-weight:700;font-size:.88rem;cursor:pointer;min-width:250px}
+.welcome-screen .welcome-btn:hover{background:var(--accent);color:var(--wh)}
+.welcome-screen .welcome-btn.primary{background:var(--accent);color:var(--wh)}
+.welcome-screen .welcome-btn.primary:hover{background:var(--bd)}
+.drop-zone{border:2px dashed var(--g200);border-radius:8px;padding:2rem;margin-top:1rem;color:var(--g400);font-size:.85rem;transition:all .2s}
+.drop-zone.drag-over{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
+
+/* Import modal */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--wh);border-radius:8px;padding:1.5rem;max-width:450px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.modal h3{font-size:1rem;color:var(--bd);margin-bottom:.75rem}
+.modal p{font-size:.85rem;color:var(--g700);margin-bottom:1rem}
+.modal .modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.modal .modal-actions button{padding:6px 16px;border-radius:4px;font-size:.82rem;font-weight:600;border:1px solid var(--g200);background:var(--wh);color:var(--g700);cursor:pointer}
+.modal .modal-actions button:hover{background:var(--g50)}
+.modal .modal-actions button.primary{background:var(--accent);color:var(--wh);border-color:var(--accent)}
+.modal .modal-actions button.primary:hover{background:var(--bd)}
+.modal .modal-actions button.danger{background:var(--danger);color:var(--wh);border-color:var(--danger)}
+.modal .modal-actions button.danger:hover{background:#a93226}
+
+/* =========== PREVIEW: Print page styles =========== */
+.home-preview-page{background:var(--wh);border-radius:6px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.1);max-width:750px;width:100%}
+.home-hero{background:linear-gradient(135deg,var(--bd) 0%,var(--bm) 70%,var(--bl) 100%);color:var(--wh);text-align:center;padding:1.2rem .8rem .9rem}
+.home-hero .org-name{font-size:.65rem;font-weight:600;opacity:.7;letter-spacing:.06em;text-transform:uppercase}
+.home-hero h1{font-weight:900;font-size:1.6rem;margin:.15rem 0 .25rem;letter-spacing:.02em}
+.home-hero .subtitle{font-size:.82rem;opacity:.7}
+.home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;padding:1rem 1.2rem;max-width:750px;margin:0 auto}
+.home-card{background:var(--wh);border:1px solid var(--g200);border-radius:6px;padding:.6rem .5rem;text-align:center;text-decoration:none;color:var(--g900);transition:all .15s}
+.home-card .card-icon{font-size:1.4rem;margin-bottom:.25rem}
+.home-card .card-icon img{width:28px;height:28px;object-fit:contain}
+.home-card .card-title{font-size:.72rem;font-weight:700;color:var(--bd)}
+
+/* MISC */
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--g400)}
+.empty-state h3{font-size:1rem;margin-bottom:.5rem;color:var(--g500)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--bd);color:var(--wh);padding:10px 24px;border-radius:6px;font-size:.82rem;font-weight:600;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+
+/* Print page preview */
+.print-page{width:8.5in;min-height:11in;max-height:11in;background:var(--wh);box-shadow:0 2px 20px rgba(0,0,0,.15);display:flex;flex-direction:column;overflow:hidden;margin-bottom:1.5rem;flex-shrink:0}
+.page-header{background:var(--bd);color:var(--wh);text-align:center;padding:.18in .4in .15in;flex-shrink:0;position:relative}
+.page-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gd),var(--gl),var(--gd))}
+.page-header h1{font-weight:900;font-size:22pt;letter-spacing:.04em;text-transform:uppercase}
+.page-body{flex:1;display:grid;padding:.12in .35in .08in;gap:.18in;overflow:hidden;align-content:start}
+.page-body.two-col{grid-template-columns:1fr 1fr}
+.page-body.one-col{grid-template-columns:1fr}
+.page-footer{background:var(--bd);color:var(--wh);padding:.12in .25in;flex-shrink:0;display:flex;justify-content:space-between;align-items:flex-start;margin-top:.06in}
+.footer-group{display:flex;gap:.25in;align-items:flex-start}
+.footer-col h4{font-size:6.2pt;font-weight:700;color:var(--gd);margin-bottom:0}
+.footer-col p{font-size:5.8pt;opacity:.8;line-height:1.25}
+.footer-col b{font-weight:700}
+.faq-block{margin-bottom:.065in;font-family:'Source Sans 3',-apple-system,sans-serif;font-size:7.5pt;color:var(--g700);line-height:1.32}
+.faq-block p,.faq-block div:not(.two-col-block):not(.section-hdr),.faq-block span,.faq-block br+br{margin:0!important;padding:0!important}
+.faq-block h3{font-size:8.2pt;font-weight:700;color:var(--bd);margin-bottom:0;line-height:1.3}
+.faq-block p{font-size:7.5pt;color:var(--g700);line-height:1.32;margin:0 0 1px 0}
+.faq-block ul,.faq-block ol{font-size:7.5pt;color:var(--g700);line-height:1.32;margin:0 0 1px 1em;padding:0}
+.faq-block li{margin-bottom:0}
+.faq-block .two-col-block{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:7.5pt;color:var(--g700);line-height:1.32}
+.chbs-callout .two-col-block{display:grid!important;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:7.2pt;color:var(--g700);line-height:1.32;margin-top:4px}
+.chbs-callout .two-col-block>div{padding:0;margin:0}
+.faq-block .two-col-block p{font-size:7.5pt}
+.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:7.5pt;margin:0 0 1px 1em;padding:0}
+/* Fix: force all faq-block text elements to 7.5pt explicitly */
+.faq-block p,.faq-block li,.faq-block span,.faq-block div:not(.section-hdr):not(.two-col-block),.faq-block b,.faq-block i,.faq-block u,.faq-block strong,.faq-block em{font-size:7.5pt!important;color:var(--g700)}
+.faq-block .section-hdr{font-size:8pt!important;color:var(--wh)!important;margin-top:0}
+.faq-block h3{font-size:8.2pt!important;color:var(--bd)}
+.chbs-callout{border-left:3px solid var(--gd);padding:.05in .08in;margin-top:.06in;margin-bottom:6px;background:var(--g50);font-size:7.2pt;color:var(--g700);line-height:1.32}
+.chbs-callout h3{font-size:8.2pt;font-weight:700;color:var(--bd);margin-bottom:0}
+.chbs-callout p,.chbs-callout div{font-size:7.2pt;color:var(--g700);line-height:1.32;margin:0;padding:0}
+.chbs-callout ul,.chbs-callout ol{font-size:7.2pt;color:var(--g700);line-height:1.32;margin:0 0 1px 1em;padding:0}
+.chbs-callout li,.chbs-callout span,.chbs-callout div,.chbs-callout b,.chbs-callout i,.chbs-callout u,.chbs-callout strong,.chbs-callout em{font-size:7.2pt!important;color:var(--g700)}
+.resource-column{overflow:hidden}
+.section-hdr{background:var(--bd);color:var(--wh)!important;padding:2.5px 8px;border-radius:3px;font-weight:700;font-size:8pt!important;margin-bottom:3px;margin-top:7px;text-align:center}
+.section-hdr:first-child{margin-top:0}
+.res-entry{padding:2px 0;border-bottom:1px solid var(--g100)}.res-entry:last-child{border-bottom:none}
+.res-name{font-weight:700;font-size:8pt;color:var(--g900);line-height:1.2}
+.res-svc{font-size:7pt;color:var(--g500);font-style:italic;line-height:1.2}
+.res-hours{font-size:7pt;color:var(--g500);line-height:1.2}
+.res-addr{font-size:7.2pt;color:var(--g700);line-height:1.2}
+.res-contact{display:flex;flex-wrap:wrap;gap:5px;align-items:baseline;font-size:7.2pt;line-height:1.2;margin-top:1px}
+.res-contact .ws{margin-left:auto}
+.res-contact .ph{font-weight:600;color:var(--bd)}.res-contact .tx{color:var(--g500)}
+.res-contact .ws{color:var(--bm);text-decoration:none;font-weight:600}
+/* QR Banner Blocks */
+.qr-banner{display:flex;align-items:center;justify-content:space-between;padding:4px 10px;border-radius:4px;margin-bottom:3px}
+.qr-banner .qr-label{font-weight:700;font-size:8pt;color:var(--wh);flex:1;text-align:center}
+.qr-banner .qr-img{width:38px;height:38px;flex-shrink:0;border-radius:2px}
+.qr-banner .qr-img img{width:100%;height:100%;object-fit:contain}
+.not-finding-bar{background:var(--g50);border-top:1px solid var(--g100);padding:.04in .35in;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.not-finding-bar h4{font-size:7pt;font-weight:700;color:var(--bd);display:inline-block;white-space:nowrap;margin:0}
+.not-finding-bar p{font-size:6.5pt;color:var(--g500);margin:0}.not-finding-bar a{color:var(--bm);text-decoration:none;font-weight:600}
+@media print{body{background:white}.home-page,.sheet-nav,.crisis-banner{display:none!important}.print-page{margin:0;box-shadow:none;width:100%;min-height:auto;max-height:none;page-break-after:always}@page{size:letter;margin:0}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span class="logo">CHBS Resource Hub</span>
+  <div class="sep"></div>
+  <button class="nav-btn active" onclick="showView('sheets')">Sheets</button>
+  <div class="spacer"></div>
+  <button class="action-btn" onclick="importJSON()">Load JSON</button>
+  <button class="action-btn" onclick="exportJSON()">Save JSON</button>
+  <div class="sep"></div>
+  <button class="action-btn" onclick="importExcel()">Import Excel/CSV</button>
+  <button class="action-btn" onclick="exportCSV()">Export CSV</button>
+  <div class="sep"></div>
+  <button class="action-btn primary" onclick="exportHTML()">Export for Publishing</button>
+  <input type="file" id="json-input" accept=".json" style="display:none">
+  <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" style="display:none">
+</div>
+
+<div class="main-layout">
+  <div class="editor-panel">
+    <div class="editor-body" id="editor-body">
+      <div class="welcome-screen" id="welcome-screen">
+        <h2>CHBS Resource Hub Editor</h2>
+        <p>Load your data to get started.</p>
+        <div class="welcome-actions">
+          <button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button>
+          <button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button>
+          <button class="welcome-btn" onclick="startEmpty()">Start Empty</button>
+        </div>
+        <div class="drop-zone" id="drop-zone">
+          Drop a .json, .xlsx, or .csv file here
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="preview-panel" id="preview-panel">
+    <div class="preview-label">Live Preview</div>
+    <div id="preview-content">
+      <div class="empty-state"><h3>Load data to see preview</h3></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="modal-root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ===================================================================
+// DATA — starts empty, loaded from external JSON
+// ===================================================================
+let DATA = {home:[], sheets:{}};
+let dataLoaded = false;
+
+// ===================================================================
+// STATE
+// ===================================================================
+let currentView = 'welcome';
+let openBlocks = new Set();
+let dragState = null;
+let sheetBlocks = {};
+
+// QR preset colors
+const QR_COLORS = [
+  {name:'Navy', value:'#1b3a5c'},
+  {name:'Blue', value:'#2e6494'},
+  {name:'Red', value:'#c0392b'},
+  {name:'Green', value:'#27ae60'},
+  {name:'Orange', value:'#e67e22'},
+  {name:'Yellow', value:'#f1c40f'},
+  {name:'Purple', value:'#8e44ad'},
+  {name:'Teal', value:'#16a085'},
+  {name:'Gold', value:'#d4a843'},
+  {name:'Dark Gray', value:'#3d3d3d'}
+];
+
+function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
+function uid(){return 'id_'+Math.random().toString(36).substr(2,9)}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+// ===================================================================
+// DROP ZONE
+// ===================================================================
+const dropZone = document.getElementById('drop-zone');
+if(dropZone){
+  ['dragenter','dragover'].forEach(e=>dropZone.addEventListener(e,ev=>{ev.preventDefault();dropZone.classList.add('drag-over')}));
+  ['dragleave','drop'].forEach(e=>dropZone.addEventListener(e,ev=>{ev.preventDefault();dropZone.classList.remove('drag-over')}));
+  dropZone.addEventListener('drop',ev=>{
+    const file=ev.dataTransfer.files[0];
+    if(!file)return;
+    if(file.name.endsWith('.json'))loadJSONFile(file);
+    else if(file.name.endsWith('.xlsx')||file.name.endsWith('.xls')||file.name.endsWith('.csv'))loadExcelFile(file);
+    else alert('Please drop a .json, .xlsx, or .csv file.');
+  });
+}
+
+// ===================================================================
+// FLATTEN / UNFLATTEN — pages <-> flat block list
+// ===================================================================
+function flattenSheet(sheet){
+  const blocks = [];
+  if(!sheet.pages) return blocks;
+  sheet.pages.forEach((pg, pi) => {
+    // New format: pg.blocks is an ordered array
+    if(pg.blocks){
+      const pgBlocks = pg.blocks.map(b => ({...b, id:uid(), r:b.r?(b.r.map(r=>({...r,id:uid()}))):undefined, items:b.items?(b.items.map(it=>({...it,id:uid()}))):undefined}));
+      // Mark first block of page 2+ as newPage
+      if(pi > 0 && pgBlocks.length > 0) pgBlocks[0].newPage = true;
+      blocks.push(...pgBlocks);
+    } else {
+      // Legacy format migration
+      const legacyBlocks = [];
+      (pg.faq||[]).forEach(f => legacyBlocks.push({type:'FAQ', id:uid(), q:f.q, a:f.a, aHTML:f.aHTML||'', spacing:f.spacing||0}));
+      if(pg.callout) legacyBlocks.push({type:'CALLOUT', id:uid(), title:pg.callout.title, text:pg.callout.text, spacing:pg.callout.spacing||0});
+      (pg.qrBlocks||[]).forEach(qb => legacyBlocks.push({type:'QR', id:uid(), items:(qb.items||[]).map(it=>({...it,id:uid()})), spacing:qb.spacing||0}));
+      (pg.sections||[]).forEach(sec => legacyBlocks.push({type:'SECTION', id:uid(), title:sec.title, r:(sec.r||[]).map(r=>({...r,id:uid()})), spacing:sec.spacing||0}));
+      if(pg.L && pg.L.length>0){
+        // Mark first L section as newCol
+        pg.L.forEach((sec,si) => {
+          const b = {type:'SECTION', id:uid(), title:sec.title, r:(sec.r||[]).map(r=>({...r,id:uid()})), spacing:sec.spacing||0};
+          if(si===0) b.newCol = true;
+          legacyBlocks.push(b);
+        });
+      }
+      if(pg.R && pg.R.length>0){
+        pg.R.forEach((sec,si) => {
+          const b = {type:'SECTION', id:uid(), title:sec.title, r:(sec.r||[]).map(r=>({...r,id:uid()})), spacing:sec.spacing||0};
+          if(si===0) b.newCol = true;
+          legacyBlocks.push(b);
+        });
+      }
+      if(pg.nf) legacyBlocks.push({type:'NOTFINDING', id:uid()});
+      // Mark first block of page 2+ as newPage
+      if(pi > 0 && legacyBlocks.length > 0) legacyBlocks[0].newPage = true;
+      blocks.push(...legacyBlocks);
+    }
+  });
+  return blocks;
+}
+
+function unflattenBlocks(blocks, sheetMeta){
+  const sheet = {title:sheetMeta.title, icon:sheetMeta.icon, status:sheetMeta.status||'live', pages:[]};
+  let currentPage = {blocks:[]};
+  blocks.forEach(b => {
+    // If this block has newPage flag and current page has content, start new page
+    if(b.newPage && currentPage.blocks.length>0){
+      sheet.pages.push(currentPage);
+      currentPage = {blocks:[]};
+    }
+    // Skip old PAGE/COLBREAK/SPACER block types (legacy) 
+    if(b.type==='PAGE'||b.type==='COLBREAK'||b.type==='SPACER') return;
+    // Strip ids from nested data for clean serialization
+    const clean = {...b};
+    delete clean.id;
+    if(clean.r) clean.r = clean.r.map(r=>{const c={...r};delete c.id;return c});
+    if(clean.items) clean.items = clean.items.map(it=>{const c={...it};delete c.id;return c});
+    currentPage.blocks.push(clean);
+  });
+  if(currentPage.blocks.length>0) sheet.pages.push(currentPage);
+  return sheet;
+}
+
+function initBlocks(){
+  sheetBlocks={};
+  for(const [slug,sheet] of Object.entries(DATA.sheets)) sheetBlocks[slug]=flattenSheet(sheet);
+}
+
+function syncSheetFromBlocks(slug){
+  const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+  if(!entry)return;
+  DATA.sheets[slug]=unflattenBlocks(sheetBlocks[slug]||[],{title:entry.title,icon:entry.icon,status:entry.status});
+}
+
+// ===================================================================
+// RENDER: Sheet List
+// ===================================================================
+function renderSheetList(){
+  const el=document.getElementById('editor-body');
+  let html='<div class="sheet-list" id="sheet-list">';
+  DATA.home.forEach((entry,i)=>{
+    const slug=slugify(entry.sheetName), sheet=DATA.sheets[slug];
+    const blocks=sheetBlocks[slug]||[];
+    const fC=blocks.filter(b=>b.type==='FAQ').length;
+    const sC=blocks.filter(b=>b.type==='SECTION').length;
+    const rC=blocks.filter(b=>b.type==='SECTION').reduce((s,b)=>(s+(b.r||[]).length),0);
+    const qC=blocks.filter(b=>b.type==='QR').length;
+    const pC=sheet?sheet.pages.length:0;
+    html+=`<div class="sheet-list-item" draggable="true" data-idx="${i}"
+      ondragstart="dragSheetStart(event,${i})" ondragover="dragSheetOver(event,${i})"
+      ondragleave="dragSheetLeave(event)" ondrop="dragSheetDrop(event,${i})"
+      onclick="openSheet('${slug}')">
+      <span class="drag-handle" onclick="event.stopPropagation()">⠿</span>
+      <span class="sli-icon">${entry.icon||'📄'}</span>
+      <div class="sli-info">
+        <div class="sli-title">${esc(entry.title)}</div>
+        <div class="sli-meta">${pC} pg · ${fC} FAQ · ${sC} sec · ${rC} res${qC?' · '+qC+' QR':''}</div>
+      </div>
+      <span class="sli-status ${entry.status==='coming-soon'?'coming-soon':''}">${entry.status==='coming-soon'?'Coming Soon':'Live'}</span>
+    </div>`;
+  });
+  html+='</div><div style="margin-top:12px;text-align:center"><button class="add-resource-btn" onclick="addNewSheet()" style="max-width:300px;margin:0 auto">+ Add New Sheet</button></div>';
+  el.innerHTML=html;
+}
+
+// ===================================================================
+// RENDER: Sheet Editor
+// ===================================================================
+function renderSheetEditor(slug){
+  const el=document.getElementById('editor-body');
+  const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+  if(!entry){el.innerHTML='<div class="empty-state"><h3>Sheet not found</h3></div>';return;}
+  const blocks=sheetBlocks[slug]||[];
+  let html=`<div class="sheet-editor-header">
+    <button class="back-btn" onclick="showView('sheets')">← Back</button>
+    <span style="font-size:1.4rem;cursor:pointer" onclick="editSheetIcon('${slug}')" title="Click to change emoji icon">${entry.icon&&entry.icon.startsWith('<img')?entry.icon:(entry.icon||'📄')}</span>
+    <button style="padding:2px 6px;font-size:.68rem;border:1px solid var(--g200);border-radius:3px;background:var(--wh);color:var(--g500);cursor:pointer" onclick="uploadSheetIcon('${slug}')" title="Upload icon image">📎 Icon</button>
+    <input type="file" id="icon-upload-${slug}" accept="image/*" style="display:none" onchange="handleSheetIconUpload(event,'${slug}')">
+    <h2>${esc(entry.title)}</h2>
+    <input type="text" value="${esc(entry.title)}" onchange="updateSheetTitle('${slug}',this.value)" style="padding:3px 8px;border:1px solid var(--g200);border-radius:4px;font-size:.8rem;width:180px" title="Sheet display title">
+    <div class="add-menu">
+      <button class="add-btn" onclick="toggleAddMenu(event)">+ Add Block</button>
+      <div class="dropdown" id="add-menu">
+        <button class="dropdown-item" onclick="addBlock('${slug}','FAQ')">FAQ Question</button>
+        <button class="dropdown-item" onclick="addBlock('${slug}','CALLOUT')">Callout Box</button>
+        <button class="dropdown-item" onclick="addBlock('${slug}','QR')">QR / Image Block</button>
+        <button class="dropdown-item" onclick="addBlock('${slug}','SECTION')">Resource Section</button>
+        <button class="dropdown-item" onclick="addBlock('${slug}','NOTFINDING')">Not Finding Bar</button>
+      </div>
+    </div>
+  </div><div class="block-list" id="block-list">`;
+  blocks.forEach((block,i)=>{html+=renderBlockCard(slug,block,i)});
+  html+='</div>';
+  el.innerHTML=html;
+  blocks.forEach((block,i)=>{if(block.type==='FAQ'||block.type==='CALLOUT') initRichText(slug,block,i)});
+}
+
+function renderBlockCard(slug,block,idx){
+  const isOpen=openBlocks.has(block.id);
+  let title='', typeClass=block.type.toLowerCase();
+  switch(block.type){
+    case 'FAQ': title=block.q||'(untitled question)'; break;
+    case 'CALLOUT': title=block.title||'(untitled callout)'; break;
+    case 'SECTION': title=(block.title||'(untitled)')+` (${(block.r||[]).length} resources)`; break;
+    case 'QR': title=`QR/Image Block (${(block.items||[]).length} items)`; typeClass='qr'; break;
+    case 'NOTFINDING': title='"Not Finding?" Bar'; break;
+  }
+  let bodyHTML='';
+  
+  if(block.type==='FAQ'){
+    const twoColChecked=block.useTwoCol?'checked':'';
+    let twoColEditors='';
+    if(block.useTwoCol){
+      twoColEditors=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
+        <div>
+          <label style="font-size:.72rem;font-weight:600;color:var(--g400)">LEFT COLUMN</label>
+          <div class="rt-toolbar">
+            <button onmousedown="event.preventDefault();rtCmdCol('bold','rt-col-left-${block.id}')" title="Bold"><b>B</b></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('italic','rt-col-left-${block.id}')" title="Italic"><i>I</i></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('underline','rt-col-left-${block.id}')" title="Underline"><u>U</u></button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();rtCmdCol('insertUnorderedList','rt-col-left-${block.id}')" title="Bullet List">• List</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('insertOrderedList','rt-col-left-${block.id}')" title="Numbered List">1. List</button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-left-${block.id}')" title="Indent">→ In</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-left-${block.id}')" title="Outdent">← Out</button>
+          </div>
+          <div class="rt-editor" id="rt-col-left-${block.id}" contenteditable="true"
+            oninput="updateColText('${slug}',${idx},'colLeft','rt-col-left-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
+        </div>
+        <div>
+          <label style="font-size:.72rem;font-weight:600;color:var(--g400)">RIGHT COLUMN</label>
+          <div class="rt-toolbar">
+            <button onmousedown="event.preventDefault();rtCmdCol('bold','rt-col-right-${block.id}')" title="Bold"><b>B</b></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('italic','rt-col-right-${block.id}')" title="Italic"><i>I</i></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('underline','rt-col-right-${block.id}')" title="Underline"><u>U</u></button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();rtCmdCol('insertUnorderedList','rt-col-right-${block.id}')" title="Bullet List">• List</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('insertOrderedList','rt-col-right-${block.id}')" title="Numbered List">1. List</button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-right-${block.id}')" title="Indent">→ In</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-right-${block.id}')" title="Outdent">← Out</button>
+          </div>
+          <div class="rt-editor" id="rt-col-right-${block.id}" contenteditable="true"
+            oninput="updateColText('${slug}',${idx},'colRight','rt-col-right-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
+        </div>
+      </div>`;
+    }
+    bodyHTML=`
+      <div class="field-row"><label>Question</label><input type="text" value="${esc(block.q)}" onchange="updateBlock('${slug}',${idx},'q',this.value)"><select onchange="updateBlock('${slug}',${idx},'headerStyle',this.value)" style="flex:none;width:90px;margin-left:4px"><option value="default" ${block.headerStyle!=='banner'?'selected':''}>Bold</option><option value="banner" ${block.headerStyle==='banner'?'selected':''}>Banner</option></select></div>
+      <div style="margin-bottom:4px"><label style="font-size:.75rem;font-weight:600;color:var(--g500)">Answer</label></div>
+      <div class="rt-toolbar" id="rt-toolbar-${block.id}">
+        <button onmousedown="event.preventDefault();rtCmd('bold','${block.id}')" title="Bold"><b>B</b></button>
+        <button onmousedown="event.preventDefault();rtCmd('italic','${block.id}')" title="Italic"><i>I</i></button>
+        <button onmousedown="event.preventDefault();rtCmd('underline','${block.id}')" title="Underline"><u>U</u></button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();rtCmd('insertUnorderedList','${block.id}')" title="Bullet List">• List</button>
+        <button onmousedown="event.preventDefault();rtCmd('insertOrderedList','${block.id}')" title="Numbered List">1. List</button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();rtCmd('indent','${block.id}')" title="Indent">→ In</button>
+        <button onmousedown="event.preventDefault();rtCmd('outdent','${block.id}')" title="Outdent">← Out</button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();clearFormatting('${block.id}')" title="Clear Formatting">✕ Clear</button>
+      </div>
+      <div class="rt-editor" id="rt-editor-${block.id}" contenteditable="true"
+        oninput="updateRichText('${slug}',${idx},'${block.id}')"></div>
+      <label style="font-size:.75rem;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--g500);margin-top:6px"><input type="checkbox" ${twoColChecked} onchange="insertTwoCol('${slug}',${idx},'${block.id}')"> Two-Column Section</label>
+      ${twoColEditors}`;
+  } else if(block.type==='CALLOUT'){
+    const twoColChecked=block.useTwoCol?'checked':'';
+    let twoColEditors='';
+    if(block.useTwoCol){
+      twoColEditors=`
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
+        <div>
+          <label style="font-size:.72rem;font-weight:600;color:var(--g400)">LEFT COLUMN</label>
+          <div class="rt-toolbar">
+            <button onmousedown="event.preventDefault();rtCmdCol('bold','rt-col-left-${block.id}')" title="Bold"><b>B</b></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('italic','rt-col-left-${block.id}')" title="Italic"><i>I</i></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('underline','rt-col-left-${block.id}')" title="Underline"><u>U</u></button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();rtCmdCol('insertUnorderedList','rt-col-left-${block.id}')" title="Bullet List">• List</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-left-${block.id}')" title="Indent">→ In</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-left-${block.id}')" title="Outdent">← Out</button>
+          </div>
+          <div class="rt-editor" id="rt-col-left-${block.id}" contenteditable="true"
+            oninput="updateColText('${slug}',${idx},'colLeft','rt-col-left-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
+        </div>
+        <div>
+          <label style="font-size:.72rem;font-weight:600;color:var(--g400)">RIGHT COLUMN</label>
+          <div class="rt-toolbar">
+            <button onmousedown="event.preventDefault();rtCmdCol('bold','rt-col-right-${block.id}')" title="Bold"><b>B</b></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('italic','rt-col-right-${block.id}')" title="Italic"><i>I</i></button>
+            <button onmousedown="event.preventDefault();rtCmdCol('underline','rt-col-right-${block.id}')" title="Underline"><u>U</u></button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();rtCmdCol('insertUnorderedList','rt-col-right-${block.id}')" title="Bullet List">• List</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-right-${block.id}')" title="Indent">→ In</button>
+            <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-right-${block.id}')" title="Outdent">← Out</button>
+          </div>
+          <div class="rt-editor" id="rt-col-right-${block.id}" contenteditable="true"
+            oninput="updateColText('${slug}',${idx},'colRight','rt-col-right-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
+        </div>
+      </div>`;
+    }
+    bodyHTML=`
+      <div class="field-row"><label>Title</label><input type="text" value="${esc(block.title)}" onchange="updateBlock('${slug}',${idx},'title',this.value)"></div>
+      <div style="margin-bottom:4px"><label style="font-size:.75rem;font-weight:600;color:var(--g500)">Text</label></div>
+      <div class="rt-toolbar" id="rt-toolbar-${block.id}">
+        <button onmousedown="event.preventDefault();rtCmd('bold','${block.id}')" title="Bold"><b>B</b></button>
+        <button onmousedown="event.preventDefault();rtCmd('italic','${block.id}')" title="Italic"><i>I</i></button>
+        <button onmousedown="event.preventDefault();rtCmd('underline','${block.id}')" title="Underline"><u>U</u></button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();rtCmd('insertUnorderedList','${block.id}')" title="Bullet List">• List</button>
+        <button onmousedown="event.preventDefault();rtCmd('insertOrderedList','${block.id}')" title="Numbered List">1. List</button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();rtCmd('indent','${block.id}')" title="Indent">→ In</button>
+        <button onmousedown="event.preventDefault();rtCmd('outdent','${block.id}')" title="Outdent">← Out</button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();clearFormatting('${block.id}')" title="Clear Formatting">✕ Clear</button>
+      </div>
+      <div class="rt-editor" id="rt-editor-${block.id}" contenteditable="true"
+        oninput="updateCalloutRichText('${slug}',${idx},'${block.id}')"></div>
+      <label style="font-size:.75rem;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--g500);margin-top:6px"><input type="checkbox" ${twoColChecked} onchange="toggleTwoCol('${slug}',${idx})"> Two-Column Section</label>
+      ${twoColEditors}`;
+  } else if(block.type==='QR'){
+    bodyHTML=`<div class="qr-items-list" id="qr-items-${block.id}">`;
+    (block.items||[]).forEach((item,ii)=>{
+      bodyHTML+=renderQRItemCard(slug,idx,block.id,item,ii);
+    });
+    bodyHTML+=`</div><button class="add-resource-btn" onclick="addQRItem('${slug}',${idx})">+ Add QR/Image Item</button>`;
+  } else if(block.type==='SECTION'){
+    bodyHTML=`<div class="field-row"><label>Title</label><input type="text" value="${esc(block.title)}" onchange="updateBlock('${slug}',${idx},'title',this.value)"></div>
+      <div id="res-list-${block.id}">`;
+    (block.r||[]).forEach((r,ri)=>{bodyHTML+=renderResCard(slug,idx,block.id,r,ri)});
+    bodyHTML+=`</div><button class="add-resource-btn" onclick="addResource('${slug}',${idx})">+ Add Resource</button>`;
+  } else if(block.type==='NOTFINDING'){
+    bodyHTML=`<div style="font-size:.78rem;color:var(--g500);padding:4px 0">Shows the "Not Finding What You Need?" bar.</div>`;
+  }
+
+  return `<div class="block-card" data-block-idx="${idx}" draggable="true"
+    ondragstart="dragBlockStart(event,'${slug}',${idx})" ondragover="dragBlockOver(event,${idx})"
+    ondragleave="dragBlockLeave(event)" ondrop="dragBlockDrop(event,'${slug}',${idx})">
+    <div class="block-header" onclick="toggleBlock('${block.id}','${slug}')">
+      <span class="bh-drag" onclick="event.stopPropagation()">⠿</span>
+      <span class="bh-type ${typeClass}">${block.type}</span>
+      <span class="bh-title">${esc(title)}</span>
+      <span class="bh-controls" onclick="event.stopPropagation()">
+        <label title="Start New Column"><input type="checkbox" ${block.newCol?'checked':''} onchange="updateBlock('${slug}',${idx},'newCol',this.checked)"> Col</label>
+        <label title="Start New Page"><input type="checkbox" ${block.newPage?'checked':''} onchange="updateBlock('${slug}',${idx},'newPage',this.checked)"> Pg</label>
+        <span class="bh-spacer-ctl" title="Space after (pt)">+<input type="number" value="${block.spacing||0}" min="0" max="100" step="1" onchange="updateBlock('${slug}',${idx},'spacing',parseFloat(this.value)||0)">pt</span>
+      </span>
+      <span class="bh-toggle ${isOpen?'open':''}">▶</span>
+      <button class="bh-delete" onclick="event.stopPropagation();deleteBlock('${slug}',${idx})" title="Delete">✕</button>
+    </div>
+    <div class="block-body ${isOpen?'open':''}" id="block-body-${block.id}">${bodyHTML}</div>
+  </div>`;
+}
+
+// ===================================================================
+// QR ITEM rendering
+// ===================================================================
+function renderQRItemCard(slug,blockIdx,blockId,item,ii){
+  const colorOptions = QR_COLORS.map(c=>`<option value="${c.value}" ${item.bgColor===c.value?'selected':''}>${c.name}</option>`).join('');
+  const preview = item.imgData ? `<img class="qr-img-preview" src="${item.imgData}" alt="QR">` : '';
+  return `<div class="qr-item-card">
+    <div class="qr-item-header">
+      <span>Item ${ii+1}</span>
+      <button onclick="deleteQRItem('${slug}',${blockIdx},${ii})" title="Delete">✕</button>
+    </div>
+    <div class="qr-item-fields">
+      <div class="rf full"><label>Label</label><input value="${esc(item.label||'')}" onchange="updateQRItem('${slug}',${blockIdx},${ii},'label',this.value)"></div>
+      <div class="rf"><label>Color</label><select onchange="updateQRItem('${slug}',${blockIdx},${ii},'bgColor',this.value)">${colorOptions}</select></div>
+      <div class="rf"><label>Image</label><input type="file" accept="image/*" onchange="loadQRImage(event,'${slug}',${blockIdx},${ii})"></div>
+      <div class="rf full">${preview}</div>
+    </div>
+  </div>`;
+}
+
+function addQRItem(slug,blockIdx){
+  if(!sheetBlocks[slug][blockIdx].items) sheetBlocks[slug][blockIdx].items=[];
+  sheetBlocks[slug][blockIdx].items.push({label:'Scan to Learn More',bgColor:'#1b3a5c',imgData:'',id:uid()});
+  syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug);
+}
+
+function deleteQRItem(slug,blockIdx,ii){
+  sheetBlocks[slug][blockIdx].items.splice(ii,1);
+  syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug);
+}
+
+function updateQRItem(slug,blockIdx,ii,field,value){
+  sheetBlocks[slug][blockIdx].items[ii][field]=value;
+  syncSheetFromBlocks(slug);refreshPreview(slug);
+  // Re-render to update color preview
+  if(field==='bgColor') renderSheetEditor(slug);
+}
+
+function loadQRImage(ev,slug,blockIdx,ii){
+  const file=ev.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    sheetBlocks[slug][blockIdx].items[ii].imgData=e.target.result;
+    syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug);
+  };
+  reader.readAsDataURL(file);
+}
+
+// ===================================================================
+// RESOURCE CARD rendering
+// ===================================================================
+function renderResCard(slug,blockIdx,blockId,r,ri){
+  const isOpen=openBlocks.has('res_'+blockIdx+'_'+ri);
+  // Build move-to options from all SECTION blocks in this sheet
+  const sections=sheetBlocks[slug].map((b,i)=>({idx:i,title:b.title,type:b.type})).filter(b=>b.type==='SECTION'&&b.idx!==blockIdx);
+  const moveOpts=sections.map(s=>`<option value="${s.idx}">${esc(s.title)}</option>`).join('');
+  const moveBtn=moveOpts?`<select onchange="moveResource('${slug}',${blockIdx},${ri},parseInt(this.value));this.selectedIndex=0" style="flex:none;padding:1px 4px;font-size:.68rem;border:1px solid var(--g200);border-radius:3px;color:var(--g500);background:var(--wh)"><option value="">Move to…</option>${moveOpts}</select>`:'';
+  return `<div class="res-card" data-res-idx="${ri}" draggable="true"
+    ondragstart="dragResStart(event,'${slug}',${blockIdx},${ri})" ondragover="dragResOver(event,${ri})"
+    ondragleave="dragResLeave(event)" ondrop="dragResDrop(event,'${slug}',${blockIdx},${ri})">
+    <div class="res-card-header" onclick="toggleResCard(${blockIdx},${ri},'${slug}')" style="cursor:pointer">
+      <span class="rc-drag" onclick="event.stopPropagation()">⠿</span>
+      <span class="rc-name">${esc(r.n||'(unnamed)')}</span>
+      ${moveBtn ? '<span onclick="event.stopPropagation()">'+moveBtn+'</span>' : ''}
+      <span class="bh-toggle ${isOpen?'open':''}">▶</span>
+      <button class="rc-delete" onclick="event.stopPropagation();deleteResource('${slug}',${blockIdx},${ri})" title="Delete">✕</button>
+    </div>
+    <div class="res-fields" style="display:${isOpen?'grid':'none'}">
+      <div class="rf full"><label>Name</label><input value="${esc(r.n||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'n',this.value)"></div>
+      <div class="rf full"><label>Services</label><input value="${esc(r.s||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'s',this.value)"></div>
+      <div class="rf"><label>Hours</label><input value="${esc(r.h||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'h',this.value)"></div>
+      <div class="rf"><label>Phone</label><input value="${esc(r.p||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'p',this.value)"></div>
+      <div class="rf"><label>Address</label><input value="${esc(r.a||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'a',this.value)"></div>
+      <div class="rf"><label>City</label><input value="${esc(r.c||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'c',this.value)"></div>
+      <div class="rf"><label>Text #</label><input value="${esc(r.t||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'t',this.value)"></div>
+      <div class="rf"><label>Website</label><input value="${esc(r.w||'')}" onchange="updateRes('${slug}',${blockIdx},${ri},'w',this.value)"></div>
+    </div>
+  </div>`;
+}
+
+function toggleResCard(blockIdx,ri,slug){
+  const key='res_'+blockIdx+'_'+ri;
+  if(openBlocks.has(key))openBlocks.delete(key);else openBlocks.add(key);
+  renderSheetEditor(slug);
+}
+
+// ===================================================================
+// RICH TEXT
+// ===================================================================
+function textToHTML(text){
+  if(!text) return '';
+  const lines = text.split('\n');
+  let html='', inList=false;
+  for(let i=0;i<lines.length;i++){
+    const line=lines[i].trim();
+    if(!line){if(inList){html+='</ul>';inList=false;}continue;}
+    if(inList){
+      if(line.endsWith(':')){html+='</ul>';inList=false;html+=`<p>${esc(line)}</p>`;}
+      else{html+=`<li>${esc(line)}</li>`;}
+    } else {
+      let prev='';
+      for(let j=i-1;j>=0;j--){if(lines[j].trim()){prev=lines[j].trim();break;}}
+      if(prev.endsWith(':') && !line.endsWith(':')){inList=true;html+='<ul>';html+=`<li>${esc(line)}</li>`;}
+      else{html+=`<p>${esc(line)}</p>`;}
+    }
+  }
+  if(inList) html+='</ul>';
+  return html;
+}
+
+function htmlToText(html){
+  const div=document.createElement('div');div.innerHTML=html;
+  let text='';
+  function walk(node){
+    if(node.nodeType===3){text+=node.textContent;return;}
+    if(node.nodeType!==1)return;
+    const tag=node.tagName.toLowerCase();
+    if(tag==='br'){text+='\n';return;}
+    if(tag==='li'){walkC(node);text+='\n';return;}
+    if(tag==='ul'||tag==='ol'){walkC(node);return;}
+    if(tag==='p'||tag==='div'){walkC(node);text+='\n';return;}
+    walkC(node);
+  }
+  function walkC(n){for(const c of n.childNodes)walk(c)}
+  walk(div);
+  return text.replace(/\n+$/,'');
+}
+
+function initRichText(slug,block,idx){
+  const editor=document.getElementById('rt-editor-'+block.id);
+  if(!editor) return;
+  if(block.type==='CALLOUT'){
+    if(block.textHTML){editor.innerHTML=block.textHTML;}
+    else{editor.innerHTML=textToHTML(block.text||'');}
+  } else {
+    if(block.aHTML){editor.innerHTML=block.aHTML;}
+    else{editor.innerHTML=textToHTML(block.a||'');}
+  }
+  // Intercept paste: keep structure (bold, italic, lists) but strip fonts/sizes/colors
+  editor.addEventListener('paste',function(e){
+    e.preventDefault();
+    const html=e.clipboardData.getData('text/html');
+    const plain=e.clipboardData.getData('text/plain');
+    let clean='';
+    if(html){
+      clean=stripPastedStyles(html);
+    } else {
+      clean=esc(plain).replace(/\n/g,'<br>');
+    }
+    document.execCommand('insertHTML',false,clean);
+  });
+  // Init two-column editors if present
+  if((block.type==='FAQ'||block.type==='CALLOUT') && block.useTwoCol){
+    const leftEd=document.getElementById('rt-col-left-'+block.id);
+    const rightEd=document.getElementById('rt-col-right-'+block.id);
+    if(leftEd){leftEd.innerHTML=block.colLeft||'';attachPasteHandler(leftEd);}
+    if(rightEd){rightEd.innerHTML=block.colRight||'';attachPasteHandler(rightEd);}
+  }
+}
+
+function attachPasteHandler(editor){
+  editor.addEventListener('paste',function(e){
+    e.preventDefault();
+    const html=e.clipboardData.getData('text/html');
+    const plain=e.clipboardData.getData('text/plain');
+    let clean='';
+    if(html){clean=stripPastedStyles(html);}
+    else{clean=esc(plain).replace(/\n/g,'<br>');}
+    document.execCommand('insertHTML',false,clean);
+  });
+}
+
+// Strip font-family, font-size, color from pasted HTML but keep structural tags
+function stripPastedStyles(html){
+  const div=document.createElement('div');
+  div.innerHTML=html;
+  // Remove all font tags, unwrap their children
+  div.querySelectorAll('font').forEach(f=>{
+    const frag=document.createDocumentFragment();
+    while(f.firstChild) frag.appendChild(f.firstChild);
+    f.parentNode.replaceChild(frag,f);
+  });
+  // Strip style attributes that set font/size/color, keep structural ones
+  div.querySelectorAll('[style]').forEach(el=>{
+    const s=el.style;
+    s.removeProperty('font-family');
+    s.removeProperty('font-size');
+    s.removeProperty('color');
+    s.removeProperty('background-color');
+    s.removeProperty('background');
+    s.removeProperty('line-height');
+    s.removeProperty('letter-spacing');
+    if(!el.getAttribute('style').trim()) el.removeAttribute('style');
+  });
+  // Remove class attributes (Word/Google Docs add tons)
+  div.querySelectorAll('[class]').forEach(el=>{
+    // Keep our own classes
+    if(!el.className.includes('two-col-block')) el.removeAttribute('class');
+  });
+  // Remove spans that are now empty wrappers
+  div.querySelectorAll('span').forEach(sp=>{
+    if(!sp.getAttribute('style')&&!sp.getAttribute('class')){
+      const frag=document.createDocumentFragment();
+      while(sp.firstChild) frag.appendChild(sp.firstChild);
+      sp.parentNode.replaceChild(frag,sp);
+    }
+  });
+  return div.innerHTML;
+}
+
+function updateRichText(slug,idx,blockId){
+  const editor=document.getElementById('rt-editor-'+blockId);
+  if(!editor) return;
+  const block=sheetBlocks[slug][idx];
+  block.aHTML=editor.innerHTML;
+  block.a=htmlToText(editor.innerHTML);
+  syncSheetFromBlocks(slug);
+  refreshPreview(slug);
+}
+
+function updateColText(slug,idx,field,editorId){
+  const editor=document.getElementById(editorId);
+  if(!editor) return;
+  const block=sheetBlocks[slug][idx];
+  block[field]=editor.innerHTML;
+  syncSheetFromBlocks(slug);
+  refreshPreview(slug);
+}
+
+function updateCalloutRichText(slug,idx,blockId){
+  const editor=document.getElementById('rt-editor-'+blockId);
+  if(!editor) return;
+  const block=sheetBlocks[slug][idx];
+  block.textHTML=editor.innerHTML;
+  block.text=htmlToText(editor.innerHTML);
+  syncSheetFromBlocks(slug);
+  refreshPreview(slug);
+}
+
+function rtCmd(cmd,blockId){
+  const editor=document.getElementById('rt-editor-'+blockId);
+  editor.focus();
+  document.execCommand(cmd,false,null);
+}
+
+function rtCmdCol(cmd,editorId){
+  const editor=document.getElementById(editorId);
+  editor.focus();
+  document.execCommand(cmd,false,null);
+}
+
+function clearFormatting(blockId){
+  const editor=document.getElementById('rt-editor-'+blockId);
+  editor.focus();
+  document.execCommand('removeFormat',false,null);
+  // Also strip font tags and inline styles from the whole editor
+  editor.innerHTML=stripPastedStyles(editor.innerHTML);
+}
+
+function insertTwoCol(slug,idx,blockId){
+  toggleTwoCol(slug,idx);
+}
+
+function toggleTwoCol(slug,idx){
+  const block=sheetBlocks[slug][idx];
+  block.useTwoCol=!block.useTwoCol;
+  if(block.useTwoCol && !block.colLeft) block.colLeft='';
+  if(block.useTwoCol && !block.colRight) block.colRight='';
+  syncSheetFromBlocks(slug);
+  renderSheetEditor(slug);
+  refreshPreview(slug);
+}
+
+// ===================================================================
+// BLOCK OPERATIONS
+// ===================================================================
+function toggleBlock(blockId,slug){
+  if(openBlocks.has(blockId))openBlocks.delete(blockId);else openBlocks.add(blockId);
+  renderSheetEditor(slug);
+}
+
+function updateBlock(slug,idx,field,value){
+  sheetBlocks[slug][idx][field]=value;
+  syncSheetFromBlocks(slug);
+  refreshPreview(slug);
+}
+
+function addBlock(slug,type){
+  closeAddMenu();
+  const block={type,id:uid(),spacing:0};
+  switch(type){
+    case 'FAQ':block.q='New Question';block.a='';block.aHTML='';break;
+    case 'CALLOUT':block.title='Callout Title';block.text='';block.textHTML='';break;
+    case 'SECTION':block.title='New Section';block.r=[];break;
+    case 'QR':block.items=[];break;
+  }
+  sheetBlocks[slug].push(block);
+  openBlocks.add(block.id);
+  syncSheetFromBlocks(slug);
+  renderSheetEditor(slug);
+  refreshPreview(slug);
+}
+
+function deleteBlock(slug,idx){
+  if(!confirm('Delete this block?'))return;
+  openBlocks.delete(sheetBlocks[slug][idx].id);
+  sheetBlocks[slug].splice(idx,1);
+  syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug);
+}
+
+function addResource(slug,blockIdx){
+  sheetBlocks[slug][blockIdx].r.push({n:'New Resource',id:uid()});
+  syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug);
+}
+
+function deleteResource(slug,blockIdx,resIdx){
+  sheetBlocks[slug][blockIdx].r.splice(resIdx,1);
+  syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug);
+}
+
+function moveResource(slug,fromBlockIdx,resIdx,toBlockIdx){
+  const res=sheetBlocks[slug][fromBlockIdx].r.splice(resIdx,1)[0];
+  sheetBlocks[slug][toBlockIdx].r.push(res);
+  syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug);
+  toast('Moved to '+sheetBlocks[slug][toBlockIdx].title);
+}
+
+function updateRes(slug,blockIdx,resIdx,field,value){
+  if(value)sheetBlocks[slug][blockIdx].r[resIdx][field]=value;
+  else delete sheetBlocks[slug][blockIdx].r[resIdx][field];
+  syncSheetFromBlocks(slug);refreshPreview(slug);
+}
+
+// ===================================================================
+// DRAG & DROP — Sheets
+// ===================================================================
+function dragSheetStart(e,idx){dragState={type:'sheet',idx};e.dataTransfer.effectAllowed='move';e.target.closest('.sheet-list-item').classList.add('dragging')}
+function dragSheetOver(e,idx){e.preventDefault();if(!dragState||dragState.type!=='sheet')return;document.querySelectorAll('.sheet-list-item').forEach(el=>el.classList.remove('drag-over-above','drag-over-below'));const r=e.target.closest('.sheet-list-item').getBoundingClientRect();if(e.clientY<r.top+r.height/2)e.target.closest('.sheet-list-item').classList.add('drag-over-above');else e.target.closest('.sheet-list-item').classList.add('drag-over-below')}
+function dragSheetLeave(e){e.target.closest('.sheet-list-item')?.classList.remove('drag-over-above','drag-over-below')}
+function dragSheetDrop(e,toIdx){e.preventDefault();document.querySelectorAll('.sheet-list-item').forEach(el=>el.classList.remove('dragging','drag-over-above','drag-over-below'));if(!dragState||dragState.type!=='sheet')return;const f=dragState.idx;dragState=null;if(f===toIdx)return;const item=DATA.home.splice(f,1)[0];DATA.home.splice(toIdx,0,item);renderSheetList()}
+
+// DRAG — Blocks
+function dragBlockStart(e,slug,idx){dragState={type:'block',slug,idx};e.dataTransfer.effectAllowed='move';e.target.closest('.block-card').classList.add('dragging')}
+function dragBlockOver(e,idx){e.preventDefault();if(!dragState||dragState.type!=='block')return;document.querySelectorAll('.block-card').forEach(el=>el.classList.remove('drag-over-above','drag-over-below'));const c=e.target.closest('.block-card');if(!c)return;const r=c.getBoundingClientRect();if(e.clientY<r.top+r.height/2)c.classList.add('drag-over-above');else c.classList.add('drag-over-below')}
+function dragBlockLeave(e){e.target.closest('.block-card')?.classList.remove('drag-over-above','drag-over-below')}
+function dragBlockDrop(e,slug,toIdx){e.preventDefault();document.querySelectorAll('.block-card').forEach(el=>el.classList.remove('dragging','drag-over-above','drag-over-below'));if(!dragState||dragState.type!=='block'||dragState.slug!==slug)return;const f=dragState.idx;dragState=null;if(f===toIdx)return;const item=sheetBlocks[slug].splice(f,1)[0];sheetBlocks[slug].splice(toIdx,0,item);syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug)}
+
+// DRAG — Resources
+function dragResStart(e,slug,bi,ri){dragState={type:'res',slug,blockIdx:bi,resIdx:ri};e.dataTransfer.effectAllowed='move';e.target.closest('.res-card').classList.add('dragging');e.stopPropagation()}
+function dragResOver(e,ri){e.preventDefault();e.stopPropagation();if(!dragState||dragState.type!=='res')return;document.querySelectorAll('.res-card').forEach(el=>el.classList.remove('drag-over-above','drag-over-below'));const c=e.target.closest('.res-card');if(!c)return;const r=c.getBoundingClientRect();if(e.clientY<r.top+r.height/2)c.classList.add('drag-over-above');else c.classList.add('drag-over-below')}
+function dragResLeave(e){e.target.closest('.res-card')?.classList.remove('drag-over-above','drag-over-below')}
+function dragResDrop(e,slug,bi,toIdx){e.preventDefault();e.stopPropagation();document.querySelectorAll('.res-card').forEach(el=>el.classList.remove('dragging','drag-over-above','drag-over-below'));if(!dragState||dragState.type!=='res'||dragState.slug!==slug||dragState.blockIdx!==bi)return;const f=dragState.resIdx;dragState=null;if(f===toIdx)return;const item=sheetBlocks[slug][bi].r.splice(f,1)[0];sheetBlocks[slug][bi].r.splice(toIdx,0,item);syncSheetFromBlocks(slug);renderSheetEditor(slug);refreshPreview(slug)}
+
+// ===================================================================
+// ADD SHEET / MENU
+// ===================================================================
+function addNewSheet(){const name=prompt('Sheet name:');if(!name)return;const slug=slugify(name);DATA.home.push({sheetName:name,title:name,icon:'📄',status:'live'});DATA.sheets[slug]={title:name,icon:'📄',status:'live',pages:[{blocks:[]}]};sheetBlocks[slug]=[];renderSheetList();toast('Sheet added: '+name)}
+
+function editSheetIcon(slug){
+  const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+  if(!entry)return;
+  const icon=prompt('Enter an emoji icon for this sheet:',entry.icon&&!entry.icon.startsWith('<img')?entry.icon:'📄');
+  if(icon===null)return;
+  entry.icon=icon;
+  if(DATA.sheets[slug])DATA.sheets[slug].icon=icon;
+  renderSheetEditor(slug);refreshPreview(slug);
+}
+
+function uploadSheetIcon(slug){
+  document.getElementById('icon-upload-'+slug).click();
+}
+
+function handleSheetIconUpload(ev,slug){
+  const file=ev.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+    if(!entry)return;
+    const imgTag=`<img src="${e.target.result}" style="width:28px;height:28px;object-fit:contain">`;
+    entry.icon=imgTag;
+    if(DATA.sheets[slug])DATA.sheets[slug].icon=imgTag;
+    renderSheetEditor(slug);refreshPreview(slug);
+    toast('Icon updated');
+  };
+  reader.readAsDataURL(file);
+  ev.target.value='';
+}
+
+function updateSheetTitle(slug,newTitle){
+  const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+  if(!entry)return;
+  entry.title=newTitle;
+  if(DATA.sheets[slug])DATA.sheets[slug].title=newTitle;
+  refreshPreview(slug);
+}
+function toggleAddMenu(e){e.stopPropagation();document.getElementById('add-menu').classList.toggle('open')}
+function closeAddMenu(){const m=document.getElementById('add-menu');if(m)m.classList.remove('open')}
+document.addEventListener('click',closeAddMenu);
+
+// ===================================================================
+// PREVIEW RENDERER
+// ===================================================================
+function refreshPreview(slug){
+  if(!slug&&currentView!=='sheets'&&currentView!=='welcome')slug=currentView;
+  const pc=document.getElementById('preview-content');
+  if(!dataLoaded){pc.innerHTML='<div class="empty-state"><h3>Load data to see preview</h3></div>';return;}
+  if(!slug||slug==='sheets'){pc.innerHTML=renderHomePreview();return;}
+  const sheet=DATA.sheets[slug];
+  if(!sheet||!sheet.pages||sheet.pages.length===0){pc.innerHTML='<div class="empty-state"><h3>No content yet</h3></div>';return;}
+  pc.innerHTML=sheet.pages.map((pg,i)=>renderPagePreview(sheet,pg,i)).join('');
+}
+
+function renderHomePreview(){
+  let cards='';
+  DATA.home.forEach(entry=>{
+    const slug=slugify(entry.sheetName),sheet=DATA.sheets[slug];
+    const has=sheet&&sheet.pages&&sheet.pages.length>0;
+    if(!has&&entry.status!=='coming-soon')return;
+    cards+=`<div class="home-card"><div class="card-icon">${entry.icon||'📄'}</div><div class="card-title">${esc(entry.title)}</div></div>`;
+  });
+  return `<div class="home-preview-page"><div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Resources for Utica and surrounding areas</p></div><div class="home-grid">${cards}</div></div>`;
+}
+
+function renderPagePreview(sheet,pg,idx){
+  const blocks = pg.blocks || [];
+  // Split blocks into columns at newCol flags, extract NOTFINDING
+  let cols=[[]], nfBlock=false;
+  blocks.forEach(b=>{
+    if(b.type==='NOTFINDING'){nfBlock=true;return;}
+    if(b.newCol&&cols[cols.length-1].length>0){cols.push([]);}
+    cols[cols.length-1].push(b);
+  });
+
+  function renderBlock(b){
+    const mb=b.spacing?`margin-bottom:${b.spacing}pt`:'';
+    switch(b.type){
+      case 'FAQ':{
+        const content=b.aHTML||faqFallbackHTML(b.a);
+        let twoCol='';
+        if(b.useTwoCol&&(b.colLeft||b.colRight)){
+          twoCol=`<div class="two-col-block"><div>${b.colLeft||''}</div><div>${b.colRight||''}</div></div>`;
+        }
+        const qHeader=b.headerStyle==='banner'?`<div class="section-hdr">${esc(b.q)}</div>`:`<h3>${esc(b.q)}</h3>`;
+        return `<div class="faq-block" style="${mb}">${qHeader}${content}${twoCol}</div>`;
+      }
+      case 'CALLOUT':{
+        const ctContent=b.textHTML||`<p>${esc(b.text).replace(/\n/g,'<br>')}</p>`;
+        let twoCol='';
+        if(b.useTwoCol&&(b.colLeft||b.colRight)){
+          twoCol=`<div class="two-col-block"><div>${b.colLeft||''}</div><div>${b.colRight||''}</div></div>`;
+        }
+        return `<div class="chbs-callout" style="${mb}"><h3>${esc(b.title)}</h3>${ctContent}${twoCol}</div>`;
+      }
+      case 'QR':{
+        let qh='';
+        (b.items||[]).forEach(it=>{
+          const imgTag=it.imgData?`<div class="qr-img"><img src="${it.imgData}"></div>`:'';
+          qh+=`<div class="qr-banner" style="background:${it.bgColor||'#1b3a5c'}"><span class="qr-label">${esc(it.label)}</span>${imgTag}</div>`;
+        });
+        return `<div style="${mb}">${qh}</div>`;
+      }
+      case 'SECTION':{
+        let s=`<div class="section-hdr">${esc(b.title)}</div>`;
+        (b.r||[]).forEach(r=>{s+=renderEntryPreview(r)});
+        return `<div style="${mb}">${s}</div>`;
+      }
+      default: return '';
+    }
+  }
+
+  let body='', cls='page-body one-col';
+  if(cols.length>=2){
+    cls='page-body two-col';
+    body=cols.map(col=>`<div class="resource-column">${col.map(renderBlock).join('')}</div>`).join('');
+  } else {
+    body=`<div class="resource-column">${cols[0].map(renderBlock).join('')}</div>`;
+  }
+
+  const nf=nfBlock?`<div class="not-finding-bar"><h4>Not Finding What You Need?</h4><p>Speak with any staff at CHBS, or try: <a>United Way 211</a> · <a>NY Connects</a> 1-800-342-9871 · <a>Oneida County System of Care</a> 315-768-3660</p></div>`:'';
+  return `<div class="print-page"><div class="page-header"><h1>${(sheet.title||'').toUpperCase()}</h1></div><div class="${cls}">${body}</div>${nf}<div class="page-footer"><div class="footer-group"><div class="footer-col"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-col"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-col"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div><div class="footer-col"><p>Call: 315-798-8868<br>Fax: 315-733-7105</p></div></div><div class="footer-group"><div class="footer-col"><h4>Crisis Stabilization Center</h4><p>1002 Oswego St.<br>Utica NY, 13502</p></div><div class="footer-col"><p><b>24/7/365</b><br>Call: 315-520-7802</p></div></div></div></div>`;
+}
+
+function faqFallbackHTML(text){
+  if(!text)return'';
+  const lines=text.split('\n');let html='',inList=false;
+  for(let i=0;i<lines.length;i++){
+    const line=lines[i].trim();
+    if(!line){if(inList){html+='</ul>';inList=false;}continue;}
+    if(inList){
+      if(line.endsWith(':')){html+='</ul>';inList=false;html+=`<p>${esc(line)}</p>`}
+      else{html+=`<li>${esc(line)}</li>`}
+    } else {
+      let prev='';for(let j=i-1;j>=0;j--){if(lines[j].trim()){prev=lines[j].trim();break;}}
+      if(prev.endsWith(':')&&!line.endsWith(':')){inList=true;html+='<ul>';html+=`<li>${esc(line)}</li>`}
+      else{html+=`<p>${esc(line)}</p>`}
+    }
+  }
+  if(inList)html+='</ul>';
+  return html;
+}
+
+// renderSecsPreview removed — flat block renderer handles all block types inline
+
+function renderEntryPreview(r){
+  let ct=[];
+  if(r.p)ct.push(`<span class="ph">📞 ${esc(r.p)}</span>`);
+  if(r.t)ct.push(`<span class="tx">💬 ${esc(r.t)}</span>`);
+  if(r.w)ct.push(`<a class="ws">🌐 ${esc(r.w)}</a>`);
+  let addr=r.a?`<div class="res-addr">📍 ${esc(r.a)}${r.c?' | '+esc(r.c):''}</div>`:'';
+  let hrs=r.h?`<div class="res-hours">${esc(r.h)}</div>`:'';
+  return `<div class="res-entry"><div class="res-name">${esc(r.n)}</div>${r.s?`<div class="res-svc">${esc(r.s)}</div>`:''}${hrs}${addr}${ct.length?`<div class="res-contact">${ct.join(' ')}</div>`:''}</div>`;
+}
+
+// ===================================================================
+// VIEW MANAGEMENT
+// ===================================================================
+function showView(view){
+  currentView=view;
+  if(view==='sheets'&&dataLoaded){renderSheetList();refreshPreview()}
+  else if(view==='welcome'){
+    document.getElementById('editor-body').innerHTML=`<div class="welcome-screen"><h2>CHBS Resource Hub Editor</h2><p>Load your data to get started.</p><div class="welcome-actions"><button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button><button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button><button class="welcome-btn" onclick="startEmpty()">Start Empty</button></div><div class="drop-zone" id="drop-zone">Drop a .json, .xlsx, or .csv file here</div></div>`;
+    setupDropZone();
+  }
+}
+function openSheet(slug){currentView=slug;renderSheetEditor(slug);refreshPreview(slug)}
+function startEmpty(){DATA={home:[],sheets:{}};dataLoaded=true;initBlocks();showView('sheets');toast('Started with empty project')}
+
+function setupDropZone(){
+  const dz=document.getElementById('drop-zone');
+  if(!dz)return;
+  ['dragenter','dragover'].forEach(e=>dz.addEventListener(e,ev=>{ev.preventDefault();dz.classList.add('drag-over')}));
+  ['dragleave','drop'].forEach(e=>dz.addEventListener(e,ev=>{ev.preventDefault();dz.classList.remove('drag-over')}));
+  dz.addEventListener('drop',ev=>{
+    const file=ev.dataTransfer.files[0];
+    if(!file)return;
+    if(file.name.endsWith('.json'))loadJSONFile(file);
+    else if(file.name.endsWith('.xlsx')||file.name.endsWith('.xls')||file.name.endsWith('.csv'))loadExcelFile(file);
+    else alert('Please drop a .json, .xlsx, or .csv file.');
+  });
+}
+
+// ===================================================================
+// SAVE / LOAD / IMPORT / EXPORT
+// ===================================================================
+function exportJSON(){
+  for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
+  const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chbs-resource-hub-data.json';a.click();toast('JSON saved!');
+}
+
+function importJSON(){document.getElementById('json-input').click()}
+document.getElementById('json-input').addEventListener('change',function(e){
+  const file=e.target.files[0];if(!file)return;
+  loadJSONFile(file);
+  e.target.value='';
+});
+
+function loadJSONFile(file){
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      DATA=JSON.parse(ev.target.result);
+      dataLoaded=true;
+      initBlocks();
+      showView('sheets');
+      toast('Loaded: '+file.name);
+    } catch(err){alert('Error: '+err.message)}
+  };
+  reader.readAsText(file);
+}
+
+// ===================================================================
+// EXCEL / CSV IMPORT
+// ===================================================================
+function importExcel(){document.getElementById('excel-input').click()}
+document.getElementById('excel-input').addEventListener('change',function(e){
+  const file=e.target.files[0];if(!file)return;
+  loadExcelFile(file);
+  e.target.value='';
+});
+
+function loadExcelFile(file){
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    try{
+      const data=new Uint8Array(ev.target.result);
+      const wb=XLSX.read(data,{type:'array',codepage:65001});
+      // Use first sheet
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+      processExcelRows(rows);
+    } catch(err){alert('Excel import error: '+err.message)}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function processExcelRows(rows){
+  // Expected columns: Sheet, Type, Question/Title, Content, Name, Services, Phone, Text, Website, Address, City, Hours
+  // Normalize column names
+  const normalize = h => h.toLowerCase().replace(/[^a-z]/g,'');
+  
+  // Group rows by sheet
+  const sheetGroups={};
+  rows.forEach(row=>{
+    const keys=Object.keys(row);
+    const get = target => {
+      const k=keys.find(k=>normalize(k)===target)||keys.find(k=>normalize(k).includes(target));
+      return k?String(row[k]||'').trim():'';
+    };
+    const sheetName=get('sheet');
+    const type=get('type').toUpperCase();
+    if(!sheetName)return;
+    if(!sheetGroups[sheetName])sheetGroups[sheetName]=[];
+    sheetGroups[sheetName].push({
+      type,
+      questionTitle:get('questiontitle')||get('question')||get('title'),
+      content:get('content')||get('answer'),
+      name:get('name'),
+      services:get('services'),
+      phone:get('phone'),
+      text:get('text'),
+      website:get('website'),
+      address:get('address'),
+      city:get('city'),
+      hours:get('hours'),
+      colBreak:get('columnbreak')||get('colbreak')||'0',
+      pageBreak:get('pagebreak')||'0'
+    });
+  });
+
+  const sheetNames=Object.keys(sheetGroups);
+  if(sheetNames.length===0){alert('No data found. Make sure your Excel has a "Sheet" column.');return;}
+  
+  if(!dataLoaded){DATA={home:[],sheets:{}};dataLoaded=true;}
+  
+  let processed=0;
+  processNextSheet(0);
+  
+  function processNextSheet(i){
+    if(i>=sheetNames.length){
+      initBlocks();
+      showView('sheets');
+      toast(`Imported ${processed} sheet(s) from Excel`);
+      return;
+    }
+    const sheetName=sheetNames[i];
+    const slug=slugify(sheetName);
+    const existing=DATA.sheets[slug];
+    
+    if(existing){
+      showModal(`Sheet "${sheetName}" already exists`,`What would you like to do with the imported data for this sheet?`,[
+        {label:'Replace',cls:'danger',action:()=>{doImportSheet(sheetName,sheetGroups[sheetName],'replace');processed++;dismissModal();processNextSheet(i+1)}},
+        {label:'Append',cls:'primary',action:()=>{doImportSheet(sheetName,sheetGroups[sheetName],'append');processed++;dismissModal();processNextSheet(i+1)}},
+        {label:'Skip',cls:'',action:()=>{dismissModal();processNextSheet(i+1)}}
+      ]);
+    } else {
+      doImportSheet(sheetName,sheetGroups[sheetName],'replace');
+      processed++;
+      processNextSheet(i+1);
+    }
+  }
+}
+
+function doImportSheet(sheetName,rows,mode){
+  const slug=slugify(sheetName);
+  
+  // Build blocks from rows
+  const newBlocks=[];
+  let currentSection=null;
+  let pendingCol=false, pendingPage=false;
+  
+  function applyPending(block){
+    if(pendingCol){block.newCol=true;pendingCol=false;}
+    if(pendingPage){block.newPage=true;pendingPage=false;}
+  }
+  
+  rows.forEach(row=>{
+    switch(row.type){
+      case 'FAQ':
+        const faqBlock={type:'FAQ',id:uid(),q:row.questionTitle,a:row.content,aHTML:'',spacing:0};
+        applyPending(faqBlock);
+        newBlocks.push(faqBlock);
+        currentSection=null;
+        break;
+      case 'CALLOUT':
+        const callBlock={type:'CALLOUT',id:uid(),title:row.questionTitle,text:row.content,spacing:0};
+        applyPending(callBlock);
+        newBlocks.push(callBlock);
+        currentSection=null;
+        break;
+      case 'SECTION':
+        currentSection={type:'SECTION',id:uid(),title:row.questionTitle,r:[],spacing:0};
+        applyPending(currentSection);
+        newBlocks.push(currentSection);
+        break;
+      case 'RESOURCE':
+        const res={n:row.name,id:uid()};
+        if(row.services)res.s=row.services;
+        if(row.phone)res.p=row.phone;
+        if(row.text)res.t=row.text;
+        if(row.website)res.w=row.website;
+        if(row.address)res.a=row.address;
+        if(row.city)res.c=row.city;
+        if(row.hours)res.h=row.hours;
+        if(currentSection){currentSection.r.push(res)}
+        else{
+          currentSection={type:'SECTION',id:uid(),title:'Resources',r:[res],spacing:0};
+          applyPending(currentSection);
+          newBlocks.push(currentSection);
+        }
+        break;
+      case 'NOTFINDING':
+        const nfBlock={type:'NOTFINDING',id:uid()};
+        applyPending(nfBlock);
+        newBlocks.push(nfBlock);
+        currentSection=null;
+        break;
+    }
+    // Insert layout markers after this row if flagged
+    // These set flags on the NEXT content block that gets added
+    if(String(row.colBreak)==='1'){pendingCol=true;}
+    if(String(row.pageBreak)==='1'){pendingPage=true;}
+  });
+  
+  // Ensure home entry exists
+  if(!DATA.home.find(h=>slugify(h.sheetName)===slug)){
+    DATA.home.push({sheetName,title:sheetName,icon:'📄',status:'live'});
+  }
+  
+  if(mode==='replace'){
+    sheetBlocks[slug]=newBlocks;
+  } else {
+    // Append
+    if(!sheetBlocks[slug])sheetBlocks[slug]=[];
+    sheetBlocks[slug]=sheetBlocks[slug].concat(newBlocks);
+  }
+  
+  // Create sheet data
+  const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+  DATA.sheets[slug]=unflattenBlocks(sheetBlocks[slug],{title:entry.title,icon:entry.icon,status:entry.status});
+}
+
+// ===================================================================
+// CSV EXPORT
+// ===================================================================
+function exportCSV(){
+  for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
+  
+  const csvRows=[['Sheet','Type','Question/Title','Content','Name','Services','Phone','Text','Website','Address','City','Hours','Column Break','Page Break']];
+  
+  DATA.home.forEach(entry=>{
+    const slug=slugify(entry.sheetName);
+    const blocks=sheetBlocks[slug]||[];
+    blocks.forEach((b,i)=>{
+      // Look ahead: is the NEXT block a COLBREAK or PAGE?
+      const nextBlock=blocks[i+1];
+      const colBreak=(nextBlock&&nextBlock.type==='COLBREAK')?1:0;
+      const pageBreak=(nextBlock&&nextBlock.type==='PAGE')?1:0;
+      switch(b.type){
+        case 'FAQ':
+          csvRows.push([entry.sheetName,'FAQ',b.q,b.a,'','','','','','','','',colBreak,pageBreak]);
+          break;
+        case 'CALLOUT':
+          csvRows.push([entry.sheetName,'CALLOUT',b.title,b.text,'','','','','','','','',colBreak,pageBreak]);
+          break;
+        case 'SECTION':
+          csvRows.push([entry.sheetName,'SECTION',b.title,'','','','','','','','','',colBreak,pageBreak]);
+          (b.r||[]).forEach(r=>{
+            csvRows.push([entry.sheetName,'RESOURCE','','',(r.n||''),(r.s||''),(r.p||''),(r.t||''),(r.w||''),(r.a||''),(r.c||''),(r.h||''),0,0]);
+          });
+          break;
+        case 'NOTFINDING':
+          csvRows.push([entry.sheetName,'NOTFINDING','','','','','','','','','','',colBreak,pageBreak]);
+          break;
+        // Skip COLBREAK, PAGE, SPACER — represented via the columns on other rows
+      }
+    });
+  });
+  
+  const csvContent=csvRows.map(row=>row.map(cell=>'"'+String(cell).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csvContent],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chbs-resource-hub-data.csv';a.click();
+  toast('CSV exported!');
+}
+
+// ===================================================================
+// MODAL
+// ===================================================================
+function showModal(title,message,buttons){
+  const root=document.getElementById('modal-root');
+  let btns=buttons.map(b=>`<button class="${b.cls}" onclick="(${b.action.toString()})()">${b.label}</button>`).join('');
+  root.innerHTML=`<div class="modal-overlay" onclick="dismissModal()"><div class="modal" onclick="event.stopPropagation()"><h3>${title}</h3><p>${message}</p><div class="modal-actions">${btns}</div></div></div>`;
+  // Store button actions globally for onclick
+  window._modalActions=buttons;
+  // Re-render with proper handlers
+  root.querySelector('.modal').innerHTML=`<h3>${title}</h3><p>${message}</p><div class="modal-actions"></div>`;
+  const actionsDiv=root.querySelector('.modal-actions');
+  buttons.forEach(b=>{
+    const btn=document.createElement('button');
+    btn.className=b.cls;
+    btn.textContent=b.label;
+    btn.onclick=b.action;
+    actionsDiv.appendChild(btn);
+  });
+}
+
+function dismissModal(){document.getElementById('modal-root').innerHTML=''}
+
+// ===================================================================
+// EXPORT HTML (Published)
+// ===================================================================
+function exportHTML(){
+  for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
+  // Ensure all FAQ blocks have aHTML populated
+  for(const slug in DATA.sheets){
+    const sheet=DATA.sheets[slug];
+    sheet.pages.forEach(pg=>{
+      (pg.blocks||[]).forEach(b=>{
+        if(b.type==='FAQ' && !b.aHTML) b.aHTML=faqFallbackHTML(b.a);
+      });
+    });
+  }
+  // Strip contenteditable and inline font styles from all aHTML before export
+  for(const slug in DATA.sheets){
+    const sheet=DATA.sheets[slug];
+    sheet.pages.forEach(pg=>{
+      (pg.blocks||[]).forEach(b=>{
+        if(b.aHTML){
+          b.aHTML=b.aHTML.replace(/\s*contenteditable="[^"]*"/gi,'');
+          b.aHTML=b.aHTML.replace(/font-family:[^;"]*(;|(?="))/gi,'');
+          b.aHTML=b.aHTML.replace(/font-size:[^;"]*(;|(?="))/gi,'');
+        }
+        if(b.textHTML){
+          b.textHTML=b.textHTML.replace(/\s*contenteditable="[^"]*"/gi,'');
+          b.textHTML=b.textHTML.replace(/font-family:[^;"]*(;|(?="))/gi,'');
+          b.textHTML=b.textHTML.replace(/font-size:[^;"]*(;|(?="))/gi,'');
+        }
+        if(b.colLeft){
+          b.colLeft=b.colLeft.replace(/\s*contenteditable="[^"]*"/gi,'');
+          b.colLeft=b.colLeft.replace(/font-family:[^;"]*(;|(?="))/gi,'');
+        }
+        if(b.colRight){
+          b.colRight=b.colRight.replace(/\s*contenteditable="[^"]*"/gi,'');
+          b.colRight=b.colRight.replace(/font-family:[^;"]*(;|(?="))/gi,'');
+        }
+      });
+    });
+  }
+  const dj=JSON.stringify(DATA);
+  const html=`<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CHBS Resource Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bd:#1b3a5c;--bm:#2e6494;--bl:#4a8ac2;--gd:#d4a843;--gl:#e6c55e;--wh:#fff;--cr:#f9f7f3;--g50:#f5f5f5;--g100:#e8e8e8;--g200:#d0d0d0;--g400:#999;--g500:#6b6b6b;--g700:#3d3d3d;--g900:#1a1a1a}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Source Sans 3',-apple-system,sans-serif;color:var(--g900);background:var(--cr);line-height:1.35}
+.home-page{display:none}.home-page.active{display:block}
+.home-hero{background:linear-gradient(135deg,var(--bd) 0%,var(--bm) 70%,var(--bl) 100%);color:var(--wh);text-align:center;padding:1.6rem 1rem 1.2rem}
+.home-hero .org-name{font-size:.7rem;font-weight:600;opacity:.7;letter-spacing:.06em;text-transform:uppercase}
+.home-hero h1{font-weight:900;font-size:1.8rem;margin:.2rem 0 .3rem}
+.home-hero .subtitle{font-size:.88rem;opacity:.7}
+.home-info-bar{display:flex;justify-content:center;gap:2rem;margin-top:.6rem;font-size:.78rem}
+.home-info-bar .info-item{display:flex;align-items:center;gap:.4rem}.home-info-bar .info-label{font-weight:700;opacity:.7}
+.home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;padding:1.2rem 1.5rem;max-width:800px;margin:0 auto}
+.home-card{background:var(--wh);border:1px solid var(--g200);border-radius:8px;padding:.75rem .6rem;text-align:center;text-decoration:none;color:var(--g900);cursor:pointer;transition:all .15s}
+.home-card:hover{border-color:var(--bm);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.home-card .card-icon{font-size:1.6rem;margin-bottom:.3rem}
+.home-card .card-icon img{width:32px;height:32px;object-fit:contain}.home-card .card-title{font-size:.75rem;font-weight:700;color:var(--bd)}
+.home-nf{max-width:800px;margin:.5rem auto 0;text-align:center;padding:0 1.5rem .8rem;font-size:.78rem;color:var(--g500)}
+.home-nf h3{font-size:.82rem;color:var(--bd);margin-bottom:.2rem}.home-nf a{color:var(--bm);text-decoration:none;font-weight:600}
+.crisis-banner{background:var(--gd);color:var(--bd);text-align:center;padding:.5rem 1rem;font-size:.78rem;font-weight:600}.crisis-banner a{color:var(--bd);font-weight:700}
+.home-ft{background:var(--bd);color:var(--wh);padding:1.25rem 2rem;margin-top:2rem}
+.home-ft-inner{max-width:750px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+.home-ft .footer-offices{display:flex;gap:1.5rem;flex-wrap:wrap}
+.home-ft .footer-office h4{font-size:.72rem;font-weight:700;color:var(--gd);margin-bottom:2px}
+.home-ft .footer-office p{font-size:.72rem;opacity:.75;line-height:1.35}
+.home-ft .footer-contact{text-align:right;font-size:.72rem}.home-ft .footer-contact .phone{font-weight:700;font-size:.8rem}
+.home-ft-bottom{max-width:750px;margin:.75rem auto 0;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.12);text-align:center;font-size:.65rem;opacity:.45}
+.sheet-nav{max-width:8.5in;margin:0 auto;padding:.6rem .35in 0;display:flex;justify-content:space-between;align-items:center}
+.sheet-nav a{color:var(--bm);text-decoration:none;font-weight:600;font-size:.8rem;cursor:pointer}.sheet-nav a:hover{text-decoration:underline}
+.sheet-nav .print-btn{padding:.3rem .8rem;border:1px solid var(--g200);background:var(--wh);border-radius:3px;font-size:.75rem;font-weight:600;cursor:pointer;font-family:inherit;color:var(--g700)}
+#sheet-container{max-width:100%;display:flex;flex-direction:column;align-items:center}
+.print-page{width:8.5in;min-height:11in;max-height:11in;margin:1rem auto;background:var(--wh);box-shadow:0 2px 20px rgba(0,0,0,.1);display:flex;flex-direction:column;overflow:hidden;transform-origin:top center}
+@media screen{.print-page{transform:scale(var(--page-scale,1))}}
+.page-header{background:var(--bd);color:var(--wh);text-align:center;padding:.18in .4in .15in;flex-shrink:0;position:relative}
+.page-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gd),var(--gl),var(--gd))}
+.page-header h1{font-weight:900;font-size:22pt;letter-spacing:.04em;text-transform:uppercase}
+.page-body{flex:1;display:grid;padding:.12in .35in .08in;gap:.18in;overflow:hidden;align-content:start}
+.page-body.two-col{grid-template-columns:1fr 1fr}.page-body.one-col{grid-template-columns:1fr}
+.page-footer{background:var(--bd);color:var(--wh);padding:.12in .25in;flex-shrink:0;display:flex;justify-content:space-between;align-items:flex-start;margin-top:.06in}
+.footer-group{display:flex;gap:.25in;align-items:flex-start}
+.footer-col h4{font-size:6.2pt;font-weight:700;color:var(--gd);margin-bottom:0}
+.footer-col p{font-size:5.8pt;opacity:.8;line-height:1.25}
+.footer-col b{font-weight:700}
+.faq-block{margin-bottom:.065in;font-family:'Source Sans 3',-apple-system,sans-serif;font-size:7.5pt;color:var(--g700);line-height:1.32}
+.faq-block p,.faq-block div:not(.two-col-block):not(.section-hdr),.faq-block span,.faq-block br+br{margin:0!important;padding:0!important}
+.faq-block h3{font-size:8.2pt;font-weight:700;color:var(--bd);margin-bottom:0;line-height:1.3}
+.faq-block p{font-size:7.5pt;color:var(--g700);line-height:1.32;margin:0 0 1px 0}
+.faq-block ul,.faq-block ol{font-size:7.5pt;color:var(--g700);line-height:1.32;margin:0 0 1px 1em;padding:0}.faq-block li{margin-bottom:0}
+.faq-block .two-col-block{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:7.5pt;color:var(--g700);line-height:1.32}
+.chbs-callout .two-col-block{display:grid!important;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:7.2pt;color:var(--g700);line-height:1.32;margin-top:4px}
+.chbs-callout .two-col-block>div{padding:0;margin:0}
+.faq-block .two-col-block p{font-size:7.5pt}.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:7.5pt;margin:0 0 1px 1em;padding:0}
+.faq-block p,.faq-block li,.faq-block span,.faq-block div:not(.section-hdr):not(.two-col-block),.faq-block b,.faq-block i,.faq-block u,.faq-block strong,.faq-block em{font-size:7.5pt!important;color:var(--g700)}
+.faq-block .section-hdr{font-size:8pt!important;color:var(--wh)!important;margin-top:0}
+.faq-block h3{font-size:8.2pt!important;color:var(--bd)}
+.chbs-callout{border-left:3px solid var(--gd);padding:.05in .08in;margin-top:.06in;margin-bottom:6px;background:var(--g50);font-size:7.2pt;color:var(--g700);line-height:1.32}
+.chbs-callout h3{font-size:8.2pt;font-weight:700;color:var(--bd);margin-bottom:0}
+.chbs-callout p,.chbs-callout div{font-size:7.2pt;color:var(--g700);line-height:1.32;margin:0;padding:0}
+.chbs-callout ul,.chbs-callout ol{font-size:7.2pt;color:var(--g700);line-height:1.32;margin:0 0 1px 1em;padding:0}
+.chbs-callout li,.chbs-callout span,.chbs-callout div,.chbs-callout b,.chbs-callout i,.chbs-callout u,.chbs-callout strong,.chbs-callout em{font-size:7.2pt!important;color:var(--g700)}
+.resource-column{overflow:hidden}
+.section-hdr{background:var(--bd);color:var(--wh)!important;padding:2.5px 8px;border-radius:3px;font-weight:700;font-size:8pt!important;margin-bottom:3px;margin-top:7px;text-align:center}
+.section-hdr:first-child{margin-top:0}
+.res-entry{padding:2px 0;border-bottom:1px solid var(--g100)}.res-entry:last-child{border-bottom:none}
+.res-name{font-weight:700;font-size:8pt;color:var(--g900);line-height:1.2}
+.res-svc{font-size:7pt;color:var(--g500);font-style:italic;line-height:1.2}
+.res-hours{font-size:7pt;color:var(--g500);line-height:1.2}
+.res-addr{font-size:7.2pt;color:var(--g700);line-height:1.2}
+.res-contact{display:flex;flex-wrap:wrap;gap:5px;align-items:baseline;font-size:7.2pt;line-height:1.2;margin-top:1px}
+.res-contact .ws{margin-left:auto}
+.res-contact .ph{font-weight:600;color:var(--bd)}.res-contact .tx{color:var(--g500)}
+.res-contact .ws{color:var(--bm);text-decoration:none;font-weight:600}
+.qr-banner{display:flex;align-items:center;justify-content:space-between;padding:4px 10px;border-radius:4px;margin-bottom:3px}
+.qr-banner .qr-label{font-weight:700;font-size:8pt;color:var(--wh);flex:1;text-align:center}
+.qr-banner .qr-img{width:38px;height:38px;flex-shrink:0;border-radius:2px}
+.qr-banner .qr-img img{width:100%;height:100%;object-fit:contain}
+.not-finding-bar{background:var(--g50);border-top:1px solid var(--g100);padding:.04in .35in;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.not-finding-bar h4{font-size:7pt;font-weight:700;color:var(--bd);display:inline-block;white-space:nowrap;margin:0}
+.not-finding-bar p{font-size:6.5pt;color:var(--g500);margin:0}.not-finding-bar a{color:var(--bm);text-decoration:none;font-weight:600}
+@media print{body{background:white}.home-page,.sheet-nav,.crisis-banner{display:none!important}.print-page{margin:0;box-shadow:none;width:100%;min-height:auto;max-height:none;page-break-after:always}@page{size:letter;margin:0}}
+</style></head><body>
+<div id="home-page" class="home-page active">
+<div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Resources for Utica and surrounding areas</p>
+<div class="home-info-bar"><div class="info-item"><span class="info-label">Hours</span><span>Mon&#x2013;Fri 8:00am &#x2013; 4:30pm</span></div><div class="info-item"><span class="info-label">Phone</span><span>315-798-8868</span></div></div></div>
+<div class="home-grid" id="home-grid"></div>
+<div class="home-nf"><h3>Not finding what you need?</h3><p>Please reach out to us by phone or in person. We&#x2019;re here to support you.</p><p style="margin-top:.3rem"><a href="http://211midyork.com">United Way 211</a> &middot; <a href="http://nyconnects.ny.gov">NY Connects</a> &middot; <a href="http://oneidacountysoc.com">Oneida County System of Care</a></p></div>
+<div class="crisis-banner">Experiencing a mental health crisis after-hours? Call MCAT at <a href="tel:3157326228">315-732-6228</a> for immediate assistance.</div>
+<footer class="home-ft"><div class="home-ft-inner"><div class="footer-offices"><div class="footer-office"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-office"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-office"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div></div><div class="footer-contact"><div class="phone">315-798-8868</div><div>Fax: 315-733-7105</div></div></div><div class="home-ft-bottom">Community Health &amp; Behavioral Services &middot; A Division of Upstate Caring Partners</div></footer>
+</div><div id="sheet-container"></div>
+<script>
+var DATA=`+dj+`;
+function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
+function renderHome(){
+  var g=document.getElementById('home-grid');g.innerHTML='';
+  DATA.home.forEach(function(e){
+    var slug=slugify(e.sheetName),sh=DATA.sheets[slug];
+    var has=sh&&sh.pages&&sh.pages.length>0&&sh.pages.some(function(p){return p.blocks&&p.blocks.length>0});
+    if(!has&&e.status!=='coming-soon')return;
+    var c=document.createElement('a');c.className='home-card';c.href='#';
+    c.innerHTML='<div class="card-icon">'+(e.icon||'')+'</div><div class="card-title">'+e.title+'</div>';
+    if(e.status!=='coming-soon'&&has)(function(s){c.addEventListener('click',function(ev){ev.preventDefault();showSheet(s)})})(slug);
+    g.appendChild(c);
+  });
+}
+function showSheet(k){
+  document.getElementById('home-page').classList.remove('active');
+  var sh=DATA.sheets[k],sc=document.getElementById('sheet-container');
+  sc.innerHTML='<div class="sheet-nav"><a onclick="goHome()">&#x2190; Back to Resource Hub</a><button class="print-btn" onclick="window.print()">Print / Save PDF</button></div>'+sh.pages.map(function(pg,i){return renderPage(sh,pg,i)}).join('');
+  window.scrollTo(0,0);
+}
+function goHome(){document.getElementById('home-page').classList.add('active');document.getElementById('sheet-container').innerHTML='';window.scrollTo(0,0)}
+function renderPage(sh,pg,idx){
+  var blocks=pg.blocks||[];
+  var cols=[[]],nfBlock=false;
+  blocks.forEach(function(b){
+    if(b.type==='NOTFINDING'){nfBlock=true;return;}
+    if(b.newCol&&cols[cols.length-1].length>0){cols.push([]);}
+    cols[cols.length-1].push(b);
+  });
+  function rb(b){
+    var mb=b.spacing?'margin-bottom:'+b.spacing+'pt':'';
+    switch(b.type){
+      case 'FAQ':var c=b.aHTML||faqFB(b.a);var tc='';if(b.useTwoCol&&(b.colLeft||b.colRight)){tc='<div class="two-col-block"><div>'+(b.colLeft||'')+'</div><div>'+(b.colRight||'')+'</div></div>'}var qh=b.headerStyle==='banner'?'<div class="section-hdr">'+esc(b.q)+'</div>':'<h3>'+esc(b.q)+'</h3>';return '<div class="faq-block" style="'+mb+'">'+qh+c+tc+'</div>';
+      case 'CALLOUT':var ct=b.textHTML||('<p>'+esc(b.text).replace(/\\n/g,'<br>')+'</p>');var ctc='';if(b.useTwoCol&&(b.colLeft||b.colRight)){ctc='<div class="two-col-block"><div>'+(b.colLeft||'')+'</div><div>'+(b.colRight||'')+'</div></div>'}return '<div class="chbs-callout" style="'+mb+'"><h3>'+esc(b.title)+'</h3>'+ct+ctc+'</div>';
+      case 'QR':var qh='';(b.items||[]).forEach(function(it){var img=it.imgData?'<div class="qr-img"><img src="'+it.imgData+'"></div>':'';qh+='<div class="qr-banner" style="background:'+(it.bgColor||'#1b3a5c')+'"><span class="qr-label">'+esc(it.label)+'</span>'+img+'</div>'});return '<div style="'+mb+'">'+qh+'</div>';
+      case 'SECTION':var s='<div class="section-hdr">'+esc(b.title)+'</div>';(b.r||[]).forEach(function(r){s+=renderEntry(r)});return '<div style="'+mb+'">'+s+'</div>';
+      default:return '';
+    }
+  }
+  var body='',cls='page-body one-col';
+  if(cols.length>=2){cls='page-body two-col';body=cols.map(function(col){return '<div class="resource-column">'+col.map(rb).join('')+'</div>'}).join('')}
+  else{body='<div class="resource-column">'+cols[0].map(rb).join('')+'</div>'}
+  var nf=nfBlock?'<div class="not-finding-bar"><h4>Not Finding What You Need?</h4><p>Speak with any staff at CHBS, or try: <a href="http://211midyork.org">United Way</a> 211 &middot; <a href="http://nyconnects.ny.gov">NY Connects</a> 1-800-342-9871 &middot; <a href="http://oneidacountysoc.com">Oneida County System of Care</a> 315-768-3660</p></div>':'';
+  return '<div class="print-page"><div class="page-header"><h1>'+sh.title.toUpperCase()+'</h1></div><div class="'+cls+'">'+body+'</div>'+nf+'<div class="page-footer"><div class="footer-group"><div class="footer-col"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-col"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-col"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div><div class="footer-col"><p>Call: 315-798-8868<br>Fax: 315-733-7105</p></div></div><div class="footer-group"><div class="footer-col"><h4>Crisis Stabilization Center</h4><p>1002 Oswego St.<br>Utica NY, 13502</p></div><div class="footer-col"><p><b>24/7/365</b><br>Call: 315-520-7802</p></div></div></div></div>';
+}
+function faqFB(text){if(!text)return'';var lines=text.split('\\n'),html='',inL=false;for(var i=0;i<lines.length;i++){var l=lines[i].trim();if(!l){if(inL){html+='</ul>';inL=false}continue}if(inL){if(l.slice(-1)===':'){html+='</ul>';inL=false;html+='<p>'+esc(l)+'</p>'}else{html+='<li>'+esc(l)+'</li>'}}else{var p='';for(var j=i-1;j>=0;j--){if(lines[j].trim()){p=lines[j].trim();break}}if(p.slice(-1)===':'&&l.slice(-1)!==':'){inL=true;html+='<ul><li>'+esc(l)+'</li>'}else{html+='<p>'+esc(l)+'</p>'}}}if(inL)html+='</ul>';return html}
+function renderEntry(r){var ct=[];if(r.p)ct.push('<span class="ph">\uD83D\uDCDE '+esc(r.p)+'</span>');if(r.t)ct.push('<span class="tx">\uD83D\uDCAC '+esc(r.t)+'</span>');if(r.w)ct.push('<a class="ws" href="'+(r.w.indexOf('http')===0?r.w:'https://'+r.w)+'" target="_blank">\uD83C\uDF10 '+esc(r.w)+'</a>');var addr=r.a?'<div class="res-addr">\uD83D\uDCCD '+esc(r.a)+(r.c?' | '+esc(r.c):'')+'</div>':'';var hrs=r.h?'<div class="res-hours">'+esc(r.h)+'</div>':'';return '<div class="res-entry"><div class="res-name">'+esc(r.n)+'</div>'+(r.s?'<div class="res-svc">'+esc(r.s)+'</div>':'')+hrs+addr+(ct.length?'<div class="res-contact">'+ct.join(' ')+'</div>':'')+'</div>'}
+renderHome();
+function setScale(){var w=window.innerWidth,s=Math.min(w/816,1.5);document.documentElement.style.setProperty('--page-scale',s);document.querySelectorAll('.print-page').forEach(function(p){p.style.marginBottom=(11*s)+'in'})}
+window.addEventListener('resize',setScale);setScale();
+<`+`/script></body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chbs-resource-hub.html';a.click();
+  toast('Published HTML exported!');
+}
+
+// ===================================================================
+// INIT — show welcome screen (no embedded data)
+// ===================================================================
+setupDropZone();
+</script>
+</body>
+</html>
