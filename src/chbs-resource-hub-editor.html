@@ -983,8 +983,7 @@ function moveResource(slug,fromBlockIdx,resIdx,toBlockIdx){
 }
 
 function updateRes(slug,blockIdx,resIdx,field,value){
-  if(value)sheetBlocks[slug][blockIdx].r[resIdx][field]=value;
-  else delete sheetBlocks[slug][blockIdx].r[resIdx][field];
+  sheetBlocks[slug][blockIdx].r[resIdx][field]=value;
   syncSheetFromBlocks(slug);refreshPreview(slug);
 }
 
@@ -1181,7 +1180,7 @@ function showView(view){
   }
 }
 function openSheet(slug){currentView=slug;renderSheetEditor(slug);refreshPreview(slug)}
-function startEmpty(){DATA={home:[],sheets:{}};dataLoaded=true;initBlocks();showView('sheets');toast('Started with empty project')}
+function startEmpty(){if(dataLoaded&&!confirm('This will discard all current data. Continue?'))return;DATA={home:[],sheets:{}};dataLoaded=true;initBlocks();showView('sheets');toast('Started with empty project')}
 
 function setupDropZone(){
   const dz=document.getElementById('drop-zone');
@@ -1653,6 +1652,49 @@ window.addEventListener('resize',setScale);setScale();
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chbs-resource-hub.html';a.click();
   toast('Published HTML exported!');
 }
+
+// ===================================================================
+// UNSAVED CHANGES WARNING
+// ===================================================================
+window.addEventListener('beforeunload',function(e){
+  if(dataLoaded){e.preventDefault();e.returnValue='';}
+});
+
+// ===================================================================
+// AUTO-SAVE TO LOCALSTORAGE
+// ===================================================================
+const AUTOSAVE_KEY='chbs-editor-autosave';
+let autosaveTimer=null;
+
+function scheduleAutosave(){
+  if(autosaveTimer) clearTimeout(autosaveTimer);
+  autosaveTimer=setTimeout(doAutosave,3000);
+}
+
+function doAutosave(){
+  if(!dataLoaded) return;
+  for(const slug in sheetBlocks) syncSheetFromBlocks(slug);
+  try{
+    localStorage.setItem(AUTOSAVE_KEY,JSON.stringify(DATA));
+  }catch(e){/* storage full — silently skip */}
+}
+
+// Hook autosave into existing sync points
+const _origSync=syncSheetFromBlocks;
+syncSheetFromBlocks=function(slug){_origSync(slug);scheduleAutosave()};
+
+// On load, check for autosaved data
+(function(){
+  const saved=localStorage.getItem(AUTOSAVE_KEY);
+  if(saved){
+    try{
+      const parsed=JSON.parse(saved);
+      if(parsed&&parsed.home&&parsed.sheets&&confirm('Recovered unsaved work from a previous session. Restore it?\n\n(Click Cancel to start fresh)')){
+        DATA=parsed;dataLoaded=true;initBlocks();showView('sheets');toast('Restored from auto-save');return;
+      }
+    }catch(e){/* corrupt data — ignore */}
+  }
+})();
 
 // ===================================================================
 // INIT — show welcome screen (no embedded data)
