@@ -481,25 +481,16 @@ async function ghGetFile(path){
 }
 
 async function ghPutFile(path,content,msg){
+  // Always fetch current SHA before writing to avoid stale SHA errors
+  try{
+    const existing=await ghApi('GET',path);
+    if(existing&&existing.sha)ghFileSha[path]=existing.sha; else delete ghFileSha[path];
+  }catch(e){delete ghFileSha[path];}
   const body={message:msg,content:u8ToB64(content),branch:GH_BRANCH};
   if(ghFileSha[path])body.sha=ghFileSha[path];
-  try{
-    const r=await ghApi('PUT',path,body);
-    if(r&&r.content)ghFileSha[path]=r.content.sha;
-    return r;
-  }catch(err){
-    if(err.message&&(err.message.includes('does not match')||err.message.includes('409')||err.message.includes('422'))){
-      // SHA mismatch — re-fetch current SHA and retry
-      const fresh=await ghApi('GET',path);
-      if(fresh)ghFileSha[path]=fresh.sha; else delete ghFileSha[path];
-      const body2={message:msg,content:u8ToB64(content),branch:GH_BRANCH};
-      if(ghFileSha[path])body2.sha=ghFileSha[path];
-      const r2=await ghApi('PUT',path,body2);
-      if(r2&&r2.content)ghFileSha[path]=r2.content.sha;
-      return r2;
-    }
-    throw err;
-  }
+  const r=await ghApi('PUT',path,body);
+  if(r&&r.content)ghFileSha[path]=r.content.sha;
+  return r;
 }
 
 async function ghGetDir(path){
