@@ -208,6 +208,28 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--bd);color:var(--wh);padding:10px 24px;border-radius:6px;font-size:.82rem;font-weight:600;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
 .toast.show{opacity:1}
 
+/* GitHub status indicator */
+.gh-status{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:600;color:rgba(255,255,255,.5);cursor:pointer;padding:3px 8px;border-radius:4px;transition:all .15s;user-select:none}
+.gh-status:hover{background:rgba(255,255,255,.08)}
+.gh-status .dot{width:7px;height:7px;border-radius:50%;background:var(--g400);transition:background .3s}
+.gh-status.connected .dot{background:#27ae60}
+.gh-status.loading .dot{background:var(--gl);animation:pulse .8s ease-in-out infinite}
+.gh-status.error .dot{background:#c0392b}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.gh-token-row{display:flex;align-items:center;gap:6px;margin-left:4px}
+.gh-token-row input{padding:3px 8px;border:1px solid rgba(255,255,255,.2);border-radius:4px;background:rgba(255,255,255,.08);color:var(--wh);font-size:.72rem;width:180px;font-family:inherit}
+.gh-token-row input::placeholder{color:rgba(255,255,255,.35)}
+.gh-token-row input:focus{outline:none;border-color:var(--gl)}
+.gh-token-row button{padding:3px 8px;border:1px solid rgba(255,255,255,.2);border-radius:4px;background:transparent;color:rgba(255,255,255,.6);font-size:.68rem;cursor:pointer}
+.gh-token-row button:hover{color:var(--gl);border-color:var(--gl)}
+
+/* Owner field in sheet editor */
+.owner-row{display:flex;align-items:center;gap:6px;margin-left:auto;font-size:.78rem}
+.owner-row label{font-size:.72rem;font-weight:600;color:var(--g400);white-space:nowrap}
+.owner-row input{padding:3px 8px;border:1px solid var(--g200);border-radius:4px;font-size:.78rem;width:140px;background:var(--wh)}
+.owner-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(46,100,148,.12)}
+.owner-badge{display:inline-block;font-size:.65rem;font-weight:600;color:var(--g400);background:var(--g50);padding:1px 6px;border-radius:3px;margin-left:4px}
+
 /* Print page preview */
 .print-page{width:8.5in;min-height:11in;max-height:11in;background:var(--wh);box-shadow:0 2px 20px rgba(0,0,0,.15);display:flex;flex-direction:column;overflow:hidden;margin-bottom:1.5rem;flex-shrink:0}
 .page-header{background:var(--bd);color:var(--wh);text-align:center;padding:.18in .4in .15in;flex-shrink:0;position:relative}
@@ -282,14 +304,23 @@ input,textarea,select{font-family:inherit;font-size:inherit}
   <div class="sep"></div>
   <button class="nav-btn active" onclick="showView('sheets')">Sheets</button>
   <div class="spacer"></div>
-  <button class="action-btn" onclick="importJSON()">Load JSON</button>
-  <button class="action-btn" onclick="exportJSON()">Save JSON</button>
+  <span class="gh-status" id="gh-status" onclick="toggleGhToken()" title="GitHub connection status"><span class="dot"></span> GitHub</span>
+  <div class="gh-token-row" id="gh-token-row" style="display:none">
+    <input type="password" id="gh-token-input" placeholder="Paste GitHub token..." onkeydown="if(event.key==='Enter'){saveGhToken()}">
+    <button onclick="saveGhToken()">Connect</button>
+    <button onclick="clearGhToken()">Clear</button>
+  </div>
+  <button class="action-btn" onclick="ghLoad()">Load</button>
+  <button class="action-btn" onclick="ghSave()">Save</button>
+  <div class="sep"></div>
+  <button class="action-btn" onclick="importJSON()" title="Load from local file">Import JSON</button>
+  <button class="action-btn" onclick="exportJSON()" title="Save to local file">Export JSON</button>
   <div class="sep"></div>
   <button class="action-btn" onclick="importExcel()">Import Excel/CSV</button>
   <button class="action-btn" onclick="exportCSV()">Export CSV</button>
   <div class="sep"></div>
-  <button class="action-btn primary" onclick="exportHTML()">Export for Publishing</button>
-  <span class="status" id="submit-reminder" style="display:none;color:var(--gd);font-size:.68rem;font-weight:600">Remember: Save JSON + Export CSV + Export HTML, then send all 3 to admin</span>
+  <button class="action-btn primary" onclick="ghPublish()">Publish</button>
+  <span class="status" id="submit-reminder" style="display:none;color:var(--gd);font-size:.68rem;font-weight:600"></span>
   <input type="file" id="json-input" accept=".json" style="display:none">
   <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" style="display:none">
 </div>
@@ -301,22 +332,17 @@ input,textarea,select{font-family:inherit;font-size:inherit}
         <h2>CHBS Resource Hub Editor</h2>
         <p>Load your data to get started.</p>
         <div style="background:var(--wh);border:2px solid var(--gd);border-radius:8px;padding:1rem 1.25rem;margin:0 auto 1.25rem;max-width:500px;text-align:left">
-          <h3 style="font-size:.9rem;color:var(--bd);margin-bottom:.4rem">How to submit changes</h3>
+          <h3 style="font-size:.9rem;color:var(--bd);margin-bottom:.4rem">How it works</h3>
           <ol style="font-size:.82rem;color:var(--g700);line-height:1.6;margin:0 0 0 1.2em;padding:0">
-            <li><strong>Load</strong> the current JSON data file</li>
+            <li><strong>Load</strong> from GitHub (or import a local file)</li>
             <li><strong>Make your edits</strong> in the editor</li>
-            <li><strong>Download all three files:</strong>
-              <ul style="margin:.2rem 0 .2rem 1.2em;padding:0;list-style:disc">
-                <li><strong>Save JSON</strong> — the data file</li>
-                <li><strong>Export CSV</strong> — spreadsheet backup</li>
-                <li><strong>Export for Publishing</strong> — the website HTML</li>
-              </ul>
-            </li>
-            <li><strong>Send all three files</strong> to your admin for review and publishing</li>
+            <li><strong>Save</strong> to GitHub — your changes go to working.json</li>
+            <li><strong>Admin publishes</strong> when ready — promotes working data to the live site</li>
           </ol>
         </div>
         <div class="welcome-actions">
-          <button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button>
+          <button class="welcome-btn primary" onclick="ghLoad()">Load from GitHub</button>
+          <button class="welcome-btn" onclick="importJSON()">Import Local JSON File</button>
           <button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button>
           <button class="welcome-btn" onclick="startEmpty()">Start Empty</button>
         </div>
@@ -371,6 +397,218 @@ function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^
 function esc(s){return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):''}
 function uid(){return 'id_'+Math.random().toString(36).substr(2,9)}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+// ===================================================================
+// GITHUB API — auto-load/save working.json
+// ===================================================================
+const GH_REPO = 'databedatain/resources';
+const GH_BRANCH = 'main';
+const GH_WORKING = 'data/working.json';
+const GH_PUBLISHED = 'data/published.json';
+const GH_BACKUP_PREFIX = 'data/working.backup';
+const ADMIN_HASH = ''; // Set SHA-256 hash of admin password; leave empty to allow any editor to publish
+
+let ghToken = localStorage.getItem('chbs-gh-token') || '';
+let ghFileSha = {};
+let lastSavedJSON = '';
+let ghBackups = []; // In-memory stack of previous versions (max 3)
+
+function u8ToB64(s){return btoa(unescape(encodeURIComponent(s)))}
+function b64ToU8(b){return decodeURIComponent(escape(atob(b.replace(/\s/g,''))))}
+
+async function sha256(str){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function updateGhStatus(state){
+  const el=document.getElementById('gh-status');
+  if(!el)return;
+  el.className='gh-status '+(state||'');
+  const labels={connected:'Connected',loading:'Loading...',error:'Error',saving:'Saving...',publishing:'Publishing...'};
+  el.querySelector('.dot');
+  el.innerHTML='<span class="dot"></span> '+(labels[state]||'GitHub');
+  el.title='GitHub: '+(labels[state]||'Not connected');
+}
+
+function toggleGhToken(){
+  const row=document.getElementById('gh-token-row');
+  if(row.style.display==='none'){
+    row.style.display='flex';
+    const inp=document.getElementById('gh-token-input');
+    if(ghToken)inp.value=ghToken;
+    inp.focus();
+  } else {
+    row.style.display='none';
+  }
+}
+
+function saveGhToken(){
+  const inp=document.getElementById('gh-token-input');
+  ghToken=inp.value.trim();
+  if(ghToken){
+    localStorage.setItem('chbs-gh-token',ghToken);
+    updateGhStatus('connected');
+    toast('GitHub token saved');
+  }
+  document.getElementById('gh-token-row').style.display='none';
+}
+
+function clearGhToken(){
+  ghToken='';
+  localStorage.removeItem('chbs-gh-token');
+  document.getElementById('gh-token-input').value='';
+  document.getElementById('gh-token-row').style.display='none';
+  updateGhStatus('');
+  toast('GitHub token cleared');
+}
+
+async function ghApi(method,path,body){
+  const url='https://api.github.com/repos/'+GH_REPO+'/contents/'+path+(method==='GET'?'?ref='+GH_BRANCH:'');
+  const opts={method,headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}};
+  if(body){opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(body);}
+  const r=await fetch(url,opts);
+  if(r.status===404)return null;
+  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.message||('HTTP '+r.status));}
+  return r.json();
+}
+
+async function ghGetFile(path){
+  const f=await ghApi('GET',path);
+  if(!f)return null;
+  ghFileSha[path]=f.sha;
+  return{content:b64ToU8(f.content),sha:f.sha};
+}
+
+async function ghPutFile(path,content,msg){
+  const body={message:msg,content:u8ToB64(content),branch:GH_BRANCH};
+  if(ghFileSha[path])body.sha=ghFileSha[path];
+  const r=await ghApi('PUT',path,body);
+  if(r&&r.content)ghFileSha[path]=r.content.sha;
+  return r;
+}
+
+async function ghGetDir(path){
+  return ghApi('GET',path);
+}
+
+// --- Load from GitHub ---
+async function ghLoad(){
+  if(!ghToken){toggleGhToken();toast('Enter a GitHub token first');return;}
+  updateGhStatus('loading');
+  try{
+    // Cache SHAs from data directory
+    try{
+      const dir=await ghGetDir('data');
+      if(Array.isArray(dir))dir.forEach(f=>{ghFileSha['data/'+f.name]=f.sha;});
+    }catch(e){}
+    const file=await ghGetFile(GH_WORKING);
+    if(!file){
+      updateGhStatus('connected');
+      toast('No working.json found on GitHub. Starting fresh.');
+      return;
+    }
+    DATA=JSON.parse(file.content);
+    lastSavedJSON=file.content;
+    dataLoaded=true;
+    initBlocks();
+    showView('sheets');
+    updateGhStatus('connected');
+    toast('Loaded from GitHub');
+  }catch(err){
+    updateGhStatus('error');
+    alert('GitHub load error: '+err.message);
+  }
+}
+
+// --- Save to GitHub with backup rotation ---
+async function ghSave(){
+  if(!ghToken){toggleGhToken();toast('Enter a GitHub token first');return;}
+  for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
+  const newContent=JSON.stringify(DATA,null,2);
+  updateGhStatus('saving');
+  try{
+    // Push previous version onto backup stack
+    if(lastSavedJSON){
+      ghBackups.unshift(lastSavedJSON);
+      if(ghBackups.length>3)ghBackups=ghBackups.slice(0,3);
+    }
+    // Save working.json
+    await ghPutFile(GH_WORKING,newContent,'Update working.json');
+    // Save backup files (up to 3)
+    for(let i=0;i<ghBackups.length;i++){
+      const bkPath=GH_BACKUP_PREFIX+'.'+(i+1)+'.json';
+      await ghPutFile(bkPath,ghBackups[i],'Backup '+(i+1));
+    }
+    lastSavedJSON=newContent;
+    updateGhStatus('connected');
+    toast('Saved to GitHub ('+ghBackups.length+' backup'+(ghBackups.length!==1?'s':'')+')');
+  }catch(err){
+    updateGhStatus('error');
+    alert('GitHub save error: '+err.message);
+  }
+}
+
+// --- Publish: admin promotes working → published + generates index.html ---
+async function ghPublish(){
+  if(!ghToken){toggleGhToken();toast('Enter a GitHub token first');return;}
+  if(!dataLoaded){toast('Load data first');return;}
+  // Admin password check
+  if(ADMIN_HASH){
+    const pw=prompt('Enter admin password to publish:');
+    if(!pw)return;
+    const hash=await sha256(pw);
+    if(hash!==ADMIN_HASH){alert('Invalid admin password.');return;}
+  } else {
+    if(!confirm('Publish working data to the live site? This will update the public Resource Hub.'))return;
+  }
+  for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
+  const content=JSON.stringify(DATA,null,2);
+  updateGhStatus('publishing');
+  try{
+    // Save to published.json
+    await ghPutFile(GH_PUBLISHED,content,'Promote working to published');
+    // Also save working.json
+    await ghPutFile(GH_WORKING,content,'Sync working.json on publish');
+    lastSavedJSON=content;
+    // Generate and save index.html
+    const htmlContent=generatePublishedHTML();
+    await ghPutFile('index.html',htmlContent,'Publish site update');
+    updateGhStatus('connected');
+    toast('Published successfully!');
+  }catch(err){
+    updateGhStatus('error');
+    alert('Publish error: '+err.message);
+  }
+}
+
+// Auto-load on startup if token exists
+async function ghAutoLoad(){
+  if(!ghToken)return false;
+  updateGhStatus('loading');
+  try{
+    try{
+      const dir=await ghGetDir('data');
+      if(Array.isArray(dir))dir.forEach(f=>{ghFileSha['data/'+f.name]=f.sha;});
+    }catch(e){}
+    const file=await ghGetFile(GH_WORKING);
+    if(file){
+      DATA=JSON.parse(file.content);
+      lastSavedJSON=file.content;
+      dataLoaded=true;
+      initBlocks();
+      showView('sheets');
+      updateGhStatus('connected');
+      toast('Auto-loaded from GitHub');
+      return true;
+    }
+    updateGhStatus('connected');
+    return false;
+  }catch(err){
+    updateGhStatus('error');
+    return false;
+  }
+}
 
 // ===================================================================
 // DROP ZONE
@@ -433,7 +671,7 @@ function flattenSheet(sheet){
 }
 
 function unflattenBlocks(blocks, sheetMeta){
-  const sheet = {title:sheetMeta.title, icon:sheetMeta.icon, status:sheetMeta.status||'live', pages:[]};
+  const sheet = {title:sheetMeta.title, icon:sheetMeta.icon, status:sheetMeta.status||'live', owner:sheetMeta.owner||'', pages:[]};
   let currentPage = {blocks:[]};
   blocks.forEach(b => {
     // If this block has newPage flag and current page has content, start new page
@@ -462,7 +700,7 @@ function initBlocks(){
 function syncSheetFromBlocks(slug){
   const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
   if(!entry)return;
-  DATA.sheets[slug]=unflattenBlocks(sheetBlocks[slug]||[],{title:entry.title,icon:entry.icon,status:entry.status});
+  DATA.sheets[slug]=unflattenBlocks(sheetBlocks[slug]||[],{title:entry.title,icon:entry.icon,status:entry.status,owner:entry.owner});
 }
 
 // ===================================================================
@@ -487,7 +725,7 @@ function renderSheetList(){
       <span class="sli-icon">${entry.icon||'📄'}</span>
       <div class="sli-info">
         <div class="sli-title">${esc(entry.title)}</div>
-        <div class="sli-meta">${pC} pg · ${fC} FAQ · ${sC} sec · ${rC} res${qC?' · '+qC+' QR':''}</div>
+        <div class="sli-meta">${pC} pg · ${fC} FAQ · ${sC} sec · ${rC} res${qC?' · '+qC+' QR':''}${entry.owner?' · <span class="owner-badge">'+esc(entry.owner)+'</span>':''}</div>
       </div>
       <span class="sli-status ${entry.status||'live'}" onclick="event.stopPropagation();cycleStatus(${i})" title="Click to change status">${statusLabel(entry.status)}</span>
     </div>`;
@@ -511,6 +749,10 @@ function renderSheetEditor(slug){
     <input type="file" id="icon-upload-${slug}" accept="image/*" style="display:none" onchange="handleSheetIconUpload(event,'${slug}')">
     <h2>${esc(entry.title)}</h2>
     <input type="text" value="${esc(entry.title)}" onchange="updateSheetTitle('${slug}',this.value)" style="padding:3px 8px;border:1px solid var(--g200);border-radius:4px;font-size:.8rem;width:180px" title="Sheet display title">
+    <div class="owner-row">
+      <label>Owner</label>
+      <input type="text" value="${esc(entry.owner||'')}" onchange="updateSheetOwner('${slug}',this.value)" placeholder="Your name" title="Sheet owner/editor name">
+    </div>
     <div class="add-menu">
       <button class="add-btn" onclick="toggleAddMenu(event)">+ Add Block</button>
       <div class="dropdown" id="add-menu">
@@ -1064,7 +1306,7 @@ function dragResDrop(e,slug,bi,toIdx){e.preventDefault();e.stopPropagation();doc
 // ===================================================================
 // ADD SHEET / MENU
 // ===================================================================
-function addNewSheet(){const name=prompt('Sheet name:');if(!name)return;const slug=slugify(name);DATA.home.push({sheetName:name,title:name,icon:'📄',status:'live'});DATA.sheets[slug]={title:name,icon:'📄',status:'live',pages:[{blocks:[]}]};sheetBlocks[slug]=[];renderSheetList();toast('Sheet added: '+name)}
+function addNewSheet(){const name=prompt('Sheet name:');if(!name)return;const slug=slugify(name);DATA.home.push({sheetName:name,title:name,icon:'📄',status:'live',owner:''});DATA.sheets[slug]={title:name,icon:'📄',status:'live',owner:'',pages:[{blocks:[]}]};sheetBlocks[slug]=[];renderSheetList();toast('Sheet added: '+name)}
 
 function editSheetIcon(slug){
   const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
@@ -1108,6 +1350,12 @@ function updateSheetTitle(slug,newTitle){
   if(DATA.sheets[slug])DATA.sheets[slug].title=newTitle;
   refreshPreview(slug);
 }
+function updateSheetOwner(slug,owner){
+  const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+  if(!entry)return;
+  entry.owner=owner;
+  if(DATA.sheets[slug])DATA.sheets[slug].owner=owner;
+}
 function toggleAddMenu(e){e.stopPropagation();document.getElementById('add-menu').classList.toggle('open')}
 function closeAddMenu(){const m=document.getElementById('add-menu');if(m)m.classList.remove('open')}
 document.addEventListener('click',closeAddMenu);
@@ -1135,7 +1383,7 @@ function renderHomePreview(){
     if(!has&&st!=='coming-soon')return;
     cards+=`<div class="home-card${st==='coming-soon'?' coming-soon':''}"><div class="card-icon">${entry.icon||'📄'}</div><div class="card-title">${esc(entry.title)}</div></div>`;
   });
-  return `<div class="home-preview-page"><div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Resources for Utica and surrounding areas</p></div><div class="home-grid">${cards}</div></div>`;
+  return `<div class="home-preview-page"><div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Your guide to local services, support, and resources in the Utica area</p></div><div class="home-grid">${cards}</div></div>`;
 }
 
 function renderPagePreview(sheet,pg,idx){
@@ -1236,7 +1484,7 @@ function showView(view){
   var sr=document.getElementById('submit-reminder');if(sr)sr.style.display=dataLoaded?'':'none';
   if(view==='sheets'&&dataLoaded){renderSheetList();refreshPreview()}
   else if(view==='welcome'){
-    document.getElementById('editor-body').innerHTML=`<div class="welcome-screen"><h2>CHBS Resource Hub Editor</h2><p>Load your data to get started.</p><div class="welcome-actions"><button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button><button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button><button class="welcome-btn" onclick="startEmpty()">Start Empty</button></div><div class="drop-zone" id="drop-zone">Drop a .json, .xlsx, or .csv file here</div></div>`;
+    document.getElementById('editor-body').innerHTML=`<div class="welcome-screen"><h2>CHBS Resource Hub Editor</h2><p>Load your data to get started.</p><div class="welcome-actions"><button class="welcome-btn primary" onclick="ghLoad()">Load from GitHub</button><button class="welcome-btn" onclick="importJSON()">Import Local JSON File</button><button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button><button class="welcome-btn" onclick="startEmpty()">Start Empty</button></div><div class="drop-zone" id="drop-zone">Drop a .json, .xlsx, or .csv file here</div></div>`;
     setupDropZone();
   }
 }
@@ -1527,9 +1775,8 @@ function dismissModal(){document.getElementById('modal-root').innerHTML=''}
 // ===================================================================
 // EXPORT HTML (Published)
 // ===================================================================
-function exportHTML(){
+function prepareDataForExport(){
   for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
-  // Ensure all FAQ blocks have aHTML populated
   for(const slug in DATA.sheets){
     const sheet=DATA.sheets[slug];
     sheet.pages.forEach(pg=>{
@@ -1538,7 +1785,6 @@ function exportHTML(){
       });
     });
   }
-  // Strip contenteditable and inline font styles from all aHTML before export
   for(const slug in DATA.sheets){
     const sheet=DATA.sheets[slug];
     sheet.pages.forEach(pg=>{
@@ -1564,8 +1810,12 @@ function exportHTML(){
       });
     });
   }
+}
+
+function generatePublishedHTML(){
+  prepareDataForExport();
   const dj=JSON.stringify(DATA);
-  const html=`<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>CHBS Resource Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
@@ -1573,12 +1823,14 @@ function exportHTML(){
 :root{--bd:#1b3a5c;--bm:#2e6494;--bl:#4a8ac2;--gd:#d4a843;--gl:#e6c55e;--wh:#fff;--cr:#f9f7f3;--g50:#f5f5f5;--g100:#e8e8e8;--g200:#d0d0d0;--g400:#999;--g500:#6b6b6b;--g700:#3d3d3d;--g900:#1a1a1a}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Source Sans 3',-apple-system,sans-serif;color:var(--g900);background:var(--cr);line-height:1.35}
 .home-page{display:none}.home-page.active{display:block}
-.home-hero{background:linear-gradient(135deg,var(--bd) 0%,var(--bm) 70%,var(--bl) 100%);color:var(--wh);text-align:center;padding:1.6rem 1rem 1.2rem}
-.home-hero .org-name{font-size:.7rem;font-weight:600;opacity:.7;letter-spacing:.06em;text-transform:uppercase}
-.home-hero h1{font-weight:900;font-size:1.8rem;margin:.2rem 0 .3rem}
-.home-hero .subtitle{font-size:.88rem;opacity:.7}
-.home-info-bar{display:flex;justify-content:center;gap:2rem;margin-top:.6rem;font-size:.78rem}
-.home-info-bar .info-item{display:flex;align-items:center;gap:.4rem}.home-info-bar .info-label{font-weight:700;opacity:.7}
+.home-hero{background:linear-gradient(135deg,var(--bd) 0%,var(--bm) 60%,var(--bl) 100%);color:var(--wh);text-align:center;padding:2rem 1rem 1.4rem;position:relative;overflow:hidden}
+.home-hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(255,255,255,.04) 0%,transparent 50%);pointer-events:none}
+.home-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gd),var(--gl),var(--gd))}
+.home-hero .org-name{font-size:.72rem;font-weight:700;opacity:.8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.1rem}
+.home-hero h1{font-weight:900;font-size:2rem;margin:.2rem 0 .35rem;letter-spacing:.03em;text-shadow:0 2px 4px rgba(0,0,0,.15)}
+.home-hero .subtitle{font-size:.9rem;opacity:.75;max-width:400px;margin:0 auto}
+.home-info-bar{display:flex;justify-content:center;gap:1.5rem;margin-top:.8rem;font-size:.8rem;background:rgba(0,0,0,.12);padding:.5rem 1.5rem;border-radius:6px;display:inline-flex}
+.home-info-bar .info-item{display:flex;align-items:center;gap:.4rem}.home-info-bar .info-label{font-weight:700;opacity:.8}
 .home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;padding:1.2rem 1.5rem;max-width:800px;margin:0 auto}
 .home-card{background:var(--wh);border:1px solid var(--g200);border-radius:8px;padding:.75rem .6rem;text-align:center;text-decoration:none;color:var(--g900);cursor:pointer;transition:all .15s}
 .home-card:hover{border-color:var(--bm);box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -1587,17 +1839,24 @@ function exportHTML(){
 .home-card.coming-soon::after{content:'Coming Soon';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:.55rem;color:var(--g400);font-weight:600;white-space:nowrap}
 .home-card .card-icon{font-size:1.6rem;margin-bottom:.3rem}
 .home-card .card-icon img{width:32px;height:32px;object-fit:contain}.home-card .card-title{font-size:.75rem;font-weight:700;color:var(--bd)}
-.home-nf{max-width:800px;margin:.5rem auto 0;text-align:center;padding:0 1.5rem .8rem;font-size:.78rem;color:var(--g500)}
-.home-nf h3{font-size:.82rem;color:var(--bd);margin-bottom:.2rem}.home-nf a{color:var(--bm);text-decoration:none;font-weight:600}
+.home-nf{max-width:800px;margin:1rem auto 0;padding:1rem 1.5rem;font-size:.82rem;color:var(--g700);background:var(--wh);border:2px solid var(--g200);border-left:4px solid var(--gd);border-radius:8px;text-align:left;display:flex;align-items:flex-start;gap:1rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.home-nf .nf-icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+.home-nf .nf-body{flex:1}
+.home-nf h3{font-size:.92rem;color:var(--bd);margin-bottom:.25rem;font-weight:700}.home-nf a{color:var(--bm);text-decoration:none;font-weight:600}.home-nf a:hover{text-decoration:underline}
+.home-nf p{margin:0 0 .2rem;line-height:1.5}.home-nf .nf-links{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.35rem}
 .crisis-banner{background:var(--gd);color:var(--bd);text-align:center;padding:.5rem 1rem;font-size:.78rem;font-weight:600}.crisis-banner a{color:var(--bd);font-weight:700}
 @media(max-width:600px){.home-grid{grid-template-columns:repeat(2,1fr);gap:.5rem;padding:1rem}.home-hero h1{font-size:1.3rem}.home-hero .subtitle{font-size:.78rem}.home-info-bar{flex-direction:column;gap:.5rem}.home-ft-inner{flex-direction:column;gap:.5rem}.home-ft .footer-contact{text-align:left}}
-.home-ft{background:var(--bd);color:var(--wh);padding:1.25rem 2rem;margin-top:2rem}
-.home-ft-inner{max-width:750px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+.home-ft{background:linear-gradient(135deg,var(--bd) 0%,#152d49 100%);color:var(--wh);padding:1.5rem 2rem 1rem;margin-top:2rem;position:relative}
+.home-ft::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gd),var(--gl),var(--gd))}
+.home-ft-inner{max-width:750px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:1.25rem;align-items:start}
 .home-ft .footer-offices{display:flex;gap:1.5rem;flex-wrap:wrap}
-.home-ft .footer-office h4{font-size:.72rem;font-weight:700;color:var(--gd);margin-bottom:2px}
-.home-ft .footer-office p{font-size:.72rem;opacity:.75;line-height:1.35}
-.home-ft .footer-contact{text-align:right;font-size:.72rem}.home-ft .footer-contact .phone{font-weight:700;font-size:.8rem}
-.home-ft-bottom{max-width:750px;margin:.75rem auto 0;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.12);text-align:center;font-size:.65rem;opacity:.45}
+.home-ft .footer-office h4{font-size:.72rem;font-weight:700;color:var(--gd);margin-bottom:2px;letter-spacing:.03em}
+.home-ft .footer-office p{font-size:.72rem;opacity:.8;line-height:1.4}
+.home-ft .footer-contact{text-align:right;font-size:.72rem}.home-ft .footer-contact .phone{font-weight:700;font-size:.85rem}
+.home-ft .footer-contact .phone a{color:var(--wh);text-decoration:none}
+.home-ft .footer-crisis{margin-top:.6rem;padding-top:.5rem;border-top:1px solid rgba(212,168,67,.3);font-size:.72rem}
+.home-ft .footer-crisis h4{font-size:.72rem;font-weight:700;color:var(--gd);margin-bottom:2px}
+.home-ft-bottom{max-width:750px;margin:.75rem auto 0;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.1);text-align:center;font-size:.65rem;opacity:.45}
 .sheet-nav{max-width:900px;margin:.75rem auto 0;padding:.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;position:sticky;top:0;background:var(--cr);z-index:100;border:2px solid var(--bd);border-radius:8px}
 .sheet-nav a{color:var(--bm);text-decoration:none;font-weight:600;font-size:.9rem;cursor:pointer}.sheet-nav a:hover{text-decoration:underline}
 .sheet-nav .print-btn{padding:.5rem 1.4rem;border:2px solid var(--bd);background:var(--bd);border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--wh);transition:all .15s}
@@ -1677,7 +1936,7 @@ function exportHTML(){
 .page-wrapper{margin:0;width:100%}
 .print-page{margin:0;box-shadow:none;border-radius:0;width:8.5in;min-height:11in;max-height:11in;overflow:hidden!important;page-break-after:always;background:var(--wh);display:flex;flex-direction:column}
 .page-header{border-radius:0;padding:.18in .4in .15in;margin-bottom:0;flex-shrink:0}.page-header h1{font-size:22pt}
-.page-body{padding:.12in .35in .08in;gap:.18in;overflow:hidden;align-content:start}
+.page-body{flex:1;min-height:0;padding:.12in .35in .08in;gap:.18in;overflow:hidden;align-content:start}
 .page-footer{display:flex;background:var(--bd);color:var(--wh);padding:.12in .25in;flex-shrink:0;margin-top:.06in;flex-wrap:nowrap;gap:0;justify-content:space-between;align-items:flex-start}
 .footer-group{display:flex;gap:.25in;align-items:flex-start;flex-wrap:nowrap}.footer-col h4{font-size:6.2pt;font-weight:700;color:var(--gd);margin-bottom:0}.footer-col p{font-size:5.8pt;opacity:.8;line-height:1.25}
 a{text-decoration:none;color:inherit}
@@ -1706,14 +1965,14 @@ a{text-decoration:none;color:inherit}
 <div class="crisis-banner" role="alert">Experiencing a mental health crisis? Call MCAT at <a href="tel:3157326228">315-732-6228</a> for immediate assistance (24/7).</div>
 <main id="main-content">
 <div id="home-page" class="home-page active">
-<div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Resources for Utica and surrounding areas</p>
-<div class="home-info-bar"><div class="info-item"><span class="info-label">Hours</span><span>Mon&#x2013;Fri 8:00am &#x2013; 4:30pm</span></div><div class="info-item"><span class="info-label">Phone</span><span><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></span></div></div></div>
+<div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Your guide to local services, support, and resources in the Utica area</p>
+<div style="text-align:center;margin-top:.8rem"><div class="home-info-bar"><div class="info-item"><span class="info-label">Hours</span><span>Mon&#x2013;Fri 8:00am &#x2013; 4:30pm</span></div><div class="info-item"><span class="info-label">Phone</span><span><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></span></div></div></div></div>
 <div class="home-search"><input type="text" id="search-input" placeholder="Search all resources, services, phone numbers..." aria-label="Search resources" oninput="handleSearch()"></div>
 <div id="search-results" class="search-results" role="region" aria-label="Search results"></div>
 <div class="home-grid" id="home-grid"></div>
 <div id="no-results" class="no-results">No resources match your search.</div>
-<div class="home-nf"><h3>Not finding what you need?</h3><p>Please reach out to us by phone or in person. We&#x2019;re here to support you.</p><p style="margin-top:.3rem"><a href="http://211midyork.com">United Way 211</a> &middot; <a href="http://nyconnects.ny.gov">NY Connects</a> &middot; <a href="http://oneidacountysoc.com">Oneida County System of Care</a></p></div>
-<footer class="home-ft"><div class="home-ft-inner"><div class="footer-offices"><div class="footer-office"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-office"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-office"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div></div><div class="footer-contact"><div class="phone"><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></div><div>Fax: 315-733-7105</div></div></div><div class="home-ft-bottom">Community Health &amp; Behavioral Services &middot; A Division of Upstate Caring Partners</div></footer>
+<div class="home-nf"><div class="nf-icon">&#x1F4DE;</div><div class="nf-body"><h3>Not finding what you need?</h3><p>Please reach out to us by phone or in person. We&#x2019;re here to support you.</p><div class="nf-links"><a href="http://211midyork.com">United Way 211</a><a href="http://nyconnects.ny.gov">NY Connects</a> <span style="color:var(--g400)">1-800-342-9871</span><a href="http://oneidacountysoc.com">Oneida County System of Care</a> <span style="color:var(--g400)">315-768-3660</span></div></div></div>
+<footer class="home-ft"><div class="home-ft-inner"><div class="footer-offices"><div class="footer-office"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-office"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-office"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div></div><div class="footer-contact"><div class="phone"><a href="tel:3157988868">315-798-8868</a></div><div style="opacity:.75">Fax: 315-733-7105</div><div class="footer-crisis"><h4>Crisis Stabilization Center</h4><p style="opacity:.8">1002 Oswego St., Utica NY 13502</p><p><b>24/7/365</b> &#x2014; <a href="tel:3155207802" style="color:var(--gl);text-decoration:none">315-520-7802</a></p></div></div></div><div class="home-ft-bottom">Community Health &amp; Behavioral Services &middot; A Division of Upstate Caring Partners</div></footer>
 </div><div id="sheet-container" role="region" aria-label="Resource details"></div>
 </main>
 <script>
@@ -1742,13 +2001,16 @@ function buildIndex(){
     if(!sh.pages||!sh.pages.length)continue;
     var st='live';var icon='';DATA.home.forEach(function(e){if(slugify(e.sheetName)===slug){icon=e.icon||'';st=e.status||'live'}});
     if(st==='pending'||st==='in-progress')continue;
+    var hasContent=sh.pages.some(function(p){return p.blocks&&p.blocks.length>0});
+    if(!hasContent)continue;
+    idx.push({text:sh.title.toLowerCase(),name:sh.title,detail:'Resource Sheet',sheet:slug,sheetTitle:sh.title,icon:icon,type:'sheet',pri:0});
     sh.pages.forEach(function(pg){
       (pg.blocks||[]).forEach(function(b){
-        if(b.type==='FAQ'&&b.q){idx.push({text:(b.q+' '+(b.a||'')).toLowerCase(),name:b.q,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info'})}
-        if(b.type==='CALLOUT'&&b.title){idx.push({text:(b.title+' '+(b.text||'')).toLowerCase(),name:b.title,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info'})}
+        if(b.type==='FAQ'&&b.q){idx.push({text:(sh.title+' '+b.q+' '+(b.a||'')).toLowerCase(),name:b.q,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info',pri:1})}
+        if(b.type==='CALLOUT'&&b.title){idx.push({text:(sh.title+' '+b.title+' '+(b.text||'')).toLowerCase(),name:b.title,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info',pri:1})}
         if(b.type==='SECTION'){
           (b.r||[]).forEach(function(r){
-            idx.push({text:[r.n,r.s,r.p,r.a,r.c,r.h,r.w].filter(Boolean).join(' ').toLowerCase(),name:r.n||'',detail:[r.s,r.p,r.a].filter(Boolean).join(' \\u00b7 '),sheet:slug,sheetTitle:sh.title,icon:icon,type:'resource'})
+            idx.push({text:[sh.title,r.n,r.s,r.p,r.a,r.c,r.h,r.w].filter(Boolean).join(' ').toLowerCase(),name:r.n||'',detail:[r.s,r.p,r.a].filter(Boolean).join(' \\u00b7 '),sheet:slug,sheetTitle:sh.title,icon:icon,type:'resource',pri:2})
           })
         }
       })
@@ -1771,11 +2033,19 @@ function handleSearch(){
   grid.style.display='none';if(nf)nf.style.display='none';
   var words=q.split(/\\s+/);
   var matches=SEARCH_INDEX.filter(function(item){return words.every(function(w){return item.text.indexOf(w)>-1})});
+  matches.sort(function(a,b){return(a.pri||2)-(b.pri||2)});
+  var seen={};
+  var deduped=[];
+  matches.forEach(function(m){
+    if(m.type==='sheet'){var k='sheet:'+m.sheet;if(seen[k])return;seen[k]=1}
+    deduped.push(m);
+  });
+  matches=deduped;
   if(matches.length===0){nr.style.display='block';sr.className='search-results';sr.innerHTML='';return}
   nr.style.display='none';
   var html='<div class="search-count">'+matches.length+' result'+(matches.length!==1?'s':'')+' found</div>';
   matches.slice(0,30).forEach(function(m){
-    html+='<a class="search-result" href="#/'+m.sheet+'"><div class="result-name">'+esc(m.name)+'</div>'+(m.detail?'<div class="result-detail">'+esc(m.detail)+'</div>':'')+'<span class="result-sheet">'+m.icon+' '+esc(m.sheetTitle)+'</span></a>';
+    html+='<a class="search-result" href="#/'+m.sheet+'"'+(m.type==='sheet'?' style="border-left:3px solid var(--gd)"':'')+'><div class="result-name">'+esc(m.name)+'</div>'+(m.detail?'<div class="result-detail">'+esc(m.detail)+'</div>':'')+'<span class="result-sheet">'+m.icon+' '+esc(m.sheetTitle)+'</span></a>';
   });
   if(matches.length>30)html+='<div class="search-count">Showing first 30 of '+matches.length+' results. Try a more specific search.</div>';
   sr.innerHTML=html;sr.className='search-results active';
@@ -1836,6 +2106,11 @@ function handleRoute(){var h=location.hash.replace('#/','');if(h&&DATA.sheets[h]
 window.addEventListener('popstate',handleRoute);
 if(location.hash&&location.hash.length>2)handleRoute();
 <`+`/script></body></html>`;
+  return html;
+}
+
+function exportHTML(){
+  const html=generatePublishedHTML();
   const blob=new Blob([html],{type:'text/html'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chbs-resource-hub.html';a.click();
   toast('Published HTML exported!');
@@ -1882,7 +2157,13 @@ const _origSync=syncSheetFromBlocks;
 syncSheetFromBlocks=function(slug){_origSync(slug);scheduleAutosave()};
 
 // Check for autosaved data (called after password gate opens)
-function checkAutoRecover(){
+async function checkAutoRecover(){
+  // First try GitHub auto-load if token exists
+  if(ghToken){
+    const loaded=await ghAutoLoad();
+    if(loaded)return;
+  }
+  // Fall back to local auto-recover
   const saved=localStorage.getItem(AUTOSAVE_KEY);
   if(saved){
     try{
@@ -1898,6 +2179,7 @@ function checkAutoRecover(){
 // INIT — show welcome screen (no embedded data)
 // ===================================================================
 setupDropZone();
+if(ghToken)updateGhStatus('connected');
 </script>
 </div><!-- /editor-content -->
 <script>
