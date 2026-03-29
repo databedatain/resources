@@ -1576,8 +1576,10 @@ function exportHTML(){
 .sheet-nav a{color:var(--bm);text-decoration:none;font-weight:600;font-size:.9rem;cursor:pointer}.sheet-nav a:hover{text-decoration:underline}
 .sheet-nav .print-btn{padding:.5rem 1.4rem;border:2px solid var(--bd);background:var(--bd);border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--wh);transition:all .15s}
 .sheet-nav .print-btn:hover{background:var(--bm);border-color:var(--bm)}
-#sheet-container{max-width:1400px;margin:0 auto;padding:0 1rem 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:0 1.5rem}
-.sheet-nav{grid-column:1/-1}
+#sheet-container{max-width:900px;margin:0 auto;padding:0 1rem 2rem}
+#sheet-container.multi-page{max-width:1600px}
+.pages-row{display:flex;gap:1.5rem}
+.pages-row .page-wrapper{flex:1;min-width:0}
 .page-wrapper{margin:1rem 0}
 .print-page{background:var(--wh);border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);display:flex;flex-direction:column;overflow:visible}
 .page-header{background:var(--bd);color:var(--wh);text-align:center;padding:.75rem 1.5rem;flex-shrink:0;position:relative;border-radius:10px 10px 0 0}
@@ -1626,9 +1628,9 @@ function exportHTML(){
 .not-finding-bar{background:var(--g50);border-top:1px solid var(--g100);padding:.6rem 1.5rem;display:flex;align-items:center;gap:12px;flex-shrink:0;border-radius:0 0 10px 10px}
 .not-finding-bar h4{font-size:.82rem;font-weight:700;color:var(--bd);display:inline-block;white-space:nowrap;margin:0}
 .not-finding-bar p{font-size:.78rem;color:var(--g500);margin:0}.not-finding-bar a{color:var(--bm);text-decoration:none;font-weight:600}
-@media(max-width:900px){#sheet-container{grid-template-columns:1fr}.page-body.two-col{grid-template-columns:1fr}.page-footer{flex-direction:column}.footer-group{width:100%}.sheet-nav{padding:.6rem 1rem}}
+@media(max-width:900px){.pages-row{flex-direction:column}.page-body.two-col{grid-template-columns:1fr}.page-footer{flex-direction:column}.footer-group{width:100%}.sheet-nav{padding:.6rem 1rem}}
 @media print{body{background:white}.home-page,.sheet-nav,.crisis-banner{display:none!important}
-#sheet-container{display:block;max-width:none;padding:0}
+#sheet-container{max-width:none;padding:0}.pages-row{display:block}
 .page-wrapper{margin:0;width:100%}
 .print-page{margin:0;box-shadow:none;border-radius:0;width:8.5in;min-height:11in;max-height:11in;overflow:hidden;page-break-after:always}
 .page-header{border-radius:0;padding:.18in .4in .15in}.page-header h1{font-size:22pt}
@@ -1680,7 +1682,10 @@ function renderHome(){
 function showSheet(k){
   document.getElementById('home-page').classList.remove('active');
   var sh=DATA.sheets[k],sc=document.getElementById('sheet-container');
-  sc.innerHTML='<div class="sheet-nav"><a onclick="goHome()">&#x2190; Back to Resource Hub</a><button class="print-btn" onclick="window.print()">Print / Save PDF</button></div>'+sh.pages.map(function(pg,i){return renderPage(sh,pg,i)}).join('');
+  var multi=sh.pages.length>1;
+  sc.className=multi?'multi-page':'';
+  var pagesHTML=sh.pages.map(function(pg,i){return renderPage(sh,pg,i)}).join('');
+  sc.innerHTML='<div class="sheet-nav"><a onclick="goHome()">&#x2190; Back to Resource Hub</a><button class="print-btn" onclick="window.print()">Print / Save PDF</button></div>'+(multi?'<div class="pages-row">'+pagesHTML+'</div>':pagesHTML);
   window.scrollTo(0,0);
 }
 function goHome(){document.getElementById('home-page').classList.add('active');document.getElementById('sheet-container').innerHTML='';window.scrollTo(0,0)}
