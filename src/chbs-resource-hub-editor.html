@@ -1617,7 +1617,7 @@ function exportHTML(){
 .resource-column{overflow:hidden}
 .section-hdr{background:var(--bd);color:var(--wh)!important;padding:.4rem .85rem;border-radius:5px;font-weight:700;font-size:.92rem!important;margin-bottom:.5rem;margin-top:.75rem;text-align:center}
 .section-hdr:first-child{margin-top:0}
-.res-entry{padding:.5rem 0;border-bottom:1px solid var(--g100)}.res-entry:last-child{border-bottom:none}
+.res-entry{padding:.6rem .5rem;border-bottom:1px solid var(--g100);border-radius:4px;transition:background .1s}.res-entry:hover{background:var(--g50)}.res-entry:last-child{border-bottom:none}
 .res-name{font-weight:700;font-size:.95rem;color:var(--g900);line-height:1.3}
 .res-svc{font-size:.82rem;color:var(--g500);font-style:italic;line-height:1.3}
 .res-hours{font-size:.82rem;color:var(--g500);line-height:1.3}
@@ -1633,9 +1633,20 @@ function exportHTML(){
 .not-finding-bar{background:var(--g50);border-top:1px solid var(--g100);padding:.6rem 1.5rem;display:flex;align-items:center;gap:12px;flex-shrink:0;border-radius:0 0 10px 10px}
 .not-finding-bar h4{font-size:.82rem;font-weight:700;color:var(--bd);display:inline-block;white-space:nowrap;margin:0}
 .not-finding-bar p{font-size:.78rem;color:var(--g500);margin:0}.not-finding-bar a{color:var(--bm);text-decoration:none;font-weight:600}
+.skip-link{position:absolute;top:-50px;left:0;background:var(--bd);color:var(--wh);padding:.5rem 1rem;z-index:200;font-weight:700;text-decoration:none;transition:top .15s}.skip-link:focus{top:0}
+.home-search{max-width:800px;margin:.8rem auto 0;padding:0 1.5rem}
+.home-search input{width:100%;padding:.55rem 1rem;border:2px solid var(--g200);border-radius:8px;font-size:.88rem;font-family:inherit;outline:none;background:var(--wh);transition:border-color .15s}
+.home-search input:focus{border-color:var(--bm);box-shadow:0 0 0 3px rgba(46,100,148,.15)}
+.home-search input::placeholder{color:var(--g400)}
+.no-results{text-align:center;padding:2rem 1rem;color:var(--g500);font-size:.9rem;grid-column:1/-1;display:none}
+.pages-row .page-wrapper:not(:first-child) .page-header{display:none}
+.pages-row .page-wrapper:not(:first-child) .print-page{border-top:2px solid var(--g200)}
 @media(max-width:900px){.pages-row{flex-direction:column}.pages-row .page-footer{display:flex}.shared-footer{display:none}.page-body.two-col{grid-template-columns:1fr}.page-footer{flex-direction:column}.footer-group{width:100%}.sheet-nav{padding:.6rem 1rem}}
 @media print{body{background:white}.home-page,.sheet-nav,.crisis-banner{display:none!important}
 #sheet-container{max-width:none;padding:0}.pages-row{display:block}.pages-row .page-footer{display:flex}.shared-footer{display:none}
+.skip-link,.home-search,.no-results{display:none!important}
+.pages-row .page-wrapper:not(:first-child) .page-header{display:block}
+.pages-row .page-wrapper:not(:first-child) .print-page{border-top:none}
 .page-wrapper{margin:0;width:100%}
 .print-page{margin:0;box-shadow:none;border-radius:0;width:8.5in;min-height:11in;max-height:11in;overflow:hidden;page-break-after:always}
 .page-header{border-radius:0;padding:.18in .4in .15in}.page-header h1{font-size:22pt}
@@ -1660,14 +1671,19 @@ function exportHTML(){
 .not-finding-bar{border-radius:0;padding:.04in .35in;gap:8px}.not-finding-bar h4{font-size:7pt}.not-finding-bar p{font-size:6.5pt}
 @page{size:letter;margin:0}}
 </style></head><body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<div class="crisis-banner" role="alert">Experiencing a mental health crisis? Call MCAT at <a href="tel:3157326228">315-732-6228</a> for immediate assistance (24/7).</div>
+<main id="main-content">
 <div id="home-page" class="home-page active">
 <div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Resources for Utica and surrounding areas</p>
-<div class="home-info-bar"><div class="info-item"><span class="info-label">Hours</span><span>Mon&#x2013;Fri 8:00am &#x2013; 4:30pm</span></div><div class="info-item"><span class="info-label">Phone</span><span>315-798-8868</span></div></div></div>
+<div class="home-info-bar"><div class="info-item"><span class="info-label">Hours</span><span>Mon&#x2013;Fri 8:00am &#x2013; 4:30pm</span></div><div class="info-item"><span class="info-label">Phone</span><span><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></span></div></div></div>
+<div class="home-search"><input type="text" id="search-input" placeholder="Search resources..." aria-label="Search resources" oninput="filterCards()"></div>
 <div class="home-grid" id="home-grid"></div>
+<div id="no-results" class="no-results">No resources match your search.</div>
 <div class="home-nf"><h3>Not finding what you need?</h3><p>Please reach out to us by phone or in person. We&#x2019;re here to support you.</p><p style="margin-top:.3rem"><a href="http://211midyork.com">United Way 211</a> &middot; <a href="http://nyconnects.ny.gov">NY Connects</a> &middot; <a href="http://oneidacountysoc.com">Oneida County System of Care</a></p></div>
-<div class="crisis-banner">Experiencing a mental health crisis after-hours? Call MCAT at <a href="tel:3157326228">315-732-6228</a> for immediate assistance.</div>
-<footer class="home-ft"><div class="home-ft-inner"><div class="footer-offices"><div class="footer-office"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-office"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-office"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div></div><div class="footer-contact"><div class="phone">315-798-8868</div><div>Fax: 315-733-7105</div></div></div><div class="home-ft-bottom">Community Health &amp; Behavioral Services &middot; A Division of Upstate Caring Partners</div></footer>
-</div><div id="sheet-container"></div>
+<footer class="home-ft"><div class="home-ft-inner"><div class="footer-offices"><div class="footer-office"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-office"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-office"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div></div><div class="footer-contact"><div class="phone"><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></div><div>Fax: 315-733-7105</div></div></div><div class="home-ft-bottom">Community Health &amp; Behavioral Services &middot; A Division of Upstate Caring Partners</div></footer>
+</div><div id="sheet-container" role="region" aria-label="Resource details"></div>
+</main>
 <script>
 var DATA=`+dj+`;
 function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
@@ -1678,23 +1694,41 @@ function renderHome(){
     var slug=slugify(e.sheetName),sh=DATA.sheets[slug];
     var has=sh&&sh.pages&&sh.pages.length>0&&sh.pages.some(function(p){return p.blocks&&p.blocks.length>0});
     if(!has&&e.status!=='coming-soon')return;
-    var c=document.createElement('a');c.className='home-card'+(e.status==='coming-soon'?' coming-soon':'');c.href='#';
+    var c=document.createElement('a');c.className='home-card'+(e.status==='coming-soon'?' coming-soon':'');
+    if(e.status!=='coming-soon'&&has){c.href='#/'+slug}else{c.href='#';c.addEventListener('click',function(ev){ev.preventDefault()})}
     c.innerHTML='<div class="card-icon">'+(e.icon||'')+'</div><div class="card-title">'+e.title+'</div>';
-    if(e.status!=='coming-soon'&&has)(function(s){c.addEventListener('click',function(ev){ev.preventDefault();showSheet(s)})})(slug);else{c.addEventListener('click',function(ev){ev.preventDefault()})}
     g.appendChild(c);
   });
 }
+function filterCards(){
+  var q=document.getElementById('search-input').value.toLowerCase();
+  var cards=document.querySelectorAll('.home-card');
+  var any=false;
+  cards.forEach(function(c){var t=c.querySelector('.card-title').textContent.toLowerCase();var show=!q||t.indexOf(q)>-1;c.style.display=show?'':'none';if(show)any=true});
+  var nr=document.getElementById('no-results');if(nr)nr.style.display=any?'none':'block';
+}
 function showSheet(k){
+  if(!DATA.sheets[k])return;
+  if(location.hash!=='#/'+k)history.pushState(null,null,'#/'+k);
   document.getElementById('home-page').classList.remove('active');
   var sh=DATA.sheets[k],sc=document.getElementById('sheet-container');
   var multi=sh.pages.length>1;
   sc.className=multi?'multi-page':'';
   var pagesHTML=sh.pages.map(function(pg,i){return renderPage(sh,pg,i)}).join('');
   var sharedFt=multi?'<div class="shared-footer"><div class="footer-group"><div class="footer-col"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-col"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-col"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div><div class="footer-col"><p>Call: <a href="tel:3157988868" style="color:var(--wh)">315-798-8868</a><br>Fax: 315-733-7105</p></div></div><div class="footer-group"><div class="footer-col"><h4>Crisis Stabilization Center</h4><p>1002 Oswego St.<br>Utica NY, 13502</p></div><div class="footer-col"><p><b>24/7/365</b><br>Call: <a href="tel:3155207802" style="color:var(--wh)">315-520-7802</a></p></div></div></div>':'';
-  sc.innerHTML='<div class="sheet-nav"><a onclick="goHome()">&#x2190; Back to Resource Hub</a><button class="print-btn" onclick="window.print()">Print / Save PDF</button></div>'+(multi?'<div class="pages-row">'+pagesHTML+'</div>'+sharedFt:pagesHTML);
+  sc.innerHTML='<nav class="sheet-nav" role="navigation" aria-label="Sheet navigation"><a href="#/" aria-label="Back to Resource Hub">&#x2190; Back to Resource Hub</a><button class="print-btn" onclick="window.print()" aria-label="Print or save as PDF">Print / Save PDF</button></nav>'+(multi?'<div class="pages-row">'+pagesHTML+'</div>'+sharedFt:pagesHTML);
   window.scrollTo(0,0);
+  document.title='CHBS Resource Hub \\u2013 '+sh.title;
 }
-function goHome(){document.getElementById('home-page').classList.add('active');document.getElementById('sheet-container').innerHTML='';window.scrollTo(0,0)}
+function goHome(){
+  if(location.hash)history.pushState(null,null,location.pathname+location.search);
+  document.getElementById('home-page').classList.add('active');
+  document.getElementById('sheet-container').innerHTML='';
+  document.getElementById('sheet-container').className='';
+  window.scrollTo(0,0);
+  document.title='CHBS Resource Hub';
+  var si=document.getElementById('search-input');if(si){si.value='';filterCards()}
+}
 function renderPage(sh,pg,idx){
   var blocks=pg.blocks||[];
   var cols=[[]],nfBlock=false;
@@ -1723,6 +1757,9 @@ function faqFB(text){if(!text)return'';var lines=text.split('\\n'),html='',inL=f
 function phoneLink(p){var digits=p.replace(/[^0-9]/g,'');return digits.length>=10?'<a class="ph" href="tel:'+digits+'">\uD83D\uDCDE '+esc(p)+'</a>':'<span class="ph">\uD83D\uDCDE '+esc(p)+'</span>'}
 function renderEntry(r){var ct=[];if(r.p)ct.push(phoneLink(r.p));if(r.t)ct.push('<span class="tx">\uD83D\uDCAC '+esc(r.t)+'</span>');if(r.w)ct.push('<a class="ws" href="'+(r.w.indexOf('http')===0?r.w:'https://'+r.w)+'" target="_blank">\uD83C\uDF10 '+esc(r.w)+'</a>');var addr=r.a?'<div class="res-addr">\uD83D\uDCCD '+esc(r.a)+(r.c?' | '+esc(r.c):'')+'</div>':'';var hrs=r.h?'<div class="res-hours">'+esc(r.h)+'</div>':'';return '<div class="res-entry"><div class="res-name">'+esc(r.n)+'</div>'+(r.s?'<div class="res-svc">'+esc(r.s)+'</div>':'')+hrs+addr+(ct.length?'<div class="res-contact">'+ct.join(' ')+'</div>':'')+'</div>'}
 renderHome();
+function handleRoute(){var h=location.hash.replace('#/','');if(h&&DATA.sheets[h]){showSheet(h)}else{goHome()}}
+window.addEventListener('popstate',handleRoute);
+if(location.hash&&location.hash.length>2)handleRoute();
 <`+`/script></body></html>`;
   const blob=new Blob([html],{type:'text/html'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chbs-resource-hub.html';a.click();
