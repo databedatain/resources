@@ -71,6 +71,24 @@
       "title": "Renter Tenant Rights",
       "icon": "<img src=\"data:image/png;base64,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\" style=\"width:28px;height:28px;object-fit:contain\">",
       "status": "live"
+    },
+    {
+      "sheetName": "Child Care",
+      "title": "Child Care",
+      "icon": "📄",
+      "status": "live"
+    },
+    {
+      "sheetName": "Transportation",
+      "title": "Transportation",
+      "icon": "📄",
+      "status": "live"
+    },
+    {
+      "sheetName": "LGBTQIA+",
+      "title": "LGBTQIA+",
+      "icon": "📄",
+      "status": "live"
     }
   ],
   "sheets": {
@@ -1409,7 +1427,8 @@
                   "h": "Mon-Fri 8:00 am-4:30 pm"
                 }
               ],
-              "spacing": 0
+              "spacing": 0,
+              "newCol": true
             },
             {
               "type": "SECTION",
@@ -1488,7 +1507,7 @@
               ],
               "spacing": 0,
               "newPage": false,
-              "newCol": true
+              "newCol": false
             },
             {
               "type": "NOTFINDING"
@@ -2755,10 +2774,12 @@
             },
             {
               "type": "FAQ",
-              "q": "Best Tips for Cleanliness at Home",
-              "a": "Tidy up as you go, rather than putting it off.\nClean the kitchen each night before going to bed.\nDo laundry throughout the week to keep it from piling up.\nDonate things you don't need anymore.\n\nDaily Cleaning: Make your bed, Clean dirty dishes, Vacuum or sweep floors, Dust hard surfaces, Disinfect countertops, Disinfect kitchen sink, Laundry.\n\nWeekly Cleaning: Change your bedding, Throw out expired food, Disinfect doorknobs/light switches/remotes, Clean your mirrors, Vacuum floors and furniture, Clean toilets, Scrub bathroom floors, Scrub stovetop, Wipe down cabinets and appliances, Clean the microwave, Scrub showers/tubs.\n\n2x a Month Cleaning: Clean the blinds/drapes/curtains, Dust and wipe down light fixtures/fans/vents, Wipe down baseboards, Shake out rugs, Scrub any grout/tile, Polish stainless steel appliances, Clean refrigerator and freezer interiors, Clean and descale your coffee maker.\n\n2x a Year Cleaning: Clean inside of oven, Wash and dry stove hood filter, Vacuum mattress, Wash or replace pillows, Empty and clean cabinets and pantry shelves.\n\nYearly Cleaning: Clean behind and underneath all your furniture and large appliances, Deep clean doors and wipe down walls, Wash window screens and deep clean the windows, Clean dryer duct, Deep clean carpet and upholstery (or hire a professional), Clean gutters (or hire a professional).",
-              "aHTML": "",
-              "spacing": 0
+              "q": "Tips for Keeping Your Space Clean",
+              "a": "\nA clean home can help you feel better and stay healthy. You don't have to do it all at once. Pick what you can, when you can.\n\nA Few Habits That Help\n\nTry to clean up a little as you go — it adds up. Washing dishes before bed keeps the kitchen from getting overwhelming. If laundry piles up, try doing a small load when you can. If you have things you don't use, donating them can free up space.\n\nEvery Day (or Most Days)\n\nWash dirty dishes, wipe down counters and the kitchen sink, sweep or vacuum floors you use the most, and put a load of laundry in if needed.\n\nOnce a Week\n\nChange your sheets, throw out old food, wipe down doorknobs and light switches, clean mirrors, vacuum floors and furniture, clean the toilet and bathroom floor, wipe down the stove and kitchen appliances, and scrub the shower or tub.\n\nA Couple Times a Year\n\nWipe down blinds, curtains, vents, light fixtures, and fans. Clean baseboards, shake out rugs, scrub tile or grout, clean inside the fridge and freezer, and clean your coffee maker if you have one.\n\nOnce a Year (When You Can)\n\nClean behind and under big furniture and appliances. Wipe down doors and walls. Clean windows and screens. Clean out the dryer vent. If you're able to, deep clean carpets and upholstery — or ask about getting help with it.",
+              "aHTML": "<p></p><!--StartFragment--><p><span style=\"font-size: 0.82rem;\">A clean home can help you feel better and stay healthy. You don't have to do it all at once. Pick what you can, when you can.</span></p>\n<p><strong>A Few Habits That Help</strong></p>\n<p>Try to clean up a little as you go — it adds up. Washing dishes before bed keeps the kitchen from getting overwhelming. If laundry piles up, try doing a small load when you can. If you have things you don't use, donating them can free up space.</p>\n<p><strong>Every Day (or Most Days)</strong></p>\n<p>Wash dirty dishes, wipe down counters and the kitchen sink, sweep or vacuum floors you use the most, and put a load of laundry in if needed.</p>\n<p><strong>Once a Week</strong></p>\n<p>Change your sheets, throw out old food, wipe down doorknobs and light switches, clean mirrors, vacuum floors and furniture, clean the toilet and bathroom floor, wipe down the stove and kitchen appliances, and scrub the shower or tub.</p>\n<p><strong>A Couple Times a Year</strong></p>\n<p>Wipe down blinds, curtains, vents, light fixtures, and fans. Clean baseboards, shake out rugs, scrub tile or grout, clean inside the fridge and freezer, and clean your coffee maker if you have one.</p>\n<p><strong>Once a Year (When You Can)</strong></p>\n<p>Clean behind and under big furniture and appliances. Wipe down doors and walls. Clean windows and screens. Clean out the dryer vent. If you're able to, deep clean carpets and upholstery — or ask about getting help with it.</p><!--EndFragment--><!--EndFragment-->",
+              "spacing": 0,
+              "newCol": false,
+              "headerStyle": "banner"
             },
             {
               "type": "SECTION",
@@ -2792,7 +2813,509 @@
                 }
               ],
               "spacing": 0,
-              "newCol": false
+              "newCol": true
+            },
+            {
+              "type": "NOTFINDING"
+            }
+          ]
+        }
+      ]
+    },
+    "child-care": {
+      "title": "Child Care",
+      "icon": "📄",
+      "status": "live",
+      "pages": [
+        {
+          "blocks": [
+            {
+              "type": "FAQ",
+              "q": "Why is access to child care important?",
+              "a": "Access to child care is important because it helps children develop, supports families, and strengthens the economy. Ensuring access to child care and early schooling helps children develop skills for school and life, and it can improve their health and well-being.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "What services can these community resources provide?",
+              "a": "Education and Supports to Parents and Families\nAccess to Child Care\nSupport in Navigating Resources\nBridging Gaps to Child Care Needs",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "CALLOUT",
+              "title": "Where do I start?",
+              "text": "Call an office near you and ask:\n\"I could use some help figuring out what childcare services are available.\" The Agency staff will gather some more info to better match you with the right people and programs to continue with support.\n\nSpeak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.",
+              "spacing": 0
+            },
+            {
+              "type": "SECTION",
+              "title": "Oneida and Herkimer Counties",
+              "r": [
+                {
+                  "n": "After School Programs",
+                  "p": "315-733-7768",
+                  "a": "110 Lomond Court",
+                  "c": "Utica NY 13502"
+                },
+                {
+                  "n": "Child Care Council of Cooperative Extension",
+                  "s": "Services Herkimer, Oneida, and Madison Counties",
+                  "p": "1-888-814-KIDS (5497)\n315-738-9773",
+                  "a": "1119 Elm St.",
+                  "c": "Utica, NY 13501"
+                },
+                {
+                  "n": "Child Care Center",
+                  "p": "315-798-4748",
+                  "a": "2150 Bleecker St.",
+                  "c": "Utica NY 13501",
+                  "h": "Eligibility: Ages 8 weeks - 5 years."
+                },
+                {
+                  "n": "Cornerstone DayCare Location",
+                  "p": "315-624-9930",
+                  "a": "1100 Miller St.",
+                  "c": "Utica NY 13501"
+                },
+                {
+                  "n": "Day Care/School Age Child Care - WIC Program (Utica)",
+                  "p": "315-272-2760",
+                  "a": "624 Elizabeth St.",
+                  "c": "Utica NY 13501"
+                },
+                {
+                  "n": "Day Care Registration",
+                  "s": "Registers and assists individuals who wish to provide registered family day care or school-age childcare services under contract to OCDSS.",
+                  "p": "315-272-2630",
+                  "a": "612 Elizabeth St.",
+                  "c": "Utica NY 13501"
+                },
+                {
+                  "n": "Donn T. King Children's Center at Rome Family Court",
+                  "p": "315-272-2600",
+                  "a": "301 W Dominick St.",
+                  "c": "Rome NY 13440"
+                },
+                {
+                  "n": "Eleanor Walsh Wertimer Children's Center at Utica Family Court",
+                  "p": "315-272-2600",
+                  "a": "200 Elizabeth St.",
+                  "c": "Utica NY 13501"
+                },
+                {
+                  "n": "Family Support Services/Recreation Respite Program (DDSO)",
+                  "s": "Provides developmentally disabled youth with a safe and educational environment after school, on weekends, and during school breaks.",
+                  "p": "315-624-9930",
+                  "a": "203 West Liberty St.",
+                  "c": "Rome NY 13440"
+                },
+                {
+                  "n": "Genesee Street Children's Center",
+                  "p": "315-525-1576 (leave a message)",
+                  "a": "2631 Genesee St",
+                  "c": "Utica, NY 13501"
+                }
+              ],
+              "spacing": 0
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "type": "SECTION",
+              "title": "Oneida and Herkimer Counties Continued",
+              "r": [
+                {
+                  "n": "Griffiss DayCare Location",
+                  "p": "315-624-9930",
+                  "a": "276 Brooklyn Rd.",
+                  "c": "Rome NY 13440"
+                },
+                {
+                  "n": "Healthy Families Program of Oneida County",
+                  "s": "Parenting skills, child development, self-care, home safety.",
+                  "p": "315-792-9039",
+                  "a": "106 Memorial Parkway",
+                  "c": "Utica NY 13501"
+                },
+                {
+                  "n": "Healthy Families Program of Herkimer County",
+                  "s": "Provide in home services to new and expecting parents in Herkimer County. Family Support Specialists work with families to ensure they raise happy, healthy children that are prepared to enter kindergarten.",
+                  "p": "315-867-1176 (ask for Healthy Families Program)",
+                  "a": "301 North Washington St.",
+                  "c": "Herkimer NY 13350"
+                },
+                {
+                  "n": "HEARS Family Line (Help, Empower, Advocate, Reassure and Support)",
+                  "s": "Guides families to services including food, clothing, housing, medical and behavioral health care services, parenting, education, and child care",
+                  "p": "1-888-55HEARS (1-888-554-3277)"
+                },
+                {
+                  "n": "Herkimer DayCare Location",
+                  "p": "315-624-9930",
+                  "a": "310 John Ave.",
+                  "c": "Herkimer NY 13350"
+                },
+                {
+                  "n": "Junior Junction",
+                  "p": "315-734-3017",
+                  "a": "2215 Genesee St.",
+                  "c": "Utica, NY 13501"
+                },
+                {
+                  "n": "Mohawk Valley Community Action (Head Start)",
+                  "s": "Ages of 3 and 5 in Oneida, Herkimer, and Madison County",
+                  "p": "315-624-9930",
+                  "a": "9882 River Rd.",
+                  "c": "Utica NY 13502"
+                },
+                {
+                  "n": "Mohawk Valley Perinatal Network",
+                  "s": "Offers training, education, community connections, and accessibility to care for women, children and families",
+                  "p": "315-732-4657",
+                  "a": "3 Parkside Ct building 2",
+                  "c": "Utica, NY 13501"
+                },
+                {
+                  "n": "New Discoveries Learning Center - UCP",
+                  "s": "Programs for children 3 to 5 years old.",
+                  "p": "315-798-4086 Ext. 2321",
+                  "a": "Utica Campus: 1601 Armory Drive, Bldg. B",
+                  "c": "Utica, NY 13501"
+                },
+                {
+                  "n": "New Discoveries Learning Center - UCP (Rome)",
+                  "s": "Programs for children 3 to 5 years old.",
+                  "p": "315-533-1150 Ext. 2518",
+                  "a": "Rome Campus: 130 Brookley Rd.",
+                  "c": "Rome, New York 13441"
+                },
+                {
+                  "n": "Oneida Area Daycare Center",
+                  "s": "Eligibility: Birth to age 12.\nServices: Herkimer, Madison, Oneida counties. Utica, Rome, City of Oneida and Oneida City School District.",
+                  "p": "315-363-0080",
+                  "a": "447 Sayles St.",
+                  "c": "Oneida NY 13421"
+                },
+                {
+                  "n": "Oneida County Daycare Assistance",
+                  "p": "315-798-5015 for those who receive Temporary Assistance\n315-266-6191 for those who do not receive Temporary Assistance",
+                  "a": "800 Park Ave.",
+                  "c": "Utica, NY 13502"
+                },
+                {
+                  "n": "R4K (Ready for Kindergarten)",
+                  "s": "Herkimer and Oneida County",
+                  "p": "315-733-4691",
+                  "a": "258 Genesee St.",
+                  "c": "Utica, NY 13502"
+                },
+                {
+                  "n": "Thea Bowman Child Care",
+                  "s": "Eligibility: Children from 20 mo. to 12 years of age depending on the service, resident of Oneida County.",
+                  "p": "315-724-6388",
+                  "a": "309 Genesee St.",
+                  "c": "Utica NY 13501"
+                },
+                {
+                  "n": "YMCA of the Greater Tri-Valley",
+                  "s": "Youth and adult fitness and wellness programs, childcare and after school care, and other services to the community.",
+                  "p": "Rome Family YMCA: 315-336-3500\nOneida Family YMCA: 315-363-7788\nYMCA School Age Child Care: 315-797-4787",
+                  "w": "hleo@ymcatrivalley.org",
+                  "a": "301 West Bloomfield St.",
+                  "c": "Rome NY 13440"
+                }
+              ],
+              "spacing": 0,
+              "newPage": true
+            },
+            {
+              "type": "NOTFINDING"
+            }
+          ]
+        }
+      ]
+    },
+    "transportation": {
+      "title": "Transportation",
+      "icon": "📄",
+      "status": "live",
+      "pages": [
+        {
+          "blocks": [
+            {
+              "type": "FAQ",
+              "q": "What Kinds of Resources Are There?",
+              "a": "Individuals can access various forms of assistance for transportation based on their income.\nCENTRO Bus Half-Fare\nMedicaid Cab\nTransportation Vouchers\nReduced Fare Shuttles\nAssistance with repairs or fuel costs",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "Can I schedule my own Medicaid cab?",
+              "a": "Yes, You can schedule your own rides through MAS! All you need to do is create an enrollee account online and you will have access to schedule a ride with your preferred transportation provider.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "How do I schedule a Medicaid cab?",
+              "a": "Call the number listed above to schedule a ride, or go online to https://www.medanswering.com to fill out an enrollee application. You will need to have your Medicaid information on hand to complete registration.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "What can I do if I forgot to schedule a ride and have a doctors appointment today?",
+              "a": "Speak with any staff at CHBS. We will address any urgent needs as best we can, and do our best to get a same-day ride scheduled for you.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "CALLOUT",
+              "title": "CENTRO Bus Half-Fare",
+              "text": "These two ride services are supported throughout the community and used often.\n\nMAS Ride Services: 866-932-7740 — Non-emergency medical transportation to and from appointments. MCD only.\n\nCentro Bus Services: 15 Elizabeth St, Utica, NY 13501, (315) 442-3333 — Provides public transit within Oneida county. Discounted prices for certain individuals.",
+              "spacing": 0
+            },
+            {
+              "type": "SECTION",
+              "title": "Taxi/Livery Services",
+              "r": [
+                {
+                  "n": "Around The Clock Cab & Car Services",
+                  "s": "24/7 car and cab services - call or go online to schedule ride. Able to take you to the casino, airports, late night outings and more.",
+                  "p": "315-922-7711",
+                  "w": "www.utica-taxi.com",
+                  "a": "1001 Park Ave",
+                  "c": "Utica, NY"
+                },
+                {
+                  "n": "Bueno Express Transportation",
+                  "s": "Offers long-distance private transportation services for the Upstate, Central NY, and New York City area. Scan the QR code to download the app or call to schedule a ride.",
+                  "p": "315-797-1010",
+                  "w": "www.buenotransit.com",
+                  "a": "4 Hobart Street",
+                  "c": "Utica, NY"
+                }
+              ],
+              "spacing": 0
+            },
+            {
+              "type": "SECTION",
+              "title": "Bus Services",
+              "r": [
+                {
+                  "n": "Centro Bus Service - Oneida County",
+                  "p": "315-442-3400",
+                  "w": "www.centro.org",
+                  "a": "200 Cortland Avenue, PO Box 820",
+                  "c": "Syracuse, NY"
+                },
+                {
+                  "n": "Centro Call-A-Bus Paratransit Service",
+                  "s": "Offers ride services to individuals w/disabilities unable to ride on regular services. Must call 315-442-3400 to fill out application prior to scheduling ride.",
+                  "p": "315-442-3400 to reserve ride\n315-442-3434 to cancel ride",
+                  "a": "15 Elizabeth Street"
+                },
+                {
+                  "n": "Birnie Bus Services",
+                  "s": "Offers ride services to individuals living in rural places unable to access any other public transit. Certain individuals qualify for discounted fares. Call for more details.",
+                  "p": "315-797-4933",
+                  "w": "www.birniebus.com",
+                  "a": "1300 Floyd Ave",
+                  "c": "Rome, NY"
+                }
+              ],
+              "spacing": 0
+            },
+            {
+              "type": "SECTION",
+              "title": "Medical Ride Services",
+              "r": [
+                {
+                  "n": "Medical Answering Services, LLC.",
+                  "s": "Provides Medicaid transportation management. Arranges all non-emergency transportation for eligible Medicaid recipients traveling to Medicaid-covered services.",
+                  "p": "866-932-7740",
+                  "w": "www.medanswering.com",
+                  "a": "P.O. Box 12000",
+                  "c": "Syracuse, NY"
+                },
+                {
+                  "n": "Medical Transportation Program",
+                  "s": "Works with RSVP of Oneida County to provide non-emergency medical transportation for individuals without regular transportation.",
+                  "p": "315-798-5456",
+                  "w": "www.ocgov.net/ofa/Transportation",
+                  "a": "120 Airline Street, Suite 201",
+                  "c": "Oriskany NY 13424"
+                }
+              ],
+              "spacing": 0
+            },
+            {
+              "type": "NOTFINDING"
+            }
+          ]
+        }
+      ]
+    },
+    "lgbtqia": {
+      "title": "LGBTQIA+",
+      "icon": "📄",
+      "status": "live",
+      "pages": [
+        {
+          "blocks": [
+            {
+              "type": "FAQ",
+              "q": "What Does LGBTQIA+ Mean?",
+              "a": "LGBTQIA+ is an abbreviation for lesbian, gay, bisexual, transgender, queer or questioning, intersex, asexual, and more. These terms are used to describe a person's sexual orientation or gender identity.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "What is Sexual Orientation?",
+              "a": "Sexual orientation is about who you are attracted to and who you want to have relationships with. It can include being attracted to the same gender, a different gender, or multiple genders. Everyone's experience is unique, and it's a natural part of who you are.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "What is Gender Identity?",
+              "a": "Gender identity is a deeply personal sense of who you are as a person in terms of gender. It may be male, female, a blend of both, neither, or something else entirely. It may or may not match the sex you were assigned at birth. Your gender identity reflects how you feel inside and how you want to express yourself to the world.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "What is Gender-Affirming Care?",
+              "a": "Gender-affirming care is a supportive form of healthcare that respects and acknowledges a person's gender identity. It includes medical, psychological, and social services that help individuals transition and live as their true selves. This care is tailored to each person's needs and aims to improve their overall well-being and quality of life.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "What Does it Mean to be an Ally?",
+              "a": "Being an ally to the LGBTQIA+ community means standing up for equality, respect, and dignity for everyone, regardless of their sexual orientation or gender identity. It involves listening, learning, and offering support. Allies use their voices to challenge discrimination and promote inclusion, ensuring that all individuals feel safe, valued, and understood.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "FAQ",
+              "q": "How Can I Find an LGBTQIA+ Friendly Provider?",
+              "a": "Look for providers openly supporting the community on their websites. Seek recommendations from friends, community centers, online directories, and reviews. Call providers to inquire about their LGBTQIA+ care approach. You deserve a provider who respects and supports you.",
+              "aHTML": "",
+              "spacing": 0
+            },
+            {
+              "type": "SECTION",
+              "title": "LGBTQIA+ Centers",
+              "r": [
+                {
+                  "n": "Q Center - Utica",
+                  "s": "Safe Space for LGBTQ-IA+ Individuals & Their Families",
+                  "p": "315-475-2430",
+                  "w": "acrhealth.org",
+                  "a": "287 Genesee Street, 2nd floor",
+                  "c": "Utica"
+                },
+                {
+                  "n": "Q Center - Syracuse",
+                  "s": "Safe Space for LGBTQ-IA+ Individuals & Their Families",
+                  "p": "315-475-2430",
+                  "w": "acrhealth.org",
+                  "a": "617 West Genesee Street",
+                  "c": "Syracuse"
+                }
+              ],
+              "spacing": 0
+            },
+            {
+              "type": "SECTION",
+              "title": "LGBTQIA+ Hotlines",
+              "r": [
+                {
+                  "n": "The Trevor Project",
+                  "s": "24/7 Crisis Support",
+                  "p": "866-488-7386",
+                  "t": "\"START\" to 678-678",
+                  "w": "thetrevorproject.org"
+                },
+                {
+                  "n": "Suicide and Crisis Lifeline",
+                  "s": "24/7 Crisis Intervention, Safety Plan, Support, Referrals",
+                  "p": "988",
+                  "t": "988",
+                  "w": "988lifeline.org"
+                },
+                {
+                  "n": "National Runaway Safeline",
+                  "s": "24/7 Crisis Support",
+                  "p": "1-800-786-2929",
+                  "t": "1-800-786-2929",
+                  "w": "1800runaway.org"
+                },
+                {
+                  "n": "LGBT National Hotline",
+                  "s": "Peer Counseling, Information, & Resources",
+                  "p": "888-843-4564",
+                  "w": "lgbthotline.org",
+                  "h": "Monday-Friday 4PM-12AM, Saturday 12PM-5PM"
+                },
+                {
+                  "n": "LGBT National Coming Out Support Hotline",
+                  "s": "Peer Counseling, Information, & Resources",
+                  "p": "888-688-5428",
+                  "w": "lgbthotline.org",
+                  "h": "Monday-Friday 4PM-12AM, Saturday 12PM-5PM"
+                },
+                {
+                  "n": "Trans Lifeline",
+                  "s": "Transgender Peer Support",
+                  "p": "877-565-8860",
+                  "w": "translifeline.org",
+                  "h": "Monday-Friday 1PM-9PM"
+                },
+                {
+                  "n": "THRIVE Lifeline",
+                  "s": "24/7 Crisis Text Support",
+                  "t": "\"THRIVE\" to 313-662-8209",
+                  "w": "thrivelifeline.org"
+                }
+              ],
+              "spacing": 0
+            }
+          ]
+        },
+        {
+          "blocks": [
+            {
+              "type": "FAQ",
+              "q": "How Can I Keep Myself Safe Online?",
+              "a": "Keep yourself safe online with these tips:\nKeep personal information private\nBe cautious when clicking on links\nVerify online friends\nReport any suspicious or harmful behavior\nThink before you post\nRespect others and follow guidelines\nBe aware of scams\nSeek support if you feel unsafe or uncomfortable\nMake healthy choices & trust your instincts",
+              "aHTML": "",
+              "spacing": 0,
+              "newPage": true
+            },
+            {
+              "type": "SECTION",
+              "title": "Educational Courses",
+              "r": [
+                {
+                  "n": "The Safe Zone Project",
+                  "s": "Free or Donation-Based",
+                  "w": "thesafezoneproject.com"
+                },
+                {
+                  "n": "NFPA Training Institute",
+                  "s": "Free Courses for Foster Parents of LGBTQ-IA+ Children",
+                  "w": "nfpati.org"
+                }
+              ],
+              "spacing": 0
             },
             {
               "type": "NOTFINDING"
