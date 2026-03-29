@@ -52,8 +52,11 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .sheet-list-item .sli-info{flex:1;min-width:0}
 .sheet-list-item .sli-title{font-weight:700;font-size:.88rem}
 .sheet-list-item .sli-meta{font-size:.72rem;color:var(--g500)}
-.sheet-list-item .sli-status{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--success-light);color:var(--success)}
+.sheet-list-item .sli-status{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--success-light);color:var(--success);cursor:pointer;user-select:none;transition:all .15s}
+.sheet-list-item .sli-status:hover{opacity:.8}
 .sheet-list-item .sli-status.coming-soon{background:#fef3e2;color:#b8860b}
+.sheet-list-item .sli-status.in-progress{background:#e3f2fd;color:#1565c0}
+.sheet-list-item .sli-status.pending{background:#fce4ec;color:#c62828}
 .sheet-list-item .drag-handle{cursor:grab;color:var(--g300,#bbb);font-size:1.1rem;padding:2px 6px;border-radius:3px;transition:color .15s,background .15s}
 .sheet-list-item .drag-handle:hover{color:var(--g700);background:var(--g100)}
 .sheet-list-item.dragging{opacity:.4;border-style:dashed}
@@ -486,7 +489,7 @@ function renderSheetList(){
         <div class="sli-title">${esc(entry.title)}</div>
         <div class="sli-meta">${pC} pg · ${fC} FAQ · ${sC} sec · ${rC} res${qC?' · '+qC+' QR':''}</div>
       </div>
-      <span class="sli-status ${entry.status==='coming-soon'?'coming-soon':''}">${entry.status==='coming-soon'?'Coming Soon':'Live'}</span>
+      <span class="sli-status ${entry.status||'live'}" onclick="event.stopPropagation();cycleStatus(${i})" title="Click to change status">${statusLabel(entry.status)}</span>
     </div>`;
   });
   html+='</div><div style="margin-top:12px;text-align:center"><button class="add-resource-btn" onclick="addNewSheet()" style="max-width:300px;margin:0 auto">+ Add New Sheet</button></div>';
@@ -1073,6 +1076,10 @@ function editSheetIcon(slug){
   renderSheetEditor(slug);refreshPreview(slug);
 }
 
+var STATUSES=['live','in-progress','pending','coming-soon'];
+function statusLabel(s){return{'live':'Live','in-progress':'In Progress','pending':'Pending','coming-soon':'Coming Soon'}[s||'live']||'Live'}
+function cycleStatus(idx){var e=DATA.home[idx];var cur=e.status||'live';var ni=(STATUSES.indexOf(cur)+1)%STATUSES.length;e.status=STATUSES[ni];var slug=slugify(e.sheetName);if(DATA.sheets[slug])DATA.sheets[slug].status=STATUSES[ni];renderSheetList();refreshPreview();toast(esc(e.title)+' → '+statusLabel(STATUSES[ni]))}
+
 function uploadSheetIcon(slug){
   document.getElementById('icon-upload-'+slug).click();
 }
@@ -1123,8 +1130,10 @@ function renderHomePreview(){
   DATA.home.forEach(entry=>{
     const slug=slugify(entry.sheetName),sheet=DATA.sheets[slug];
     const has=sheet&&sheet.pages&&sheet.pages.length>0;
-    if(!has&&entry.status!=='coming-soon')return;
-    cards+=`<div class="home-card"><div class="card-icon">${entry.icon||'📄'}</div><div class="card-title">${esc(entry.title)}</div></div>`;
+    const st=entry.status||'live';
+    if(st==='pending'||st==='in-progress')return;
+    if(!has&&st!=='coming-soon')return;
+    cards+=`<div class="home-card${st==='coming-soon'?' coming-soon':''}"><div class="card-icon">${entry.icon||'📄'}</div><div class="card-title">${esc(entry.title)}</div></div>`;
   });
   return `<div class="home-preview-page"><div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Resources for Utica and surrounding areas</p></div><div class="home-grid">${cards}</div></div>`;
 }
@@ -1716,9 +1725,11 @@ function renderHome(){
   DATA.home.forEach(function(e){
     var slug=slugify(e.sheetName),sh=DATA.sheets[slug];
     var has=sh&&sh.pages&&sh.pages.length>0&&sh.pages.some(function(p){return p.blocks&&p.blocks.length>0});
-    if(!has&&e.status!=='coming-soon')return;
-    var c=document.createElement('a');c.className='home-card'+(e.status==='coming-soon'?' coming-soon':'');
-    if(e.status!=='coming-soon'&&has){c.href='#/'+slug}else{c.href='#';c.addEventListener('click',function(ev){ev.preventDefault()})}
+    var st=e.status||'live';
+    if(st==='pending'||st==='in-progress')return;
+    if(!has&&st!=='coming-soon')return;
+    var c=document.createElement('a');c.className='home-card'+(st==='coming-soon'?' coming-soon':'');
+    if(st!=='coming-soon'&&has){c.href='#/'+slug}else{c.href='#';c.addEventListener('click',function(ev){ev.preventDefault()})}
     c.innerHTML='<div class="card-icon">'+(e.icon||'')+'</div><div class="card-title">'+e.title+'</div>';
     g.appendChild(c);
   });
@@ -1729,7 +1740,8 @@ function buildIndex(){
   for(var slug in DATA.sheets){
     var sh=DATA.sheets[slug];
     if(!sh.pages||!sh.pages.length)continue;
-    var icon='';DATA.home.forEach(function(e){if(slugify(e.sheetName)===slug)icon=e.icon||''});
+    var st='live';var icon='';DATA.home.forEach(function(e){if(slugify(e.sheetName)===slug){icon=e.icon||'';st=e.status||'live'}});
+    if(st==='pending'||st==='in-progress')continue;
     sh.pages.forEach(function(pg){
       (pg.blocks||[]).forEach(function(b){
         if(b.type==='FAQ'&&b.q){idx.push({text:(b.q+' '+(b.a||'')).toLowerCase(),name:b.q,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info'})}
