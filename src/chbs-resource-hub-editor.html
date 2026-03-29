@@ -247,13 +247,13 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .faq-block p,.faq-block div:not(.two-col-block):not(.section-hdr),.faq-block span,.faq-block br+br{margin:0!important;padding:0!important}
 .faq-block h3{font-size:8.2pt;font-weight:700;color:var(--bd);margin-bottom:0;line-height:1.3}
 .faq-block p{font-size:7.5pt;color:var(--g700);line-height:1.32;margin:0 0 1px 0}
-.faq-block ul,.faq-block ol{font-size:7.5pt;color:var(--g700);line-height:1.32;margin:0 0 1px 1em;padding:0}
+.faq-block ul,.faq-block ol{font-size:7.5pt;color:var(--g700);line-height:1.32;margin:0 0 1px 0;padding:0 0 0 1.4em}
 .faq-block li{margin-bottom:0}
 .faq-block .two-col-block{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:7.5pt;color:var(--g700);line-height:1.32}
 .chbs-callout .two-col-block{display:grid!important;grid-template-columns:1fr 1fr;gap:4px 8px;font-size:7.2pt;color:var(--g700);line-height:1.32;margin-top:4px}
 .chbs-callout .two-col-block>div{padding:0;margin:0}
 .faq-block .two-col-block p{font-size:7.5pt}
-.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:7.5pt;margin:0 0 1px 1em;padding:0}
+.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:7.5pt;margin:0 0 1px 0;padding:0 0 0 1.4em}
 /* Fix: force all faq-block text elements to 7.5pt explicitly */
 .faq-block p,.faq-block li,.faq-block span,.faq-block div:not(.section-hdr):not(.two-col-block),.faq-block b,.faq-block i,.faq-block u,.faq-block strong,.faq-block em{font-size:7.5pt!important;color:var(--g700)}
 .faq-block .section-hdr{font-size:8pt!important;color:var(--wh)!important;margin-top:0}
@@ -261,7 +261,7 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .chbs-callout{border-left:3px solid var(--gd);padding:.05in .08in;margin-top:.06in;margin-bottom:6px;background:var(--g50);font-size:7.2pt;color:var(--g700);line-height:1.32}
 .chbs-callout h3{font-size:8.2pt;font-weight:700;color:var(--bd);margin-bottom:0}
 .chbs-callout p,.chbs-callout div{font-size:7.2pt;color:var(--g700);line-height:1.32;margin:0;padding:0}
-.chbs-callout ul,.chbs-callout ol{font-size:7.2pt;color:var(--g700);line-height:1.32;margin:0 0 1px 1em;padding:0}
+.chbs-callout ul,.chbs-callout ol{font-size:7.2pt;color:var(--g700);line-height:1.32;margin:0 0 1px 0;padding:0 0 0 1.4em}
 .chbs-callout li,.chbs-callout span,.chbs-callout div,.chbs-callout b,.chbs-callout i,.chbs-callout u,.chbs-callout strong,.chbs-callout em{font-size:7.2pt!important;color:var(--g700)}
 .resource-column{overflow:hidden}
 .section-hdr{background:var(--bd);color:var(--wh)!important;padding:2.5px 8px;border-radius:3px;font-weight:700;font-size:8pt!important;margin-bottom:3px;margin-top:7px;text-align:center}
@@ -406,7 +406,7 @@ const GH_BRANCH = 'main';
 const GH_WORKING = 'data/working.json';
 const GH_PUBLISHED = 'data/published.json';
 const GH_BACKUP_PREFIX = 'data/working.backup';
-const ADMIN_HASH = ''; // Set SHA-256 hash of admin password; leave empty to allow any editor to publish
+const PUBLISH_ADMINS = ['databedatain']; // GitHub usernames allowed to publish
 
 let ghToken = localStorage.getItem('chbs-gh-token') || '';
 let ghFileSha = {};
@@ -553,14 +553,19 @@ async function ghSave(){
 async function ghPublish(){
   if(!ghToken){toggleGhToken();toast('Enter a GitHub token first');return;}
   if(!dataLoaded){toast('Load data first');return;}
-  // Admin password check
-  if(ADMIN_HASH){
-    const pw=prompt('Enter admin password to publish:');
-    if(!pw)return;
-    const hash=await sha256(pw);
-    if(hash!==ADMIN_HASH){alert('Invalid admin password.');return;}
-  } else {
-    if(!confirm('Publish working data to the live site? This will update the public Resource Hub.'))return;
+  // Check GitHub identity against allowed publishers
+  try{
+    const resp=await fetch('https://api.github.com/user',{headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
+    if(!resp.ok)throw new Error('Could not verify identity');
+    const user=await resp.json();
+    if(PUBLISH_ADMINS.length>0&&!PUBLISH_ADMINS.includes(user.login)){
+      alert('Publishing is restricted. Your GitHub account ('+user.login+') is not authorized to publish.');
+      return;
+    }
+    if(!confirm('Publish working data to the live site as '+user.login+'?'))return;
+  }catch(err){
+    alert('Could not verify GitHub identity: '+err.message);
+    return;
   }
   for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
   const content=JSON.stringify(DATA,null,2);
@@ -913,11 +918,11 @@ function renderBlockCard(slug,block,idx){
     bodyHTML=`<div style="font-size:.78rem;color:var(--g500);padding:4px 0">Shows the "Not Finding What You Need?" bar.</div>`;
   }
 
-  return `<div class="block-card" data-block-idx="${idx}" draggable="true"
-    ondragstart="dragBlockStart(event,'${slug}',${idx})" ondragover="dragBlockOver(event,${idx})"
+  return `<div class="block-card" data-block-idx="${idx}"
+    ondragover="dragBlockOver(event,${idx})"
     ondragleave="dragBlockLeave(event)" ondrop="dragBlockDrop(event,'${slug}',${idx})">
     <div class="block-header" onclick="toggleBlock('${block.id}','${slug}')">
-      <span class="bh-drag" onclick="event.stopPropagation()" title="Drag to reorder">⠿</span>
+      <span class="bh-drag" draggable="true" ondragstart="dragBlockStart(event,'${slug}',${idx})" onclick="event.stopPropagation()" title="Drag to reorder">⠿</span>
       <span class="bh-type ${typeClass}">${block.type}</span>
       <span class="bh-title">${esc(title)}</span>
       <span class="bh-controls" onclick="event.stopPropagation()">
@@ -990,11 +995,11 @@ function renderResCard(slug,blockIdx,blockId,r,ri){
   const sections=sheetBlocks[slug].map((b,i)=>({idx:i,title:b.title,type:b.type})).filter(b=>b.type==='SECTION'&&b.idx!==blockIdx);
   const moveOpts=sections.map(s=>`<option value="${s.idx}">${esc(s.title)}</option>`).join('');
   const moveBtn=moveOpts?`<select onchange="moveResource('${slug}',${blockIdx},${ri},parseInt(this.value));this.selectedIndex=0" style="flex:none;padding:1px 4px;font-size:.68rem;border:1px solid var(--g200);border-radius:3px;color:var(--g500);background:var(--wh)"><option value="">Move to…</option>${moveOpts}</select>`:'';
-  return `<div class="res-card" data-res-idx="${ri}" draggable="true"
-    ondragstart="dragResStart(event,'${slug}',${blockIdx},${ri})" ondragover="dragResOver(event,${ri})"
+  return `<div class="res-card" data-res-idx="${ri}"
+    ondragover="dragResOver(event,${ri})"
     ondragleave="dragResLeave(event)" ondrop="dragResDrop(event,'${slug}',${blockIdx},${ri})">
     <div class="res-card-header" onclick="toggleResCard(${blockIdx},${ri},'${slug}')" style="cursor:pointer">
-      <span class="rc-drag" onclick="event.stopPropagation()" title="Drag to reorder">⠿</span>
+      <span class="rc-drag" draggable="true" ondragstart="dragResStart(event,'${slug}',${blockIdx},${ri})" onclick="event.stopPropagation()" title="Drag to reorder">⠿</span>
       <span class="rc-name">${esc(r.n||'(unnamed)')}</span>
       ${moveBtn ? '<span onclick="event.stopPropagation()">'+moveBtn+'</span>' : ''}
       <span class="bh-toggle ${isOpen?'open':''}">▶</span>
@@ -1881,18 +1886,18 @@ function generatePublishedHTML(){
 .faq-block p,.faq-block div:not(.two-col-block):not(.section-hdr),.faq-block span,.faq-block br+br{margin:0!important;padding:0!important}
 .faq-block h3{font-size:1.05rem;font-weight:700;color:var(--bd);margin-bottom:.2rem;line-height:1.3}
 .faq-block p{font-size:.88rem;color:var(--g700);line-height:1.55;margin:0 0 .25rem 0}
-.faq-block ul,.faq-block ol{font-size:.88rem;color:var(--g700);line-height:1.55;margin:0 0 .25rem 1.2em;padding:0}.faq-block li{margin-bottom:.15rem}
+.faq-block ul,.faq-block ol{font-size:.88rem;color:var(--g700);line-height:1.55;margin:0 0 .25rem 0;padding:0 0 0 1.4em}.faq-block li{margin-bottom:.15rem}
 .faq-block .two-col-block{display:grid;grid-template-columns:1fr 1fr;gap:.4rem .75rem;font-size:.88rem;color:var(--g700);line-height:1.55}
 .chbs-callout .two-col-block{display:grid!important;grid-template-columns:1fr 1fr;gap:.4rem .75rem;font-size:.85rem;color:var(--g700);line-height:1.55;margin-top:.4rem}
 .chbs-callout .two-col-block>div{padding:0;margin:0}
-.faq-block .two-col-block p{font-size:.88rem}.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:.88rem;margin:0 0 .25rem 1.2em;padding:0}
+.faq-block .two-col-block p{font-size:.88rem}.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:.88rem;margin:0 0 .25rem 0;padding:0 0 0 1.4em}
 .faq-block p,.faq-block li,.faq-block span,.faq-block div:not(.section-hdr):not(.two-col-block),.faq-block b,.faq-block i,.faq-block u,.faq-block strong,.faq-block em{font-size:.88rem!important;color:var(--g700)}
 .faq-block .section-hdr{font-size:.92rem!important;color:var(--wh)!important;margin-top:0}
 .faq-block h3{font-size:1.05rem!important;color:var(--bd)}
 .chbs-callout{border-left:3px solid var(--gd);padding:.75rem 1rem;margin:.75rem 0;background:var(--wh);font-size:.85rem;color:var(--g700);line-height:1.55;border-radius:0 8px 8px 0;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .chbs-callout h3{font-size:1.05rem;font-weight:700;color:var(--bd);margin-bottom:.15rem}
 .chbs-callout p,.chbs-callout div{font-size:.85rem;color:var(--g700);line-height:1.55;margin:0;padding:0}
-.chbs-callout ul,.chbs-callout ol{font-size:.85rem;color:var(--g700);line-height:1.55;margin:0 0 .25rem 1.2em;padding:0}
+.chbs-callout ul,.chbs-callout ol{font-size:.85rem;color:var(--g700);line-height:1.55;margin:0 0 .25rem 0;padding:0 0 0 1.4em}
 .chbs-callout li,.chbs-callout span,.chbs-callout div,.chbs-callout b,.chbs-callout i,.chbs-callout u,.chbs-callout strong,.chbs-callout em{font-size:.85rem!important;color:var(--g700)}
 .resource-column{overflow:visible}
 .section-hdr{background:var(--bd);color:var(--wh)!important;padding:.45rem .85rem;border-radius:6px;font-weight:700;font-size:.92rem!important;margin-bottom:.6rem;margin-top:1rem;text-align:center}
@@ -1941,13 +1946,13 @@ function generatePublishedHTML(){
 .footer-group{display:flex;gap:.25in;align-items:flex-start;flex-wrap:nowrap}.footer-col h4{font-size:6.2pt;font-weight:700;color:var(--gd);margin-bottom:0}.footer-col p{font-size:5.8pt;opacity:.8;line-height:1.25}
 a{text-decoration:none;color:inherit}
 .faq-block{margin-bottom:.065in;font-family:'Source Sans 3',-apple-system,sans-serif;font-size:7.5pt;line-height:1.32;color:var(--g700)}.faq-block h3{font-size:8.2pt!important;margin-bottom:0;line-height:1.3}
-.faq-block p{font-size:7.5pt;line-height:1.32;margin:0 0 1px 0}.faq-block ul,.faq-block ol{font-size:7.5pt;line-height:1.32;margin:0 0 1px 1em;padding:0}.faq-block li{margin-bottom:0}
+.faq-block p{font-size:7.5pt;line-height:1.32;margin:0 0 1px 0}.faq-block ul,.faq-block ol{font-size:7.5pt;line-height:1.32;margin:0 0 1px 0;padding:0 0 0 1.4em}.faq-block li{margin-bottom:0}
 .faq-block p,.faq-block li,.faq-block span,.faq-block div:not(.section-hdr):not(.two-col-block),.faq-block b,.faq-block i,.faq-block u,.faq-block strong,.faq-block em{font-size:7.5pt!important}
 .faq-block .section-hdr{font-size:8pt!important}.faq-block .two-col-block{gap:4px 8px;font-size:7.5pt}.faq-block .two-col-block p{font-size:7.5pt}
-.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:7.5pt;margin:0 0 1px 1em;padding:0}
+.faq-block .two-col-block ul,.faq-block .two-col-block ol{font-size:7.5pt;margin:0 0 1px 0;padding:0 0 0 1.4em}
 .chbs-callout{border-radius:0;padding:.05in .08in;margin-top:.06in;margin-bottom:6px;font-size:7.2pt;line-height:1.32;box-shadow:none;background:var(--g50)}
 .chbs-callout h3{font-size:8.2pt}.chbs-callout p,.chbs-callout div{font-size:7.2pt;line-height:1.32}
-.chbs-callout ul,.chbs-callout ol{font-size:7.2pt;line-height:1.32;margin:0 0 1px 1em;padding:0}
+.chbs-callout ul,.chbs-callout ol{font-size:7.2pt;line-height:1.32;margin:0 0 1px 0;padding:0 0 0 1.4em}
 .chbs-callout li,.chbs-callout span,.chbs-callout div,.chbs-callout b,.chbs-callout i,.chbs-callout u,.chbs-callout strong,.chbs-callout em{font-size:7.2pt!important}
 .chbs-callout .two-col-block{gap:4px 8px;font-size:7.2pt;margin-top:4px}
 .resource-column{overflow:hidden}
