@@ -285,6 +285,7 @@ input,textarea,select{font-family:inherit;font-size:inherit}
   <button class="action-btn" onclick="exportCSV()">Export CSV</button>
   <div class="sep"></div>
   <button class="action-btn primary" onclick="exportHTML()">Export for Publishing</button>
+  <span class="status" id="submit-reminder" style="display:none;color:var(--gd);font-size:.68rem;font-weight:600">Remember: Save JSON + Export CSV + Export HTML, then send all 3 to admin</span>
   <input type="file" id="json-input" accept=".json" style="display:none">
   <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" style="display:none">
 </div>
@@ -295,6 +296,21 @@ input,textarea,select{font-family:inherit;font-size:inherit}
       <div class="welcome-screen" id="welcome-screen">
         <h2>CHBS Resource Hub Editor</h2>
         <p>Load your data to get started.</p>
+        <div style="background:var(--wh);border:2px solid var(--gd);border-radius:8px;padding:1rem 1.25rem;margin:0 auto 1.25rem;max-width:500px;text-align:left">
+          <h3 style="font-size:.9rem;color:var(--bd);margin-bottom:.4rem">How to submit changes</h3>
+          <ol style="font-size:.82rem;color:var(--g700);line-height:1.6;margin:0 0 0 1.2em;padding:0">
+            <li><strong>Load</strong> the current JSON data file</li>
+            <li><strong>Make your edits</strong> in the editor</li>
+            <li><strong>Download all three files:</strong>
+              <ul style="margin:.2rem 0 .2rem 1.2em;padding:0;list-style:disc">
+                <li><strong>Save JSON</strong> — the data file</li>
+                <li><strong>Export CSV</strong> — spreadsheet backup</li>
+                <li><strong>Export for Publishing</strong> — the website HTML</li>
+              </ul>
+            </li>
+            <li><strong>Send all three files</strong> to your admin for review and publishing</li>
+          </ol>
+        </div>
         <div class="welcome-actions">
           <button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button>
           <button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button>
@@ -1207,6 +1223,7 @@ function renderEntryPreview(r){
 // ===================================================================
 function showView(view){
   currentView=view;
+  var sr=document.getElementById('submit-reminder');if(sr)sr.style.display=dataLoaded?'':'none';
   if(view==='sheets'&&dataLoaded){renderSheetList();refreshPreview()}
   else if(view==='welcome'){
     document.getElementById('editor-body').innerHTML=`<div class="welcome-screen"><h2>CHBS Resource Hub Editor</h2><p>Load your data to get started.</p><div class="welcome-actions"><button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button><button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button><button class="welcome-btn" onclick="startEmpty()">Start Empty</button></div><div class="drop-zone" id="drop-zone">Drop a .json, .xlsx, or .csv file here</div></div>`;
