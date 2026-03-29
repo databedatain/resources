@@ -262,6 +262,16 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 </style>
 </head>
 <body>
+<div id="pw-gate" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--cr);font-family:'Source Sans 3',-apple-system,sans-serif">
+<div style="background:var(--wh);padding:2rem;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.1);text-align:center;max-width:360px;width:90%">
+<div style="font-size:1.6rem;font-weight:900;color:var(--bd);margin-bottom:.25rem">CHBS Resource Hub</div>
+<div style="font-size:.85rem;color:var(--g500);margin-bottom:1.25rem">Editor Access</div>
+<input id="pw-input" type="password" placeholder="Enter password" style="width:100%;padding:.6rem 1rem;border:2px solid var(--g200);border-radius:6px;font-size:.9rem;font-family:inherit;outline:none;margin-bottom:.75rem" onkeydown="if(event.key==='Enter')checkPw()">
+<button onclick="checkPw()" style="width:100%;padding:.6rem;background:var(--bd);color:var(--wh);border:none;border-radius:6px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit">Enter</button>
+<div id="pw-error" style="color:#c0392b;font-size:.8rem;margin-top:.5rem;display:none">Incorrect password</div>
+</div>
+</div>
+<div id="editor-content" style="display:none">
 
 <div class="top-bar">
   <span class="logo">CHBS Resource Hub</span>
@@ -1865,6 +1875,30 @@ syncSheetFromBlocks=function(slug){_origSync(slug);scheduleAutosave()};
 // INIT — show welcome screen (no embedded data)
 // ===================================================================
 setupDropZone();
+</script>
+</div><!-- /editor-content -->
+<script>
+function checkPw(){
+  var pw=document.getElementById('pw-input').value;
+  crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw)).then(function(buf){
+    var hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+    if(hash==='e791a35003356f9d22444c14d60de10c3604d97cd861b9261d5f687e3efb41bc'){
+      document.getElementById('pw-gate').style.display='none';
+      document.getElementById('editor-content').style.display='';
+      sessionStorage.setItem('chbs-editor-auth','1');
+    }else{
+      document.getElementById('pw-error').style.display='block';
+      document.getElementById('pw-input').value='';
+      document.getElementById('pw-input').focus();
+    }
+  });
+}
+if(sessionStorage.getItem('chbs-editor-auth')==='1'){
+  document.getElementById('pw-gate').style.display='none';
+  document.getElementById('editor-content').style.display='';
+}else{
+  document.getElementById('pw-input').focus();
+}
 </script>
 </body>
 </html>
