@@ -6,12 +6,14 @@
 :root{--bd:#1b3a5c;--bm:#2e6494;--bl:#4a8ac2;--gd:#d4a843;--gl:#e6c55e;--wh:#fff;--cr:#f9f7f3;--g50:#f5f5f5;--g100:#e8e8e8;--g200:#d0d0d0;--g400:#999;--g500:#6b6b6b;--g700:#3d3d3d;--g900:#1a1a1a}
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Source Sans 3',-apple-system,sans-serif;color:var(--g900);background:var(--cr);line-height:1.35}
 .home-page{display:none}.home-page.active{display:block}
-.home-hero{background:linear-gradient(135deg,var(--bd) 0%,var(--bm) 70%,var(--bl) 100%);color:var(--wh);text-align:center;padding:1.6rem 1rem 1.2rem}
-.home-hero .org-name{font-size:.7rem;font-weight:600;opacity:.7;letter-spacing:.06em;text-transform:uppercase}
-.home-hero h1{font-weight:900;font-size:1.8rem;margin:.2rem 0 .3rem}
-.home-hero .subtitle{font-size:.88rem;opacity:.7}
-.home-info-bar{display:flex;justify-content:center;gap:2rem;margin-top:.6rem;font-size:.78rem}
-.home-info-bar .info-item{display:flex;align-items:center;gap:.4rem}.home-info-bar .info-label{font-weight:700;opacity:.7}
+.home-hero{background:linear-gradient(135deg,var(--bd) 0%,var(--bm) 60%,var(--bl) 100%);color:var(--wh);text-align:center;padding:2rem 1rem 1.4rem;position:relative;overflow:hidden}
+.home-hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(255,255,255,.04) 0%,transparent 50%);pointer-events:none}
+.home-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gd),var(--gl),var(--gd))}
+.home-hero .org-name{font-size:.72rem;font-weight:700;opacity:.8;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.1rem}
+.home-hero h1{font-weight:900;font-size:2rem;margin:.2rem 0 .35rem;letter-spacing:.03em;text-shadow:0 2px 4px rgba(0,0,0,.15)}
+.home-hero .subtitle{font-size:.9rem;opacity:.75;max-width:400px;margin:0 auto}
+.home-info-bar{display:flex;justify-content:center;gap:1.5rem;margin-top:.8rem;font-size:.8rem;background:rgba(0,0,0,.12);padding:.5rem 1.5rem;border-radius:6px;display:inline-flex}
+.home-info-bar .info-item{display:flex;align-items:center;gap:.4rem}.home-info-bar .info-label{font-weight:700;opacity:.8}
 .home-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;padding:1.2rem 1.5rem;max-width:800px;margin:0 auto}
 .home-card{background:var(--wh);border:1px solid var(--g200);border-radius:8px;padding:.75rem .6rem;text-align:center;text-decoration:none;color:var(--g900);cursor:pointer;transition:all .15s}
 .home-card:hover{border-color:var(--bm);box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -20,17 +22,24 @@
 .home-card.coming-soon::after{content:'Coming Soon';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:.55rem;color:var(--g400);font-weight:600;white-space:nowrap}
 .home-card .card-icon{font-size:1.6rem;margin-bottom:.3rem}
 .home-card .card-icon img{width:32px;height:32px;object-fit:contain}.home-card .card-title{font-size:.75rem;font-weight:700;color:var(--bd)}
-.home-nf{max-width:800px;margin:.5rem auto 0;text-align:center;padding:0 1.5rem .8rem;font-size:.78rem;color:var(--g500)}
-.home-nf h3{font-size:.82rem;color:var(--bd);margin-bottom:.2rem}.home-nf a{color:var(--bm);text-decoration:none;font-weight:600}
+.home-nf{max-width:800px;margin:1rem auto 0;padding:1rem 1.5rem;font-size:.82rem;color:var(--g700);background:var(--wh);border:2px solid var(--g200);border-left:4px solid var(--gd);border-radius:8px;text-align:left;display:flex;align-items:flex-start;gap:1rem;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.home-nf .nf-icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+.home-nf .nf-body{flex:1}
+.home-nf h3{font-size:.92rem;color:var(--bd);margin-bottom:.25rem;font-weight:700}.home-nf a{color:var(--bm);text-decoration:none;font-weight:600}.home-nf a:hover{text-decoration:underline}
+.home-nf p{margin:0 0 .2rem;line-height:1.5}.home-nf .nf-links{display:flex;gap:1rem;flex-wrap:wrap;margin-top:.35rem}
 .crisis-banner{background:var(--gd);color:var(--bd);text-align:center;padding:.5rem 1rem;font-size:.78rem;font-weight:600}.crisis-banner a{color:var(--bd);font-weight:700}
-@media(max-width:600px){.home-grid{grid-template-columns:repeat(2,1fr);gap:.5rem;padding:1rem}.home-hero h1{font-size:1.3rem}.home-hero .subtitle{font-size:.78rem}.home-info-bar{flex-direction:column;gap:.5rem}.home-ft-inner{flex-direction:column;gap:.5rem}.home-ft .footer-contact{text-align:left}}
-.home-ft{background:var(--bd);color:var(--wh);padding:1.25rem 2rem;margin-top:2rem}
-.home-ft-inner{max-width:750px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+@media(max-width:600px){.home-grid{grid-template-columns:repeat(2,1fr);gap:.5rem;padding:1rem}.home-hero h1{font-size:1.3rem}.home-hero .subtitle{font-size:.78rem;max-width:none}.home-info-bar{flex-direction:column;gap:.5rem}.home-ft-inner{grid-template-columns:1fr;gap:.75rem}.home-ft .footer-contact{text-align:left}.home-nf{flex-direction:column;gap:.5rem}}
+.home-ft{background:linear-gradient(135deg,var(--bd) 0%,#152d49 100%);color:var(--wh);padding:1.5rem 2rem 1rem;margin-top:2rem;position:relative}
+.home-ft::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gd),var(--gl),var(--gd))}
+.home-ft-inner{max-width:750px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:1.25rem;align-items:start}
 .home-ft .footer-offices{display:flex;gap:1.5rem;flex-wrap:wrap}
-.home-ft .footer-office h4{font-size:.72rem;font-weight:700;color:var(--gd);margin-bottom:2px}
-.home-ft .footer-office p{font-size:.72rem;opacity:.75;line-height:1.35}
-.home-ft .footer-contact{text-align:right;font-size:.72rem}.home-ft .footer-contact .phone{font-weight:700;font-size:.8rem}
-.home-ft-bottom{max-width:750px;margin:.75rem auto 0;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.12);text-align:center;font-size:.65rem;opacity:.45}
+.home-ft .footer-office h4{font-size:.72rem;font-weight:700;color:var(--gd);margin-bottom:2px;letter-spacing:.03em}
+.home-ft .footer-office p{font-size:.72rem;opacity:.8;line-height:1.4}
+.home-ft .footer-contact{text-align:right;font-size:.72rem}.home-ft .footer-contact .phone{font-weight:700;font-size:.85rem}
+.home-ft .footer-contact .phone a{color:var(--wh);text-decoration:none}
+.home-ft .footer-crisis{margin-top:.6rem;padding-top:.5rem;border-top:1px solid rgba(212,168,67,.3);font-size:.72rem}
+.home-ft .footer-crisis h4{font-size:.72rem;font-weight:700;color:var(--gd);margin-bottom:2px}
+.home-ft-bottom{max-width:750px;margin:.75rem auto 0;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.1);text-align:center;font-size:.65rem;opacity:.45}
 .sheet-nav{max-width:900px;margin:.75rem auto 0;padding:.75rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;position:sticky;top:0;background:var(--cr);z-index:100;border:2px solid var(--bd);border-radius:8px}
 .sheet-nav a{color:var(--bm);text-decoration:none;font-weight:600;font-size:.9rem;cursor:pointer}.sheet-nav a:hover{text-decoration:underline}
 .sheet-nav .print-btn{padding:.5rem 1.4rem;border:2px solid var(--bd);background:var(--bd);border-radius:6px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--wh);transition:all .15s}
@@ -110,7 +119,7 @@
 .page-wrapper{margin:0;width:100%}
 .print-page{margin:0;box-shadow:none;border-radius:0;width:8.5in;min-height:11in;max-height:11in;overflow:hidden!important;page-break-after:always;background:var(--wh);display:flex;flex-direction:column}
 .page-header{border-radius:0;padding:.18in .4in .15in;margin-bottom:0;flex-shrink:0}.page-header h1{font-size:22pt}
-.page-body{padding:.12in .35in .08in;gap:.18in;overflow:hidden;align-content:start}
+.page-body{flex:1;min-height:0;padding:.12in .35in .08in;gap:.18in;overflow:hidden;align-content:start}
 .page-footer{display:flex;background:var(--bd);color:var(--wh);padding:.12in .25in;flex-shrink:0;margin-top:.06in;flex-wrap:nowrap;gap:0;justify-content:space-between;align-items:flex-start}
 .footer-group{display:flex;gap:.25in;align-items:flex-start;flex-wrap:nowrap}.footer-col h4{font-size:6.2pt;font-weight:700;color:var(--gd);margin-bottom:0}.footer-col p{font-size:5.8pt;opacity:.8;line-height:1.25}
 a{text-decoration:none;color:inherit}
@@ -139,14 +148,14 @@ a{text-decoration:none;color:inherit}
 <div class="crisis-banner" role="alert">Experiencing a mental health crisis? Call MCAT at <a href="tel:3157326228">315-732-6228</a> for immediate assistance (24/7).</div>
 <main id="main-content">
 <div id="home-page" class="home-page active">
-<div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Resources for Utica and surrounding areas</p>
-<div class="home-info-bar"><div class="info-item"><span class="info-label">Hours</span><span>Mon&#x2013;Fri 8:00am &#x2013; 4:30pm</span></div><div class="info-item"><span class="info-label">Phone</span><span><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></span></div></div></div>
+<div class="home-hero"><div class="org-name">Community Health &amp; Behavioral Services</div><h1>Resource Hub</h1><p class="subtitle">Your guide to local services, support, and resources in the Utica area</p>
+<div style="text-align:center;margin-top:.8rem"><div class="home-info-bar"><div class="info-item"><span class="info-label">Hours</span><span>Mon&#x2013;Fri 8:00am &#x2013; 4:30pm</span></div><div class="info-item"><span class="info-label">Phone</span><span><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></span></div></div></div></div>
 <div class="home-search"><input type="text" id="search-input" placeholder="Search all resources, services, phone numbers..." aria-label="Search resources" oninput="handleSearch()"></div>
 <div id="search-results" class="search-results" role="region" aria-label="Search results"></div>
 <div class="home-grid" id="home-grid"></div>
 <div id="no-results" class="no-results">No resources match your search.</div>
-<div class="home-nf"><h3>Not finding what you need?</h3><p>Please reach out to us by phone or in person. We&#x2019;re here to support you.</p><p style="margin-top:.3rem"><a href="http://211midyork.com">United Way 211</a> &middot; <a href="http://nyconnects.ny.gov">NY Connects</a> &middot; <a href="http://oneidacountysoc.com">Oneida County System of Care</a></p></div>
-<footer class="home-ft"><div class="home-ft-inner"><div class="footer-offices"><div class="footer-office"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-office"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-office"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div></div><div class="footer-contact"><div class="phone"><a href="tel:3157988868" style="color:var(--wh);text-decoration:none">315-798-8868</a></div><div>Fax: 315-733-7105</div></div></div><div class="home-ft-bottom">Community Health &amp; Behavioral Services &middot; A Division of Upstate Caring Partners</div></footer>
+<div class="home-nf"><div class="nf-icon">&#x1F4DE;</div><div class="nf-body"><h3>Not finding what you need?</h3><p>Please reach out to us by phone or in person. We&#x2019;re here to support you.</p><div class="nf-links"><a href="http://211midyork.com">United Way 211</a><a href="http://nyconnects.ny.gov">NY Connects</a> <span style="color:var(--g400)">1-800-342-9871</span><a href="http://oneidacountysoc.com">Oneida County System of Care</a> <span style="color:var(--g400)">315-768-3660</span></div></div></div>
+<footer class="home-ft"><div class="home-ft-inner"><div class="footer-offices"><div class="footer-office"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-office"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-office"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div></div><div class="footer-contact"><div class="phone"><a href="tel:3157988868">315-798-8868</a></div><div style="opacity:.75">Fax: 315-733-7105</div><div class="footer-crisis"><h4>Crisis Stabilization Center</h4><p style="opacity:.8">1002 Oswego St., Utica NY 13502</p><p><b>24/7/365</b> &#x2014; <a href="tel:3155207802" style="color:var(--gl);text-decoration:none">315-520-7802</a></p></div></div></div><div class="home-ft-bottom">Community Health &amp; Behavioral Services &middot; A Division of Upstate Caring Partners</div></footer>
 </div><div id="sheet-container" role="region" aria-label="Resource details"></div>
 </main>
 <script>
@@ -175,13 +184,16 @@ function buildIndex(){
     if(!sh.pages||!sh.pages.length)continue;
     var st='live';var icon='';DATA.home.forEach(function(e){if(slugify(e.sheetName)===slug){icon=e.icon||'';st=e.status||'live'}});
     if(st==='pending'||st==='in-progress')continue;
+    var hasContent=sh.pages.some(function(p){return p.blocks&&p.blocks.length>0});
+    if(!hasContent)continue;
+    idx.push({text:sh.title.toLowerCase(),name:sh.title,detail:'Resource Sheet',sheet:slug,sheetTitle:sh.title,icon:icon,type:'sheet',pri:0});
     sh.pages.forEach(function(pg){
       (pg.blocks||[]).forEach(function(b){
-        if(b.type==='FAQ'&&b.q){idx.push({text:(b.q+' '+(b.a||'')).toLowerCase(),name:b.q,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info'})}
-        if(b.type==='CALLOUT'&&b.title){idx.push({text:(b.title+' '+(b.text||'')).toLowerCase(),name:b.title,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info'})}
+        if(b.type==='FAQ'&&b.q){idx.push({text:(sh.title+' '+b.q+' '+(b.a||'')).toLowerCase(),name:b.q,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info',pri:1})}
+        if(b.type==='CALLOUT'&&b.title){idx.push({text:(sh.title+' '+b.title+' '+(b.text||'')).toLowerCase(),name:b.title,detail:'',sheet:slug,sheetTitle:sh.title,icon:icon,type:'info',pri:1})}
         if(b.type==='SECTION'){
           (b.r||[]).forEach(function(r){
-            idx.push({text:[r.n,r.s,r.p,r.a,r.c,r.h,r.w].filter(Boolean).join(' ').toLowerCase(),name:r.n||'',detail:[r.s,r.p,r.a].filter(Boolean).join(' \u00b7 '),sheet:slug,sheetTitle:sh.title,icon:icon,type:'resource'})
+            idx.push({text:[sh.title,r.n,r.s,r.p,r.a,r.c,r.h,r.w].filter(Boolean).join(' ').toLowerCase(),name:r.n||'',detail:[r.s,r.p,r.a].filter(Boolean).join(' \u00b7 '),sheet:slug,sheetTitle:sh.title,icon:icon,type:'resource',pri:2})
           })
         }
       })
@@ -204,11 +216,15 @@ function handleSearch(){
   grid.style.display='none';if(nf)nf.style.display='none';
   var words=q.split(/\s+/);
   var matches=SEARCH_INDEX.filter(function(item){return words.every(function(w){return item.text.indexOf(w)>-1})});
+  matches.sort(function(a,b){return(a.pri||2)-(b.pri||2)});
+  var seen={};var deduped=[];
+  matches.forEach(function(m){if(m.type==='sheet'){var k='sheet:'+m.sheet;if(seen[k])return;seen[k]=1}deduped.push(m)});
+  matches=deduped;
   if(matches.length===0){nr.style.display='block';sr.className='search-results';sr.innerHTML='';return}
   nr.style.display='none';
   var html='<div class="search-count">'+matches.length+' result'+(matches.length!==1?'s':'')+' found</div>';
   matches.slice(0,30).forEach(function(m){
-    html+='<a class="search-result" href="#/'+m.sheet+'"><div class="result-name">'+esc(m.name)+'</div>'+(m.detail?'<div class="result-detail">'+esc(m.detail)+'</div>':'')+'<span class="result-sheet">'+m.icon+' '+esc(m.sheetTitle)+'</span></a>';
+    html+='<a class="search-result" href="#/'+m.sheet+'"'+(m.type==='sheet'?' style="border-left:3px solid var(--gd)"':'')+'><div class="result-name">'+esc(m.name)+'</div>'+(m.detail?'<div class="result-detail">'+esc(m.detail)+'</div>':'')+'<span class="result-sheet">'+m.icon+' '+esc(m.sheetTitle)+'</span></a>';
   });
   if(matches.length>30)html+='<div class="search-count">Showing first 30 of '+matches.length+' results. Try a more specific search.</div>';
   sr.innerHTML=html;sr.className='search-results active';
