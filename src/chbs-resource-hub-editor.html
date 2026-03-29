@@ -271,7 +271,7 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 <div id="pw-error" style="color:#c0392b;font-size:.8rem;margin-top:.5rem;display:none">Incorrect password</div>
 </div>
 </div>
-<div id="editor-content" style="display:none">
+<div id="editor-content" style="display:none;flex-direction:column;flex:1;overflow:hidden">
 
 <div class="top-bar">
   <span class="logo">CHBS Resource Hub</span>
@@ -1890,7 +1890,7 @@ function checkPw(){
     var hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
     if(hash==='e791a35003356f9d22444c14d60de10c3604d97cd861b9261d5f687e3efb41bc'){
       document.getElementById('pw-gate').style.display='none';
-      document.getElementById('editor-content').style.display='';
+      document.getElementById('editor-content').style.display='flex';
       sessionStorage.setItem('chbs-editor-auth','1');
     }else{
       document.getElementById('pw-error').style.display='block';
@@ -1901,7 +1901,7 @@ function checkPw(){
 }
 if(sessionStorage.getItem('chbs-editor-auth')==='1'){
   document.getElementById('pw-gate').style.display='none';
-  document.getElementById('editor-content').style.display='';
+  document.getElementById('editor-content').style.display='flex';
 }else{
   document.getElementById('pw-input').focus();
 }
