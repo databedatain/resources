@@ -35,15 +35,18 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 /* ===================== LAYOUT ===================== */
 .page-layout {
-  display: grid;
-  grid-template-columns: var(--sidebar-w) 1fr;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+}
+.page-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Crisis banner spans full width */
 .crisis {
-  grid-column: 1 / -1;
   background: var(--p4); color: var(--p2); text-align: center;
   padding: .4rem 1rem; font-family: 'Barlow', sans-serif; font-size: .78rem; font-weight: 600;
 }
@@ -51,7 +54,7 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 /* ===================== SIDEBAR ===================== */
 .sidebar {
-  grid-row: 2 / 3;
+  width: var(--sidebar-w); flex-shrink: 0;
   background: #152d49;
   display: flex; flex-direction: column;
   padding: 1.25rem;
@@ -118,20 +121,20 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 .sidebar-info .info-label:first-child { margin-top: 0; }
 
 .sidebar-info .office-row {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .5rem;
+  display: flex; flex-wrap: wrap; gap: .1rem .8rem;
 }
 .sidebar-info .office {
-  font-size: .68rem; opacity: .7; line-height: 1.3;
+  font-size: .68rem; opacity: .7; line-height: 1.25;
 }
 .sidebar-info .office strong {
-  font-weight: 600; color: var(--p4-60); display: block; font-size: .65rem;
+  font-weight: 600; color: var(--p4-60); font-size: .65rem; margin-right: .2rem;
 }
 .sidebar-info .info-value {
-  font-size: .75rem; opacity: .8; line-height: 1.35;
+  font-size: .72rem; opacity: .8; line-height: 1.35;
 }
 .sidebar-info .info-value a { color: #fff; text-decoration: none; }
 .sidebar-info .phone-main {
-  font-weight: 700; font-size: .88rem; color: #fff;
+  font-weight: 700; font-size: .85rem; color: #fff;
 }
 .sidebar-info .crisis-block {
   border-top: 1px solid rgba(255,255,255,.08);
@@ -153,7 +156,7 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 /* ===================== MAIN CONTENT ===================== */
 .main {
-  grid-row: 2 / 3;
+  flex: 1; min-width: 0;
   background: var(--p2);
   padding: 1.25rem 1.5rem 2rem;
   display: flex; flex-direction: column;
@@ -209,7 +212,6 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 /* ===================== FOOTER ===================== */
 .nf-footer {
-  grid-column: 1 / -1;
   background: #0f2236; padding: .65rem 1.5rem;
   border-top: 2px solid var(--p4);
 }
@@ -234,12 +236,9 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 900px) {
-  .page-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr auto;
-  }
+  .page-body { flex-direction: column; }
   .sidebar {
-    position: relative; height: auto;
+    width: 100%; position: relative; height: auto;
     flex-direction: row; flex-wrap: wrap;
     align-items: center; gap: 1rem;
     padding: 1rem 1.5rem;
@@ -264,6 +263,9 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
     Experiencing a mental health crisis? Call MCAT at <a href="tel:3157326228">315-732-6228</a> for immediate assistance (24/7).
   </div>
 
+  <!-- Body: sidebar + main -->
+  <div class="page-body">
+
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="logo-card">
@@ -285,26 +287,23 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
     <div class="sidebar-info">
       <div class="info-label">Offices</div>
       <div class="office-row">
-        <div class="office"><strong>Utica</strong>1002 Oswego St.<br>Utica, NY 13502</div>
-        <div class="office"><strong>Rome</strong>207 W. Dominick St.<br>Rome, NY 13440</div>
-        <div class="office"><strong>Herkimer</strong>235 N. Prospect St.<br>Herkimer, NY 13350</div>
+        <div class="office"><strong>Utica</strong> 1002 Oswego St., Utica 13502</div>
+        <div class="office"><strong>Rome</strong> 207 W. Dominick St., Rome 13440</div>
+        <div class="office"><strong>Herkimer</strong> 235 N. Prospect St., Herkimer 13350</div>
       </div>
 
       <div class="info-label">Hours &amp; Contact</div>
       <div class="info-value">
-        Mon–Fri 8:00am – 4:30pm
-        <span style="opacity:.3;margin:0 .2rem">|</span>
+        Mon–Fri 8am – 4:30pm<br>
         <span class="phone-main"><a href="tel:3157988868">315-798-8868</a></span>
-        <span style="opacity:.4;font-size:.66rem;margin-left:.25rem">Fax: 315-733-7105</span>
+        <span style="opacity:.4;font-size:.65rem;margin-left:.2rem">Fax: 315-733-7105</span>
       </div>
 
       <div class="crisis-block">
         <div class="crisis-head">Crisis Stabilization Center</div>
         <div class="crisis-detail">
-          1002 Oswego St., Utica, NY 13502<br>
-          <b>24/7/365</b>
-          <span style="opacity:.3;margin:0 .2rem">|</span>
-          <a href="tel:3155207802">315-520-7802</a>
+          1002 Oswego St., Utica 13502<br>
+          <b>24/7/365</b> · <a href="tel:3155207802">315-520-7802</a>
         </div>
       </div>
     </div>
@@ -331,6 +330,8 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
       <!-- Search results appear here -->
     </div>
   </main>
+
+  </div><!-- /page-body -->
 
   <!-- Footer -->
   <footer class="nf-footer">
