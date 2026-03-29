@@ -1578,8 +1578,13 @@ function exportHTML(){
 .sheet-nav .print-btn:hover{background:var(--bm);border-color:var(--bm)}
 #sheet-container{max-width:900px;margin:0 auto;padding:0 1rem 2rem}
 #sheet-container.multi-page{max-width:1600px}
-.pages-row{display:flex;gap:1.5rem}
+.pages-row{display:flex;gap:1.5rem;align-items:stretch}
 .pages-row .page-wrapper{flex:1;min-width:0}
+.pages-row .print-page{height:100%}
+.pages-row .page-footer{display:none}
+.pages-row .print-page{border-radius:10px}
+.pages-row .not-finding-bar{border-radius:0 0 10px 10px}
+.shared-footer{background:var(--bd);color:var(--wh);padding:.75rem 1.5rem;display:flex;justify-content:space-between;align-items:flex-start;border-radius:0 0 10px 10px;flex-wrap:wrap;gap:.5rem;margin-top:-0.5rem}
 .page-wrapper{margin:1rem 0}
 .print-page{background:var(--wh);border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);display:flex;flex-direction:column;overflow:visible}
 .page-header{background:var(--bd);color:var(--wh);text-align:center;padding:.75rem 1.5rem;flex-shrink:0;position:relative;border-radius:10px 10px 0 0}
@@ -1628,9 +1633,9 @@ function exportHTML(){
 .not-finding-bar{background:var(--g50);border-top:1px solid var(--g100);padding:.6rem 1.5rem;display:flex;align-items:center;gap:12px;flex-shrink:0;border-radius:0 0 10px 10px}
 .not-finding-bar h4{font-size:.82rem;font-weight:700;color:var(--bd);display:inline-block;white-space:nowrap;margin:0}
 .not-finding-bar p{font-size:.78rem;color:var(--g500);margin:0}.not-finding-bar a{color:var(--bm);text-decoration:none;font-weight:600}
-@media(max-width:900px){.pages-row{flex-direction:column}.page-body.two-col{grid-template-columns:1fr}.page-footer{flex-direction:column}.footer-group{width:100%}.sheet-nav{padding:.6rem 1rem}}
+@media(max-width:900px){.pages-row{flex-direction:column}.pages-row .page-footer{display:flex}.shared-footer{display:none}.page-body.two-col{grid-template-columns:1fr}.page-footer{flex-direction:column}.footer-group{width:100%}.sheet-nav{padding:.6rem 1rem}}
 @media print{body{background:white}.home-page,.sheet-nav,.crisis-banner{display:none!important}
-#sheet-container{max-width:none;padding:0}.pages-row{display:block}
+#sheet-container{max-width:none;padding:0}.pages-row{display:block}.pages-row .page-footer{display:flex}.shared-footer{display:none}
 .page-wrapper{margin:0;width:100%}
 .print-page{margin:0;box-shadow:none;border-radius:0;width:8.5in;min-height:11in;max-height:11in;overflow:hidden;page-break-after:always}
 .page-header{border-radius:0;padding:.18in .4in .15in}.page-header h1{font-size:22pt}
@@ -1685,7 +1690,8 @@ function showSheet(k){
   var multi=sh.pages.length>1;
   sc.className=multi?'multi-page':'';
   var pagesHTML=sh.pages.map(function(pg,i){return renderPage(sh,pg,i)}).join('');
-  sc.innerHTML='<div class="sheet-nav"><a onclick="goHome()">&#x2190; Back to Resource Hub</a><button class="print-btn" onclick="window.print()">Print / Save PDF</button></div>'+(multi?'<div class="pages-row">'+pagesHTML+'</div>':pagesHTML);
+  var sharedFt=multi?'<div class="shared-footer"><div class="footer-group"><div class="footer-col"><h4>Utica Office</h4><p>1002 Oswego St.<br>Utica, NY 13502</p></div><div class="footer-col"><h4>Rome Office</h4><p>207 W. Dominick St.<br>Rome, NY 13440</p></div><div class="footer-col"><h4>Herkimer Office</h4><p>235 N. Prospect St.<br>Herkimer, NY 13350</p></div><div class="footer-col"><p>Call: <a href="tel:3157988868" style="color:var(--wh)">315-798-8868</a><br>Fax: 315-733-7105</p></div></div><div class="footer-group"><div class="footer-col"><h4>Crisis Stabilization Center</h4><p>1002 Oswego St.<br>Utica NY, 13502</p></div><div class="footer-col"><p><b>24/7/365</b><br>Call: <a href="tel:3155207802" style="color:var(--wh)">315-520-7802</a></p></div></div></div>':'';
+  sc.innerHTML='<div class="sheet-nav"><a onclick="goHome()">&#x2190; Back to Resource Hub</a><button class="print-btn" onclick="window.print()">Print / Save PDF</button></div>'+(multi?'<div class="pages-row">'+pagesHTML+'</div>'+sharedFt:pagesHTML);
   window.scrollTo(0,0);
 }
 function goHome(){document.getElementById('home-page').classList.add('active');document.getElementById('sheet-container').innerHTML='';window.scrollTo(0,0)}
