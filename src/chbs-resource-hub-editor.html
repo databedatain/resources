@@ -821,24 +821,13 @@ function initRichText(slug,block,idx){
     else{editor.innerHTML=textToHTML(block.a||'');}
   }
   // Intercept paste: keep structure (bold, italic, lists) but strip fonts/sizes/colors
-  editor.addEventListener('paste',function(e){
-    e.preventDefault();
-    const html=e.clipboardData.getData('text/html');
-    const plain=e.clipboardData.getData('text/plain');
-    let clean='';
-    if(html){
-      clean=stripPastedStyles(html);
-    } else {
-      clean=esc(plain).replace(/\n/g,'<br>');
-    }
-    document.execCommand('insertHTML',false,clean);
-  });
+  if(!editor._pasteHandled){attachPasteHandler(editor);editor._pasteHandled=true;}
   // Init two-column editors if present
   if((block.type==='FAQ'||block.type==='CALLOUT') && block.useTwoCol){
     const leftEd=document.getElementById('rt-col-left-'+block.id);
     const rightEd=document.getElementById('rt-col-right-'+block.id);
-    if(leftEd){leftEd.innerHTML=block.colLeft||'';attachPasteHandler(leftEd);}
-    if(rightEd){rightEd.innerHTML=block.colRight||'';attachPasteHandler(rightEd);}
+    if(leftEd&&!leftEd._pasteHandled){leftEd.innerHTML=block.colLeft||'';attachPasteHandler(leftEd);leftEd._pasteHandled=true;}
+    if(rightEd&&!rightEd._pasteHandled){rightEd.innerHTML=block.colRight||'';attachPasteHandler(rightEd);rightEd._pasteHandled=true;}
   }
 }
 
