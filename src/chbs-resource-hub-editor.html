@@ -262,6 +262,16 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 </style>
 </head>
 <body>
+<div id="pw-gate" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--cr);font-family:'Source Sans 3',-apple-system,sans-serif">
+<div style="background:var(--wh);padding:2rem;border-radius:10px;box-shadow:0 2px 12px rgba(0,0,0,.1);text-align:center;max-width:360px;width:90%">
+<div style="font-size:1.6rem;font-weight:900;color:var(--bd);margin-bottom:.25rem">CHBS Resource Hub</div>
+<div style="font-size:.85rem;color:var(--g500);margin-bottom:1.25rem">Editor Access</div>
+<input id="pw-input" type="password" placeholder="Enter password" style="width:100%;padding:.6rem 1rem;border:2px solid var(--g200);border-radius:6px;font-size:.9rem;font-family:inherit;outline:none;margin-bottom:.75rem" onkeydown="if(event.key==='Enter')checkPw()">
+<button onclick="checkPw()" style="width:100%;padding:.6rem;background:var(--bd);color:var(--wh);border:none;border-radius:6px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit">Enter</button>
+<div id="pw-error" style="color:#c0392b;font-size:.8rem;margin-top:.5rem;display:none">Incorrect password</div>
+</div>
+</div>
+<div id="editor-content" style="display:none">
 
 <div class="top-bar">
   <span class="logo">CHBS Resource Hub</span>
@@ -275,6 +285,7 @@ input,textarea,select{font-family:inherit;font-size:inherit}
   <button class="action-btn" onclick="exportCSV()">Export CSV</button>
   <div class="sep"></div>
   <button class="action-btn primary" onclick="exportHTML()">Export for Publishing</button>
+  <span class="status" id="submit-reminder" style="display:none;color:var(--gd);font-size:.68rem;font-weight:600">Remember: Save JSON + Export CSV + Export HTML, then send all 3 to admin</span>
   <input type="file" id="json-input" accept=".json" style="display:none">
   <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" style="display:none">
 </div>
@@ -285,6 +296,21 @@ input,textarea,select{font-family:inherit;font-size:inherit}
       <div class="welcome-screen" id="welcome-screen">
         <h2>CHBS Resource Hub Editor</h2>
         <p>Load your data to get started.</p>
+        <div style="background:var(--wh);border:2px solid var(--gd);border-radius:8px;padding:1rem 1.25rem;margin:0 auto 1.25rem;max-width:500px;text-align:left">
+          <h3 style="font-size:.9rem;color:var(--bd);margin-bottom:.4rem">How to submit changes</h3>
+          <ol style="font-size:.82rem;color:var(--g700);line-height:1.6;margin:0 0 0 1.2em;padding:0">
+            <li><strong>Load</strong> the current JSON data file</li>
+            <li><strong>Make your edits</strong> in the editor</li>
+            <li><strong>Download all three files:</strong>
+              <ul style="margin:.2rem 0 .2rem 1.2em;padding:0;list-style:disc">
+                <li><strong>Save JSON</strong> — the data file</li>
+                <li><strong>Export CSV</strong> — spreadsheet backup</li>
+                <li><strong>Export for Publishing</strong> — the website HTML</li>
+              </ul>
+            </li>
+            <li><strong>Send all three files</strong> to your admin for review and publishing</li>
+          </ol>
+        </div>
         <div class="welcome-actions">
           <button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button>
           <button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button>
@@ -811,24 +837,13 @@ function initRichText(slug,block,idx){
     else{editor.innerHTML=textToHTML(block.a||'');}
   }
   // Intercept paste: keep structure (bold, italic, lists) but strip fonts/sizes/colors
-  editor.addEventListener('paste',function(e){
-    e.preventDefault();
-    const html=e.clipboardData.getData('text/html');
-    const plain=e.clipboardData.getData('text/plain');
-    let clean='';
-    if(html){
-      clean=stripPastedStyles(html);
-    } else {
-      clean=esc(plain).replace(/\n/g,'<br>');
-    }
-    document.execCommand('insertHTML',false,clean);
-  });
+  if(!editor._pasteHandled){attachPasteHandler(editor);editor._pasteHandled=true;}
   // Init two-column editors if present
   if((block.type==='FAQ'||block.type==='CALLOUT') && block.useTwoCol){
     const leftEd=document.getElementById('rt-col-left-'+block.id);
     const rightEd=document.getElementById('rt-col-right-'+block.id);
-    if(leftEd){leftEd.innerHTML=block.colLeft||'';attachPasteHandler(leftEd);}
-    if(rightEd){rightEd.innerHTML=block.colRight||'';attachPasteHandler(rightEd);}
+    if(leftEd&&!leftEd._pasteHandled){leftEd.innerHTML=block.colLeft||'';attachPasteHandler(leftEd);leftEd._pasteHandled=true;}
+    if(rightEd&&!rightEd._pasteHandled){rightEd.innerHTML=block.colRight||'';attachPasteHandler(rightEd);rightEd._pasteHandled=true;}
   }
 }
 
@@ -1208,6 +1223,7 @@ function renderEntryPreview(r){
 // ===================================================================
 function showView(view){
   currentView=view;
+  var sr=document.getElementById('submit-reminder');if(sr)sr.style.display=dataLoaded?'':'none';
   if(view==='sheets'&&dataLoaded){renderSheetList();refreshPreview()}
   else if(view==='welcome'){
     document.getElementById('editor-body').innerHTML=`<div class="welcome-screen"><h2>CHBS Resource Hub Editor</h2><p>Load your data to get started.</p><div class="welcome-actions"><button class="welcome-btn primary" onclick="importJSON()">Load JSON Data File</button><button class="welcome-btn" onclick="importExcel()">Import from Excel/CSV</button><button class="welcome-btn" onclick="startEmpty()">Start Empty</button></div><div class="drop-zone" id="drop-zone">Drop a .json, .xlsx, or .csv file here</div></div>`;
@@ -1865,6 +1881,30 @@ syncSheetFromBlocks=function(slug){_origSync(slug);scheduleAutosave()};
 // INIT — show welcome screen (no embedded data)
 // ===================================================================
 setupDropZone();
+</script>
+</div><!-- /editor-content -->
+<script>
+function checkPw(){
+  var pw=document.getElementById('pw-input').value;
+  crypto.subtle.digest('SHA-256',new TextEncoder().encode(pw)).then(function(buf){
+    var hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0')}).join('');
+    if(hash==='e791a35003356f9d22444c14d60de10c3604d97cd861b9261d5f687e3efb41bc'){
+      document.getElementById('pw-gate').style.display='none';
+      document.getElementById('editor-content').style.display='';
+      sessionStorage.setItem('chbs-editor-auth','1');
+    }else{
+      document.getElementById('pw-error').style.display='block';
+      document.getElementById('pw-input').value='';
+      document.getElementById('pw-input').focus();
+    }
+  });
+}
+if(sessionStorage.getItem('chbs-editor-auth')==='1'){
+  document.getElementById('pw-gate').style.display='none';
+  document.getElementById('editor-content').style.display='';
+}else{
+  document.getElementById('pw-input').focus();
+}
 </script>
 </body>
 </html>
