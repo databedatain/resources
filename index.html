@@ -60,14 +60,17 @@ body{font-family:'Karla',sans-serif;color:#fff;background:var(--p2)}
 .home-card.coming-soon:hover{background:rgba(255,255,255,.06);transform:none;box-shadow:none}
 .home-card.coming-soon::after{display:none}
 .home-nf,.home-ft,.home-hero,.home-info-bar{display:none}
+.home-card.highlighted{border-color:var(--p4);box-shadow:0 0 0 1px var(--p4)}
 .no-results{text-align:center;padding:2rem 1rem;color:rgba(255,255,255,.4);font-size:.9rem;grid-column:1/-1;display:none}
 .search-results{max-width:820px;width:100%;margin:.5rem auto 0;display:none}
 .search-results.active{display:block}
-.search-result{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.75rem 1rem;margin-bottom:.5rem;cursor:pointer;transition:all .15s;text-decoration:none;color:#fff}
+.search-result{display:flex;align-items:center;gap:1rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.65rem 1rem;margin-bottom:.4rem;cursor:pointer;transition:all .15s;text-decoration:none;color:#fff}
 .search-result:hover{border-color:rgba(255,255,255,.15);box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.search-result .result-name{font-weight:700;font-size:.95rem;color:#fff}
-.search-result .result-detail{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:2px}
-.search-result .result-sheet{display:inline-block;font-size:.7rem;color:var(--p1-40);font-weight:700;background:rgba(92,139,195,.15);padding:2px 8px;border-radius:4px;margin-top:4px}
+.search-result .result-info{flex:1;min-width:0}
+.search-result .result-name{font-weight:700;font-size:.9rem;color:#fff}
+.search-result .result-detail{font-size:.78rem;color:rgba(255,255,255,.5);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result .result-sheet{display:flex;align-items:center;gap:4px;font-size:.7rem;color:var(--p1-40);font-weight:700;background:rgba(92,139,195,.15);padding:4px 10px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+.search-result .result-sheet .rs-icon{font-size:.9rem}
 .search-count{font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:.5rem}
 #sheet-container{flex:1;display:flex;flex-direction:column}
 .screen-view{display:flex;flex-direction:column;flex:1;min-height:0}
@@ -225,7 +228,7 @@ function renderHome(){
     var st=e.status||'live';
     if(st==='pending'||st==='in-progress')return;
     if(!has&&st!=='coming-soon')return;
-    var c=document.createElement('a');c.className='home-card'+(st==='coming-soon'?' coming-soon':'');
+    var c=document.createElement('a');c.className='home-card'+(st==='coming-soon'?' coming-soon':'');c.setAttribute('data-sheet',slug);
     if(st!=='coming-soon'&&has){c.href='#/'+slug}else{c.href='#';c.addEventListener('click',function(ev){ev.preventDefault()})}
     c.innerHTML='<div class="card-icon">'+(e.icon||'')+'</div><div class="card-title">'+e.title+'</div>';
     g.appendChild(c);
@@ -275,30 +278,34 @@ function handleSearch(){
   var grid=document.getElementById('home-grid');
   var sr=document.getElementById('search-results');
   var nr=document.getElementById('no-results');
+  var cards=grid.querySelectorAll('.home-card');
+  cards.forEach(function(c){c.classList.remove('highlighted')});
   if(!q){
     sr.className='search-results';sr.innerHTML='';
-    grid.style.display='';nr.style.display='none';
+    nr.style.display='none';
     return;
   }
-  grid.style.display='none';
   var words=q.split(/\s+/);
   var matches=SEARCH_INDEX.filter(function(item){return words.every(function(w){return item.text.indexOf(w)>-1})});
   matches.sort(function(a,b){return(a.pri||2)-(b.pri||2)});
+  var hitSheets={};
+  matches.forEach(function(m){hitSheets[m.sheet]=1});
+  cards.forEach(function(c){if(hitSheets[c.getAttribute('data-sheet')])c.classList.add('highlighted')});
+  var results=[];
   var seen={};
-  var deduped=[];
   matches.forEach(function(m){
-    if(m.type==='sheet'){var k='sheet:'+m.sheet;if(seen[k])return;seen[k]=1}
-    deduped.push(m);
+    if(m.type==='sheet')return;
+    var k=m.name+'|'+m.sheet;if(seen[k])return;seen[k]=1;
+    results.push(m);
   });
-  matches=deduped;
   if(matches.length===0){nr.style.display='block';sr.className='search-results';sr.innerHTML='';return}
   nr.style.display='none';
-  var html='<div class="search-count">'+matches.length+' result'+(matches.length!==1?'s':'')+' found</div>';
-  matches.slice(0,30).forEach(function(m){
-    html+='<a class="search-result" href="#/'+m.sheet+'"'+(m.type==='sheet'?' style="border-left:3px solid var(--gd)"':'')+'><div class="result-name">'+esc(m.name)+'</div>'+(m.detail?'<div class="result-detail">'+esc(m.detail)+'</div>':'')+'<span class="result-sheet">'+m.icon+' '+esc(m.sheetTitle)+'</span></a>';
+  var html='';
+  results.slice(0,30).forEach(function(m){
+    html+='<a class="search-result" href="#/'+m.sheet+'"><div class="result-info"><div class="result-name">'+esc(m.name)+'</div>'+(m.detail?'<div class="result-detail">'+esc(m.detail)+'</div>':'')+'</div><span class="result-sheet"><span class="rs-icon">'+m.icon+'</span>'+esc(m.sheetTitle)+'</span></a>';
   });
-  if(matches.length>30)html+='<div class="search-count">Showing first 30 of '+matches.length+' results. Try a more specific search.</div>';
-  sr.innerHTML=html;sr.className='search-results active';
+  if(results.length>30)html+='<div class="search-count">Showing first 30 of '+results.length+' results.</div>';
+  sr.innerHTML=html;sr.className=results.length?'search-results active':'search-results';
 }
 function showSheet(k){
   if(!DATA.sheets[k])return;
