@@ -27,7 +27,7 @@
   --p4-60: #F5D566;
   --p4-40: #F9E399;
   --p4-20: #FCF1CC;
-  --sidebar-w: 320px;
+  --sidebar-w: 300px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,21 +36,17 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 /* ===================== LAYOUT ===================== */
 .page-layout {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  display: flex; flex-direction: column; height: 100vh;
 }
 .page-body {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
+  display: flex; flex: 1; min-height: 0; overflow: hidden;
 }
 
-/* Crisis banner spans full width */
+/* Crisis banner */
 .crisis {
+  flex-shrink: 0;
   background: var(--p4); color: var(--p2); text-align: center;
-  padding: .4rem 1rem; font-family: 'Barlow', sans-serif; font-size: .78rem; font-weight: 600;
+  padding: .35rem 1rem; font-family: 'Barlow', sans-serif; font-size: .76rem; font-weight: 600;
 }
 .crisis a { color: var(--p2); font-weight: 700; }
 
@@ -59,27 +55,27 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
   width: var(--sidebar-w); flex-shrink: 0;
   background: #152d49;
   display: flex; flex-direction: column;
-  padding: 1rem 1.25rem;
+  padding: 1.25rem;
   overflow-y: auto;
   border-right: 1px solid rgba(255,255,255,.06);
 }
 
 /* Logo card */
 .logo-card {
-  background: #fff;
-  border-radius: 10px;
-  padding: .7rem 1rem;
-  text-align: center;
+  background: #fff; border-radius: 10px;
+  padding: .75rem 1.25rem; text-align: center;
   box-shadow: 0 2px 12px rgba(0,0,0,.15);
   border-bottom: 3px solid var(--p4);
+  flex-shrink: 0;
 }
 .logo-card img {
-  width: 100%; max-width: 220px; height: auto;
+  display: block; width: auto; height: auto;
+  max-width: 100%;
 }
 
 /* Title area */
 .sidebar-title {
-  text-align: center; margin-top: .75rem;
+  text-align: center; margin-top: .75rem; flex-shrink: 0;
 }
 .sidebar-title h1 {
   font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
@@ -92,61 +88,77 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 /* Announcements */
 .sidebar-announcements {
-  margin-top: .75rem; padding: .5rem .65rem;
+  margin-top: .6rem; padding: .5rem .65rem; flex-shrink: 0;
   background: rgba(255,255,255,.05);
   border-radius: 8px; border-left: 3px solid var(--p4);
 }
 .sidebar-announcements .ann-label {
   font-family: 'Barlow', sans-serif; font-weight: 600;
   font-size: .6rem; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--p4); margin-bottom: .15rem;
+  color: var(--p4); margin-bottom: .1rem;
 }
 .sidebar-announcements p {
   font-size: .72rem; opacity: .6; line-height: 1.4;
 }
 
-/* Spacer pushes info to bottom */
-.sidebar-spacer { flex: 1; }
+/* Sheet nav links (visible when on a sheet page) */
+.sidebar-sheets { margin-top: .6rem; flex-shrink: 0; }
+.sidebar-sheets .sheets-label {
+  font-family: 'Barlow', sans-serif; font-weight: 600;
+  font-size: .6rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--p4); margin-bottom: .3rem;
+}
+.sidebar-sheets a {
+  display: block; padding: .3rem .5rem; margin-bottom: .15rem;
+  font-family: 'Barlow', sans-serif; font-size: .75rem; font-weight: 500;
+  color: rgba(255,255,255,.6); text-decoration: none;
+  border-radius: 5px; transition: all .15s;
+}
+.sidebar-sheets a:hover { color: #fff; background: rgba(255,255,255,.06); }
+.sidebar-sheets a.active {
+  color: #fff; background: rgba(92,139,195,.2);
+  border-left: 2px solid var(--p4); font-weight: 600;
+}
+
+/* Spacer */
+.sidebar-spacer { flex: 1; min-height: .5rem; }
 
 /* Office info at bottom */
 .sidebar-info {
-  font-family: 'Barlow', sans-serif;
+  font-family: 'Barlow', sans-serif; flex-shrink: 0;
   border-top: 1px solid rgba(255,255,255,.08);
   padding-top: .5rem; margin-top: .5rem;
 }
 .sidebar-info .info-label {
   font-weight: 600; font-size: .58rem; letter-spacing: .08em;
   text-transform: uppercase; color: var(--p4); margin-bottom: .1rem;
-  margin-top: .4rem;
+  margin-top: .35rem;
 }
 .sidebar-info .info-label:first-child { margin-top: 0; }
-
 .sidebar-info .office-row {
-  display: flex; flex-wrap: wrap; gap: .1rem .8rem;
+  display: flex; flex-wrap: wrap; gap: .05rem .8rem;
 }
 .sidebar-info .office {
-  font-size: .68rem; opacity: .7; line-height: 1.25;
+  font-size: .66rem; opacity: .7; line-height: 1.25;
 }
 .sidebar-info .office strong {
-  font-weight: 600; color: var(--p4-60); font-size: .65rem; margin-right: .2rem;
+  font-weight: 600; color: var(--p4-60); font-size: .64rem; margin-right: .15rem;
 }
 .sidebar-info .info-value {
-  font-size: .72rem; opacity: .8; line-height: 1.35;
+  font-size: .7rem; opacity: .8; line-height: 1.3;
 }
 .sidebar-info .info-value a { color: #fff; text-decoration: none; }
-.sidebar-info .phone-main {
-  font-weight: 700; font-size: .85rem; color: #fff;
-}
+.sidebar-info .phone-main { font-weight: 700; font-size: .82rem; color: #fff; }
 .sidebar-info .crisis-block {
   border-top: 1px solid rgba(255,255,255,.08);
-  padding-top: .35rem; margin-top: .35rem;
+  padding-top: .3rem; margin-top: .3rem;
 }
 .sidebar-info .crisis-head {
-  font-weight: 700; color: var(--p4); font-size: .62rem;
+  font-weight: 700; color: var(--p4); font-size: .6rem;
   letter-spacing: .06em; text-transform: uppercase;
 }
 .sidebar-info .crisis-detail {
-  font-size: .68rem; opacity: .7; line-height: 1.4;
+  font-size: .66rem; opacity: .7; line-height: 1.35;
 }
 .sidebar-info .crisis-detail a {
   color: var(--p4-60); text-decoration: none; font-weight: 600;
@@ -165,11 +177,11 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 }
 
 /* Search */
-.search-wrap { max-width: 820px; width: 100%; margin-bottom: .75rem; }
+.search-wrap { max-width: 820px; width: 100%; margin-bottom: .75rem; flex-shrink: 0; }
 .search-wrap input {
   width: 100%; padding: .55rem 1rem;
   border: 1px solid rgba(255,255,255,.12);
-  border-radius: 8px; font-family: 'Karla', sans-serif; font-size: .9rem;
+  border-radius: 8px; font-family: 'Karla', sans-serif; font-size: .88rem;
   outline: none; background: rgba(255,255,255,.07); color: #fff;
   transition: all .2s;
 }
@@ -182,7 +194,7 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 /* Card grid */
 .card-grid {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem;
-  max-width: 820px;
+  max-width: 820px; flex-shrink: 0;
 }
 .card {
   background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
@@ -205,43 +217,123 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
   font-size: .78rem; color: var(--p1-40);
 }
 
-/* Search result area (placeholder) */
-.search-results-area {
-  max-width: 820px; margin-top: .75rem;
-  font-size: .82rem; opacity: .4; font-style: italic;
-  display: none;
+/* ===================== SHEET VIEW ===================== */
+.sheet-view { display: none; flex-direction: column; flex: 1; }
+.sheet-view.active { display: flex; }
+
+.sheet-header {
+  background: rgba(255,255,255,.06); border-radius: 8px;
+  padding: .75rem 1.25rem; margin-bottom: 1rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sheet-header h2 {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 1.6rem; letter-spacing: .01em;
+}
+.sheet-header .print-btn {
+  padding: .4rem 1rem; border: 1px solid rgba(255,255,255,.2);
+  background: transparent; border-radius: 6px; color: rgba(255,255,255,.7);
+  font-family: 'Barlow', sans-serif; font-weight: 600; font-size: .78rem;
+  cursor: pointer; transition: all .15s;
+}
+.sheet-header .print-btn:hover {
+  background: rgba(255,255,255,.08); color: #fff;
+}
+
+.sheet-body {
+  flex: 1; overflow-y: auto; padding-right: .5rem;
+}
+.sheet-body::-webkit-scrollbar { width: 5px; }
+.sheet-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
+
+/* FAQ block */
+.s-faq { margin-bottom: .75rem; }
+.s-faq h3 {
+  font-family: 'Barlow', sans-serif; font-weight: 700;
+  font-size: .95rem; color: var(--p4); margin-bottom: .2rem;
+}
+.s-faq p {
+  font-size: .84rem; opacity: .75; line-height: 1.55;
+}
+
+/* Callout */
+.s-callout {
+  border-left: 3px solid var(--p4);
+  background: rgba(255,255,255,.04);
+  padding: .6rem .85rem; border-radius: 0 8px 8px 0;
+  margin-bottom: .75rem;
+}
+.s-callout h3 {
+  font-family: 'Barlow', sans-serif; font-weight: 700;
+  font-size: .92rem; color: var(--p1-40); margin-bottom: .15rem;
+}
+.s-callout p {
+  font-size: .82rem; opacity: .65; line-height: 1.5;
+}
+
+/* Section header */
+.s-section-hdr {
+  background: var(--p1); color: #fff;
+  padding: .35rem .75rem; border-radius: 5px;
+  font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .85rem;
+  text-align: center; margin: .75rem 0 .5rem;
+}
+.s-section-hdr:first-child { margin-top: 0; }
+
+/* Resource entry */
+.s-entry {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06);
+  border-radius: 8px; padding: .55rem .75rem; margin-bottom: .4rem;
+  transition: all .15s;
+}
+.s-entry:hover { border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.06); }
+.s-entry .e-name {
+  font-weight: 700; font-size: .88rem; color: #fff;
+}
+.s-entry .e-svc {
+  font-size: .78rem; color: var(--p3-60); font-style: italic;
+}
+.s-entry .e-contact {
+  display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .2rem;
+  font-size: .8rem;
+}
+.s-entry .e-phone { color: var(--p4-60); font-weight: 600; }
+.s-entry .e-addr { color: rgba(255,255,255,.5); }
+.s-entry .e-web { color: var(--p1-60); }
+
+/* Two column layout for sheet */
+.sheet-columns {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start;
 }
 
 /* ===================== FOOTER ===================== */
 .nf-footer {
   flex-shrink: 0;
-  background: #0f2236; padding: .5rem 1.5rem;
+  background: #0f2236; padding: .45rem 1.5rem;
   border-top: 2px solid var(--p4);
 }
 .nf-footer-inner {
   max-width: 1200px; margin: 0 auto;
   display: flex; align-items: baseline; gap: .35rem; flex-wrap: wrap;
-  font-size: .76rem; line-height: 1.7;
+  font-size: .74rem; line-height: 1.7;
 }
 .nf-footer-inner .nf-title {
   font-family: 'Barlow', sans-serif; font-weight: 700;
   color: var(--p4); white-space: nowrap;
 }
-.nf-footer-inner .nf-text {
-  color: rgba(255,255,255,.55);
-}
+.nf-footer-inner .nf-text { color: rgba(255,255,255,.55); }
 .nf-footer-inner a {
   color: var(--p1-40); text-decoration: none; font-weight: 600;
 }
 .nf-footer-inner a:hover { color: #fff; text-decoration: underline; }
 .nf-footer-inner .sep { color: rgba(255,255,255,.18); margin: 0 .1rem; }
-.nf-footer-inner .phone { color: rgba(255,255,255,.35); font-size: .73rem; }
+.nf-footer-inner .phone { color: rgba(255,255,255,.35); font-size: .71rem; }
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 900px) {
   .page-body { flex-direction: column; }
   .sidebar {
-    width: 100%; position: relative; height: auto;
+    width: 100%; height: auto;
     flex-direction: row; flex-wrap: wrap;
     align-items: center; gap: 1rem;
     padding: 1rem 1.5rem;
@@ -250,10 +342,9 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
   .logo-card { max-width: 180px; padding: .6rem .8rem; }
   .sidebar-title { text-align: left; margin-top: 0; }
   .sidebar-title h1 { font-size: 1.8rem; }
-  .sidebar-spacer { display: none; }
-  .sidebar-announcements { display: none; }
-  .sidebar-info { display: none; }
+  .sidebar-spacer, .sidebar-announcements, .sidebar-info, .sidebar-sheets { display: none; }
   .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .sheet-columns { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -261,15 +352,12 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 
 <div class="page-layout">
 
-  <!-- Crisis banner -->
   <div class="crisis">
     Experiencing a mental health crisis? Call MCAT at <a href="tel:3157326228">315-732-6228</a> for immediate assistance (24/7).
   </div>
 
-  <!-- Body: sidebar + main -->
   <div class="page-body">
 
-  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="logo-card">
       <img src="src/CHBS Logo.png" alt="Community Health &amp; Behavioral Services – A Division of Upstate Caring Partners">
@@ -280,9 +368,21 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
       <div class="sub">Your guide to local services, support, and resources in the Utica area</div>
     </div>
 
-    <div class="sidebar-announcements">
+    <div class="sidebar-announcements" id="announcements">
       <div class="ann-label">Announcements</div>
       <p>Space for news, seasonal updates, new resources, and program highlights.</p>
+    </div>
+
+    <!-- Sheet nav: shown when viewing a sheet -->
+    <div class="sidebar-sheets" id="sheet-nav" style="display:none">
+      <div class="sheets-label">Resources</div>
+      <a href="#" onclick="showHome(event)">← Back to Hub</a>
+      <a href="#" onclick="showSheet('dv',event)" data-sheet="dv">🚨 Domestic Violence</a>
+      <a href="#" onclick="showSheet('crisis',event)" data-sheet="crisis">🆘 Crisis Hotlines</a>
+      <a href="#" onclick="showSheet('food',event)" data-sheet="food">🍽️ Food</a>
+      <a href="#" onclick="showSheet('housing',event)" data-sheet="housing">🏠 Housing &amp; Shelter</a>
+      <a href="#" onclick="showSheet('legal',event)" data-sheet="legal">⚖️ Legal</a>
+      <a href="#" onclick="showSheet('medical',event)" data-sheet="medical">🏥 Primary Care</a>
     </div>
 
     <div class="sidebar-spacer"></div>
@@ -294,14 +394,12 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
         <div class="office"><strong>Rome</strong> 207 W. Dominick St., Rome 13440</div>
         <div class="office"><strong>Herkimer</strong> 235 N. Prospect St., Herkimer 13350</div>
       </div>
-
       <div class="info-label">Hours &amp; Contact</div>
       <div class="info-value">
         Mon–Fri 8am – 4:30pm<br>
         <span class="phone-main"><a href="tel:3157988868">315-798-8868</a></span>
-        <span style="opacity:.4;font-size:.65rem;margin-left:.2rem">Fax: 315-733-7105</span>
+        <span style="opacity:.4;font-size:.63rem;margin-left:.2rem">Fax: 315-733-7105</span>
       </div>
-
       <div class="crisis-block">
         <div class="crisis-head">Crisis Stabilization Center</div>
         <div class="crisis-detail">
@@ -312,31 +410,137 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
     </div>
   </aside>
 
-  <!-- Main content -->
-  <main class="main">
-    <div class="search-wrap">
-      <input type="text" placeholder="Search all resources, services, phone numbers..." id="search-input">
+  <main class="main" id="main-content">
+
+    <!-- HOME VIEW -->
+    <div id="home-view">
+      <div class="search-wrap">
+        <input type="text" placeholder="Search all resources, services, phone numbers..." id="search-input">
+      </div>
+      <div class="card-grid" id="card-grid">
+        <div class="card" onclick="showSheet('crisis')"><div class="icon">🆘</div><div class="label">Crisis Hotlines</div></div>
+        <div class="card" onclick="showSheet('dv')"><div class="icon">🚨</div><div class="label">Domestic Violence</div></div>
+        <div class="card" onclick="showSheet('food')"><div class="icon">🍽️</div><div class="label">Food</div></div>
+        <div class="card" onclick="showSheet('housing')"><div class="icon">🏠</div><div class="label">Housing &amp; Shelter</div></div>
+        <div class="card" onclick="showSheet('legal')"><div class="icon">⚖️</div><div class="label">Legal</div></div>
+        <div class="card" onclick="showSheet('medical')"><div class="icon">🏥</div><div class="label">Primary Care</div></div>
+        <div class="card" onclick="showSheet('mental')"><div class="icon">🧠</div><div class="label">Mental Health</div></div>
+        <div class="card" onclick="showSheet('substance')"><div class="icon">💊</div><div class="label">Substance Use</div></div>
+      </div>
     </div>
 
-    <div class="card-grid" id="card-grid">
-      <div class="card" data-cat="crisis"><div class="icon">🆘</div><div class="label">Crisis Hotlines</div></div>
-      <div class="card" data-cat="mental"><div class="icon">🧠</div><div class="label">Mental Health</div></div>
-      <div class="card" data-cat="substance"><div class="icon">💊</div><div class="label">Substance Use</div></div>
-      <div class="card" data-cat="housing"><div class="icon">🏠</div><div class="label">Housing</div></div>
-      <div class="card" data-cat="food"><div class="icon">🍽️</div><div class="label">Food &amp; Nutrition</div></div>
-      <div class="card" data-cat="legal"><div class="icon">⚖️</div><div class="label">Legal Aid</div></div>
-      <div class="card" data-cat="family"><div class="icon">👶</div><div class="label">Children &amp; Family</div></div>
-      <div class="card" data-cat="medical"><div class="icon">🏥</div><div class="label">Medical Services</div></div>
+    <!-- SHEET VIEW: Domestic Violence (sample) -->
+    <div class="sheet-view" id="sheet-dv">
+      <div class="sheet-header">
+        <h2>DOMESTIC VIOLENCE</h2>
+        <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+      </div>
+      <div class="sheet-body">
+        <div class="sheet-columns">
+          <div>
+            <div class="s-faq">
+              <h3>What is Domestic Violence?</h3>
+              <p>Domestic violence is a pattern of behaviors used by one partner to maintain power and control over another in an intimate relationship. It can include physical, emotional, sexual, financial, and psychological abuse. It affects people of all ages, genders, and backgrounds.</p>
+            </div>
+            <div class="s-faq">
+              <h3>What Kind of Resources Are There?</h3>
+              <p>There are hotlines for immediate support, shelters for safe housing, legal advocacy for orders of protection, counseling services, support groups, and help with safety planning. Many services are free and confidential.</p>
+            </div>
+            <div class="s-faq">
+              <h3>What Happens When I Call a Hotline?</h3>
+              <p>A trained advocate will listen without judgment. They can help you create a safety plan, connect you with local resources, and support whatever decisions you make. You don't have to give your name.</p>
+            </div>
+            <div class="s-callout">
+              <h3>How do I get help to get started?</h3>
+              <p>Call any of the hotlines listed here, or reach out to CHBS directly. Staff can assist with referrals, safety planning, and connecting you with local services. Walk-ins are welcome at any of our offices.</p>
+            </div>
+          </div>
+          <div>
+            <div class="s-section-hdr">Hotlines</div>
+            <div class="s-entry">
+              <div class="e-name">NYS Office for the Prevention of Domestic Violence</div>
+              <div class="e-contact">
+                <span class="e-phone">1-800-942-6906</span>
+              </div>
+            </div>
+            <div class="s-entry">
+              <div class="e-name">National Domestic Violence Hotline</div>
+              <div class="e-contact">
+                <span class="e-phone">1-800-799-7233</span>
+                <span class="e-addr">TTY: 1-800-787-3224</span>
+              </div>
+            </div>
+            <div class="s-entry">
+              <div class="e-name">YWCA Mohawk Valley</div>
+              <div class="e-svc">DV Crisis Hotline</div>
+              <div class="e-contact">
+                <span class="e-phone">315-797-7740</span>
+              </div>
+            </div>
+
+            <div class="s-section-hdr">Local Services</div>
+            <div class="s-entry">
+              <div class="e-name">YWCA Mohawk Valley</div>
+              <div class="e-svc">Advocacy, Shelter, Counseling, Support Groups</div>
+              <div class="e-contact">
+                <span class="e-phone">315-797-7740</span>
+                <span class="e-addr">1000 Cornelia St., Utica 13502</span>
+              </div>
+            </div>
+            <div class="s-entry">
+              <div class="e-name">Oneida County Family Violence Prevention Council</div>
+              <div class="e-svc">Community Coordination &amp; Referrals</div>
+              <div class="e-contact">
+                <span class="e-phone">315-798-5456</span>
+              </div>
+            </div>
+            <div class="s-entry">
+              <div class="e-name">Legal Aid Society of Mid-New York</div>
+              <div class="e-svc">Orders of Protection, Legal Advocacy</div>
+              <div class="e-contact">
+                <span class="e-phone">315-793-7000</span>
+                <span class="e-web">www.lasmny.org</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="search-results-area" id="search-results">
-      <!-- Search results appear here -->
+    <!-- Placeholder for other sheets -->
+    <div class="sheet-view" id="sheet-crisis">
+      <div class="sheet-header"><h2>CRISIS HOTLINES</h2><button class="print-btn">Print / Save PDF</button></div>
+      <div class="sheet-body"><p style="opacity:.4;padding:2rem">Sheet content loads here...</p></div>
     </div>
+    <div class="sheet-view" id="sheet-food">
+      <div class="sheet-header"><h2>FOOD</h2><button class="print-btn">Print / Save PDF</button></div>
+      <div class="sheet-body"><p style="opacity:.4;padding:2rem">Sheet content loads here...</p></div>
+    </div>
+    <div class="sheet-view" id="sheet-housing">
+      <div class="sheet-header"><h2>HOUSING &amp; SHELTER</h2><button class="print-btn">Print / Save PDF</button></div>
+      <div class="sheet-body"><p style="opacity:.4;padding:2rem">Sheet content loads here...</p></div>
+    </div>
+    <div class="sheet-view" id="sheet-legal">
+      <div class="sheet-header"><h2>LEGAL</h2><button class="print-btn">Print / Save PDF</button></div>
+      <div class="sheet-body"><p style="opacity:.4;padding:2rem">Sheet content loads here...</p></div>
+    </div>
+    <div class="sheet-view" id="sheet-medical">
+      <div class="sheet-header"><h2>PRIMARY CARE</h2><button class="print-btn">Print / Save PDF</button></div>
+      <div class="sheet-body"><p style="opacity:.4;padding:2rem">Sheet content loads here...</p></div>
+    </div>
+    <div class="sheet-view" id="sheet-mental">
+      <div class="sheet-header"><h2>MENTAL HEALTH</h2><button class="print-btn">Print / Save PDF</button></div>
+      <div class="sheet-body"><p style="opacity:.4;padding:2rem">Sheet content loads here...</p></div>
+    </div>
+    <div class="sheet-view" id="sheet-substance">
+      <div class="sheet-header"><h2>SUBSTANCE USE</h2><button class="print-btn">Print / Save PDF</button></div>
+      <div class="sheet-body"><p style="opacity:.4;padding:2rem">Sheet content loads here...</p></div>
+    </div>
+
   </main>
 
-  </div><!-- /page-body -->
+  </div>
 
-  <!-- Footer -->
   <footer class="nf-footer">
     <div class="nf-footer-inner">
       <span class="nf-title">Not Finding What You Need?</span>
@@ -354,12 +558,39 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 </div>
 
 <script>
-// Simple search highlight demo
-var input = document.getElementById('search-input');
-var cards = document.querySelectorAll('.card');
-input.addEventListener('input', function() {
+function showSheet(id, e) {
+  if (e) e.preventDefault();
+  // Hide home, show sheet
+  document.getElementById('home-view').style.display = 'none';
+  document.querySelectorAll('.sheet-view').forEach(function(s) { s.classList.remove('active'); });
+  var sheet = document.getElementById('sheet-' + id);
+  if (sheet) sheet.classList.add('active');
+  // Show sheet nav in sidebar, hide announcements
+  document.getElementById('sheet-nav').style.display = '';
+  document.getElementById('announcements').style.display = 'none';
+  // Highlight active link
+  document.querySelectorAll('.sidebar-sheets a[data-sheet]').forEach(function(a) {
+    a.classList.toggle('active', a.dataset.sheet === id);
+  });
+  // Scroll main to top
+  document.getElementById('main-content').scrollTop = 0;
+}
+
+function showHome(e) {
+  if (e) e.preventDefault();
+  document.getElementById('home-view').style.display = '';
+  document.querySelectorAll('.sheet-view').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('sheet-nav').style.display = 'none';
+  document.getElementById('announcements').style.display = '';
+  document.querySelectorAll('.sidebar-sheets a[data-sheet]').forEach(function(a) {
+    a.classList.remove('active');
+  });
+}
+
+// Search highlight
+document.getElementById('search-input').addEventListener('input', function() {
   var q = this.value.trim().toLowerCase();
-  cards.forEach(function(c) {
+  document.querySelectorAll('.card').forEach(function(c) {
     var label = c.querySelector('.label').textContent.toLowerCase();
     if (q && label.indexOf(q) > -1) {
       c.style.background = 'rgba(239,185,0,.15)';
