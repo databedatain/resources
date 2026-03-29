@@ -3330,5 +3330,28 @@
         }
       ]
     }
+  },
+  "siteInfo": {
+    "offices": [
+      {
+        "label": "Utica",
+        "address": "1002 Oswego Street , Utica 13502"
+      },
+      {
+        "label": "Rome",
+        "address": "207 W. Dominick Street, Rome 13440"
+      },
+      {
+        "label": "Herkimer",
+        "address": "235 N. Prospect Street., Herkimer 13350"
+      }
+    ],
+    "hours": "Mon–Fri 8am – 4:30pm",
+    "phone": "315-798-8868",
+    "fax": "315-733-7105",
+    "crisisAddress": "1002 Oswego St., Utica 13502",
+    "crisisPhone": "315-520-7802",
+    "crisisHours": "24/7/365",
+    "announcements": "Our offices in Utica, Rome, and Herkimer will be closed on Monday, Febrjune 25th. Crisis Stabilization will remain open. "
   }
 }
