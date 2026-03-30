@@ -261,7 +261,8 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
   .resource-column { overflow: hidden; }
 
   /* Fill lines (worksheet blanks) */
-  .fill-line { display: inline-block; border-bottom: 1px solid #888; flex: 1; min-width: .5in; height: 1em; }
+  .fill-line { display: inline-block; border-bottom: 1px solid #888; flex: 1; min-width: .5in; height: .2in !important; }
+  .faq-block span[style*="border-bottom"], .chbs-callout span[style*="border-bottom"] { height: .2in !important; }
   .faq-block p:has(.fill-line), .faq-block div:not(.two-col-block):has(.fill-line),
   .chbs-callout p:has(.fill-line), .chbs-callout div:has(.fill-line) { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 3px; }
 
