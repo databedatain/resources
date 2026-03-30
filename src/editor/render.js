@@ -12,19 +12,27 @@ function renderSheetList(){
     const rC=blocks.filter(b=>b.type==='SECTION').reduce((s,b)=>(s+(b.r||[]).length),0);
     const qC=blocks.filter(b=>b.type==='QR').length;
     const pC=sheet?sheet.pages.length:0;
-    html+=`<div class="sheet-list-item" draggable="true" data-idx="${i}"
-      ondragstart="dragSheetStart(event,${i})" ondragover="dragSheetOver(event,${i})"
-      ondragleave="dragSheetLeave(event)" ondrop="dragSheetDrop(event,${i})"
-      onclick="openSheet('${slug}')">
-      <span class="drag-handle" onclick="event.stopPropagation()" title="Drag to reorder">⠿</span>
-      <span class="sli-icon">${entry.icon||'📄'}</span>
-      <div class="sli-info">
-        <div class="sli-title">${esc(entry.title)}</div>
-        <div class="sli-meta">${pC} pg · ${fC} FAQ · ${sC} sec · ${rC} res${qC?' · '+qC+' QR':''}${entry.owner?' · <span class="owner-badge">'+esc(entry.owner)+'</span>':''}</div>
+    html+=`<div class="sheet-list-entry" data-idx="${i}">
+      <div class="sheet-list-item" draggable="true"
+        ondragstart="dragSheetStart(event,${i})" ondragover="dragSheetOver(event,${i})"
+        ondragleave="dragSheetLeave(event)" ondrop="dragSheetDrop(event,${i})"
+        onclick="openSheet('${slug}')">
+        <span class="drag-handle" onclick="event.stopPropagation()" title="Drag to reorder">⠿</span>
+        <span class="sli-icon">${entry.icon||'📄'}</span>
+        <div class="sli-info">
+          <div class="sli-title">${esc(entry.title)}</div>
+          <div class="sli-meta">${pC} pg · ${fC} FAQ · ${sC} sec · ${rC} res${qC?' · '+qC+' QR':''}</div>
+        </div>
+        <div class="sli-owner-wrap" onclick="event.stopPropagation()">
+          <input type="text" class="sli-owner-input" value="${esc(entry.owner||'')}" placeholder="Owner" onchange="updateSheetOwner('${slug}',this.value)" title="Sheet owner">
+        </div>
+        <select class="sli-status-select ${entry.status||'live'}" onclick="event.stopPropagation()" onchange="setStatus(${i},this.value)" title="Change status">
+          ${STATUSES.map(s=>'<option value="'+s+'"'+(s===(entry.status||'live')?' selected':'')+'>'+statusLabel(s)+'</option>').join('')}
+        </select>
       </div>
-      <select class="sli-status-select ${entry.status||'live'}" onclick="event.stopPropagation()" onchange="setStatus(${i},this.value)" title="Change status">
-        ${STATUSES.map(s=>'<option value="'+s+'"'+(s===(entry.status||'live')?' selected':'')+'>'+statusLabel(s)+'</option>').join('')}
-      </select>
+      <div class="sli-comments" onclick="event.stopPropagation()">
+        <input type="text" class="sli-comments-input" value="${esc(entry.comments||'')}" placeholder="Notes / plan..." onchange="updateSheetComments('${slug}',this.value)" title="Comments or plan for this sheet">
+      </div>
     </div>`;
   });
   html+='</div><div style="margin-top:12px;text-align:center"><button class="add-resource-btn" onclick="addNewSheet()" style="max-width:300px;margin:0 auto">+ Add New Sheet</button></div>';
