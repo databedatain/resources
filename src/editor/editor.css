@@ -51,9 +51,10 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .sheet-list-item .sli-status-select.live{background:var(--success-light);color:var(--success);border-color:#a5d6a7}
 .sheet-list-item .drag-handle{cursor:grab;color:var(--g300,#bbb);font-size:1.1rem;padding:2px 6px;border-radius:3px;transition:color .15s,background .15s}
 .sheet-list-item .drag-handle:hover{color:var(--g700);background:var(--g100)}
-.sheet-list-item.dragging{opacity:.4;border-style:dashed}
-.sheet-list-item.drag-over-above{border-top:3px solid var(--accent)}
-.sheet-list-item.drag-over-below{border-bottom:3px solid var(--accent)}
+.sheet-list-item.dragging{opacity:.4}
+.sheet-list-entry:has(.sheet-list-item.dragging){opacity:.4;border-style:dashed}
+.sheet-list-entry:has(.sheet-list-item.drag-over-above){border-top:3px solid var(--accent)}
+.sheet-list-entry:has(.sheet-list-item.drag-over-below){border-bottom:3px solid var(--accent)}
 
 /* CONTENT BLOCKS */
 .sheet-editor-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--g200)}
@@ -221,6 +222,25 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .owner-row input{padding:3px 8px;border:1px solid var(--g200);border-radius:4px;font-size:.78rem;width:140px;background:var(--wh)}
 .owner-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(46,100,148,.12)}
 .owner-badge{display:inline-block;font-size:.65rem;font-weight:600;color:var(--g400);background:var(--g50);padding:1px 6px;border-radius:3px;margin-left:4px}
+
+/* Sheet list entry wrapper */
+.sheet-list-entry{background:var(--card-bg);border:1px solid var(--card-border);border-radius:6px;overflow:hidden;transition:all .12s}
+.sheet-list-entry:hover{border-color:var(--accent)}
+.sheet-list-entry .sheet-list-item{border:none;border-radius:0;background:transparent}
+.sheet-list-entry .sheet-list-item:hover{background:var(--accent-light)}
+
+/* Inline owner input in sheet list */
+.sli-owner-wrap{flex-shrink:0}
+.sli-owner-input{padding:2px 6px;border:1px solid var(--g200);border-radius:4px;font-size:.72rem;width:90px;background:var(--wh);color:var(--g700);font-family:inherit}
+.sli-owner-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px rgba(46,100,148,.12)}
+.sli-owner-input::placeholder{color:var(--g400);font-style:italic}
+
+/* Comments/plan line under sheet list item */
+.sli-comments{padding:0 14px 8px 54px}
+.sli-comments-input{width:100%;padding:3px 8px;border:1px solid transparent;border-radius:4px;font-size:.74rem;color:var(--g500);background:transparent;font-family:inherit;transition:all .15s}
+.sli-comments-input:hover{border-color:var(--g200);background:var(--wh)}
+.sli-comments-input:focus{outline:none;border-color:var(--accent);background:var(--wh);box-shadow:0 0 0 2px rgba(46,100,148,.12);color:var(--g700)}
+.sli-comments-input::placeholder{color:var(--g300);font-style:italic}
 
 /* Print page preview */
 .print-page{width:8.5in;min-height:11in;max-height:11in;background:var(--wh);box-shadow:0 2px 20px rgba(0,0,0,.15);display:flex;flex-direction:column;overflow:hidden;margin-bottom:1.5rem;flex-shrink:0}

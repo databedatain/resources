@@ -43,7 +43,7 @@ function flattenSheet(sheet){
 }
 
 function unflattenBlocks(blocks, sheetMeta){
-  const sheet = {title:sheetMeta.title, icon:sheetMeta.icon, status:sheetMeta.status||'live', owner:sheetMeta.owner||'', pages:[]};
+  const sheet = {title:sheetMeta.title, icon:sheetMeta.icon, status:sheetMeta.status||'live', owner:sheetMeta.owner||'', comments:sheetMeta.comments||'', pages:[]};
   let currentPage = {blocks:[]};
   blocks.forEach(b => {
     // If this block has newPage flag and current page has content, start new page
@@ -76,5 +76,5 @@ function initBlocks(){
 function syncSheetFromBlocks(slug){
   const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
   if(!entry)return;
-  DATA.sheets[slug]=unflattenBlocks(sheetBlocks[slug]||[],{title:entry.title,icon:entry.icon,status:entry.status,owner:entry.owner});
+  DATA.sheets[slug]=unflattenBlocks(sheetBlocks[slug]||[],{title:entry.title,icon:entry.icon,status:entry.status,owner:entry.owner,comments:entry.comments});
 }

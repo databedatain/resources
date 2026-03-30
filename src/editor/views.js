@@ -1,7 +1,7 @@
 // ===================================================================
 // VIEWS — sheet management, menus, site info, and view routing
 // ===================================================================
-function addNewSheet(){const name=prompt('Sheet name:');if(!name)return;const slug=slugify(name);DATA.home.push({sheetName:name,title:name,icon:'📄',status:'live',owner:''});DATA.sheets[slug]={title:name,icon:'📄',status:'live',owner:'',pages:[{blocks:[]}]};sheetBlocks[slug]=[];renderSheetList();toast('Sheet added: '+name)}
+function addNewSheet(){const name=prompt('Sheet name:');if(!name)return;const slug=slugify(name);DATA.home.push({sheetName:name,title:name,icon:'📄',status:'live',owner:'',comments:''});DATA.sheets[slug]={title:name,icon:'📄',status:'live',owner:'',comments:'',pages:[{blocks:[]}]};sheetBlocks[slug]=[];renderSheetList();toast('Sheet added: '+name)}
 
 function editSheetIcon(slug){
   const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
@@ -50,6 +50,12 @@ function updateSheetOwner(slug,owner){
   if(!entry)return;
   entry.owner=owner;
   if(DATA.sheets[slug])DATA.sheets[slug].owner=owner;
+}
+function updateSheetComments(slug,comments){
+  const entry=DATA.home.find(h=>slugify(h.sheetName)===slug);
+  if(!entry)return;
+  entry.comments=comments;
+  if(DATA.sheets[slug])DATA.sheets[slug].comments=comments;
 }
 function toggleAddMenu(e){e.stopPropagation();document.getElementById('add-menu').classList.toggle('open')}
 function closeAddMenu(){const m=document.getElementById('add-menu');if(m)m.classList.remove('open')}
