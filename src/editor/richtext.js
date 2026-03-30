@@ -152,6 +152,18 @@ function rtCmdCol(cmd,editorId){
   document.execCommand(cmd,false,null);
 }
 
+function insertCheckbox(editorId){
+  const editor=document.getElementById(editorId);
+  editor.focus();
+  document.execCommand('insertHTML',false,'\u2610 ');
+}
+
+function insertLine(editorId){
+  const editor=document.getElementById(editorId);
+  editor.focus();
+  document.execCommand('insertHTML',false,'<span style="display:inline-block;border-bottom:1px solid #888;min-width:100%;height:1em;margin:2px 0">&nbsp;</span>');
+}
+
 function clearFormatting(blockId){
   const editor=document.getElementById('rt-editor-'+blockId);
   editor.focus();

@@ -117,7 +117,7 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .rt-toolbar button{padding:3px 8px;border:1px solid transparent;border-radius:3px;background:none;font-size:.78rem;color:var(--g700);cursor:pointer}
 .rt-toolbar button:hover{background:var(--g200);border-color:var(--g200)}
 .rt-toolbar .sep{width:1px;background:var(--g200);margin:2px 4px}
-.rt-editor{border:1px solid var(--g200);border-radius:0 0 4px 4px;padding:8px 10px;min-height:80px;max-height:400px;overflow-y:auto;font-size:.82rem;line-height:1.5;background:var(--wh);outline:none;font-family:'Source Sans 3',-apple-system,sans-serif!important;resize:vertical}
+.rt-editor{border:1px solid var(--g200);border-radius:0 0 4px 4px;padding:8px 10px;min-height:80px;max-height:400px;overflow-y:auto;font-size:.82rem;line-height:1.5;background:var(--wh);outline:none;font-family:'Source Sans 3',-apple-system,sans-serif!important;resize:vertical;max-width:7.8in}
 .rt-editor *{font-family:inherit!important}
 .rt-editor:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(46,100,148,.12)}
 .rt-editor .two-col-block{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--accent);padding:0;margin:6px 0;border-radius:4px;background:var(--g50)}
