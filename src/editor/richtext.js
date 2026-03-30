@@ -161,22 +161,31 @@ function insertCheckbox(editorId){
 function insertLine(editorId){
   const editor=document.getElementById(editorId);
   editor.focus();
-  const marker='fl-'+Date.now();
-  document.execCommand('insertHTML',false,'<span class="fill-line" id="'+marker+'">\u00a0</span>');
-  const span=document.getElementById(marker);
-  if(span){
-    span.removeAttribute('id');
-    // Make the parent block a flex row so the line fills remaining space
-    let parent=span.parentElement;
+  const sel=window.getSelection();
+  if(!sel.rangeCount) return;
+  const range=sel.getRangeAt(0);
+  range.deleteContents();
+  // Create the line span with inline styles (no class dependency)
+  const span=document.createElement('span');
+  span.style.cssText='display:inline-block;border-bottom:1px solid #888;flex:1;min-width:1in;height:1em';
+  span.innerHTML='\u00a0';
+  range.insertNode(span);
+  // Move cursor after the span
+  range.setStartAfter(span);range.collapse(true);
+  sel.removeAllRanges();sel.addRange(range);
+  // Make the parent block a flex row so the line fills remaining space
+  let parent=span.parentElement;
+  if(parent){
     if(parent===editor){
-      // Text is directly in editor — wrap this line in a <p>
-      // Collect siblings on the same "line" (all nodes between previous/next block element)
+      // Text is directly in editor — wrap line content in a <p>
       const p=document.createElement('p');
-      const nodes=[];
       let sib=span;
-      while(sib.previousSibling&&sib.previousSibling.nodeType!==1||(sib.previousSibling&&sib.previousSibling.nodeType===1&&!['P','DIV','UL','OL','H3','HR'].includes(sib.previousSibling.tagName))){
-        sib=sib.previousSibling;
+      while(sib.previousSibling){
+        const prev=sib.previousSibling;
+        if(prev.nodeType===1&&['P','DIV','UL','OL','H3','HR','BR'].includes(prev.tagName)) break;
+        sib=prev;
       }
+      const nodes=[];
       let cur=sib;
       while(cur){
         const next=cur.nextSibling;
@@ -190,13 +199,13 @@ function insertLine(editorId){
       }
       parent=p;
     }
-    if(parent&&parent!==editor){
-      parent.style.display='flex';
-      parent.style.alignItems='baseline';
-      parent.style.flexWrap='wrap';
-      parent.style.gap='0 4px';
-    }
+    parent.style.display='flex';
+    parent.style.alignItems='baseline';
+    parent.style.flexWrap='wrap';
+    parent.style.gap='0 4px';
   }
+  // Trigger input so data syncs
+  editor.dispatchEvent(new Event('input',{bubbles:true}));
 }
 
 function clearFormatting(blockId){
