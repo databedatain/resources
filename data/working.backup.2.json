@@ -105,35 +105,35 @@
               "type": "FAQ",
               "q": "What is a Mental Health Crisis?",
               "a": "A mental health crisis is when someone’s actions put them in danger. Or, when they can’t care for themselves or function well in their community. People can call for themselves, or for people they’re worried about.\nIf you feel unsafe, like you might hurt yourself or someone else, please reach out to Crisis Support Services.",
-              "aHTML": "",
+              "aHTML": "<p>A mental health crisis is when someone’s actions put them in danger. Or, when they can’t care for themselves or function well in their community. People can call for themselves, or for people they’re worried about.</p><p>If you feel unsafe, like you might hurt yourself or someone else, please reach out to Crisis Support Services.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What are Crisis Support Services?",
               "a": "Crisis Support Services connect you with an advocate who can help you make a plan to stay safe. They can send an advocate to you in-person to keep you safe. They can also connect you with more support.",
-              "aHTML": "",
+              "aHTML": "<p>Crisis Support Services connect you with an advocate who can help you make a plan to stay safe. They can send an advocate to you in-person to keep you safe. They can also connect you with more support.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Happens when I call a Crisis Line?",
               "a": "When you call a Crisis Line, you may have to make choices in an automated menu. Services are free & confidential. Advocates help with safety planning, emotional support, and/or connecting to emergency services.\nYou can share as little or as much information as you want. You are in control of the call.",
-              "aHTML": "",
+              "aHTML": "<p>When you call a Crisis Line, you may have to make choices in an automated menu. Services are free &amp; confidential. Advocates help with safety planning, emotional support, and/or connecting to emergency services.</p><p>You can share as little or as much information as you want. You are in control of the call.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What if I’m Safe but Need to Talk to Someone?",
               "a": "If you are not having an emergency, Warmline services can connect you with an advocate. The advocate is there to listen, understand, and help you feel better. This can be a chat on the phone, a text message, or even talking to someone in person.",
-              "aHTML": "",
+              "aHTML": "<p>If you are not having an emergency, Warmline services can connect you with an advocate. The advocate is there to listen, understand, and help you feel better. This can be a chat on the phone, a text message, or even talking to someone in person.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What other supports are there?",
               "a": "There are support hotlines on this list for people facing many different challenges.\nIf this list doesn’t have what you need, please let us know so we can help you get connected.",
-              "aHTML": "",
+              "aHTML": "<p>There are support hotlines on this list for people facing many different challenges.</p><p>If this list doesn’t have what you need, please let us know so we can help you get connected.</p>",
               "spacing": 0
             },
             {
@@ -400,21 +400,21 @@
               "type": "FAQ",
               "q": "What is Domestic Violence?",
               "a": "DV is a pattern of behaviors. It’s used by one partner to keep power over another person in a relationship. DV comes in many forms: Physical Abuse, Emotional Verbal Abuse, Sexual Abuse, Financial Abuse, Digital Abuse, and Stalking.\nYou deserve to feel safe. You have the right to say “no”. If someone is making you feel unsafe, hurting you, or taking advantage of you, there is help.\nNot sure? You can also get support to learn about healthy relationships. This includes setting boundaries and making decisions that are right for you.",
-              "aHTML": "",
+              "aHTML": "<p>DV is a pattern of behaviors. It’s used by one partner to keep power over another person in a relationship. DV comes in many forms: Physical Abuse, Emotional Verbal Abuse, Sexual Abuse, Financial Abuse, Digital Abuse, and Stalking.</p><p>You deserve to feel safe. You have the right to say “no”. If someone is making you feel unsafe, hurting you, or taking advantage of you, there is help.</p><p>Not sure? You can also get support to learn about healthy relationships. This includes setting boundaries and making decisions that are right for you.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Kind of Resources Are There?",
               "a": "Hotlines - Connect with someone who can listen to you, explain options, find help, and create safety plans.\nShelters - DV shelters are a safe space that a person can go when they leave DV. Hotlines refer directly to shelters when needed.\nAdvocates - Can help you learn about your options and make a plan. They can go with you to a police station, court, or appointments.\nClasses / Groups - Help you learn about DV, healthy relationships, boundaries, financial independence, and more.",
-              "aHTML": "",
+              "aHTML": "<p>Hotlines - Connect with someone who can listen to you, explain options, find help, and create safety plans.</p><p>Shelters - DV shelters are a safe space that a person can go when they leave DV. Hotlines refer directly to shelters when needed.</p><p>Advocates - Can help you learn about your options and make a plan. They can go with you to a police station, court, or appointments.</p><p>Classes / Groups - Help you learn about DV, healthy relationships, boundaries, financial independence, and more.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Happens When I Call a Hotline?",
               "a": "Hotlines are free & confidential. Hotline Advocates help people in crisis. They do this through safety planning, emotional support, and/or connecting to emergency services.\nYou can share as little or as much information as you want. You are in control of the call.",
-              "aHTML": "",
+              "aHTML": "<p>Hotlines are free &amp; confidential. Hotline Advocates help people in crisis. They do this through safety planning, emotional support, and/or connecting to emergency services.</p><p>You can share as little or as much information as you want. You are in control of the call.</p>",
               "spacing": 0
             },
             {
@@ -534,42 +534,42 @@
               "type": "FAQ",
               "q": "What is a Food Pantry?",
               "a": "A Food Pantry provides food for individuals and families in need. It is sometimes called a Food Bank. Visiting a Food Pantry is like a trip to the grocery store for food you need to prepare at home.",
-              "aHTML": "",
+              "aHTML": "<p>A Food Pantry provides food for individuals and families in need. It is sometimes called a Food Bank. Visiting a Food Pantry is like a trip to the grocery store for food you need to prepare at home.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is a Soup Kitchen?",
               "a": "A Soup Kitchen provides prepared meals for individuals and families in need. Food from a Soup Kitchen may be fresh or frozen. Sometimes, you can eat at the Soup Kitchen. Sometimes, you can take it to-go.",
-              "aHTML": "",
+              "aHTML": "<p>A Soup Kitchen provides prepared meals for individuals and families in need. Food from a Soup Kitchen may be fresh or frozen. Sometimes, you can eat at the Soup Kitchen. Sometimes, you can take it to-go.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is FoodSense?",
               "a": "FoodSense offers low-cost packages of groceries to individuals or families in need. A package costs $20.50 and has 12-15 items. You can buy several packages at once and can use SNAP to pay.",
-              "aHTML": "",
+              "aHTML": "<p>FoodSense offers low-cost packages of groceries to individuals or families in need. A package costs $20.50 and has 12-15 items. You can buy several packages at once and can use SNAP to pay.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is SNAP? ",
               "a": "SNAP / Food Stamps (Supplemental Nutrition Assistance Program)\nCan help you and your family access healthy food options. SNAP is a federal program that provides financial assistance to eligible individuals and families, helping them purchase groceries. \n\nWIC (Special Supplemental Nutrition Program for Women, Infants, and Children) \nsupports the health and nutrition of pregnant women, new mothers, infants, and young children. WIC is a federal assistance program that offers nutritious food, nutrition education, breastfeeding support, and access to health care services for eligible families, promoting the well-being of vulnerable populations.",
-              "aHTML": "<p><b>SNAP / Food Stamps (</b><b style=\"font-family: &quot;Source Sans 3&quot;, -apple-system, sans-serif; font-size: 0.82rem;\">Supplemental Nutrition Assistance Program)</b></p><!--StartFragment--><!--EndFragment--><p>Can help you and your family access healthy food options. SNAP is a federal program that provides financial assistance to eligible individuals and families, helping them purchase groceries.&nbsp;<br><br><span style=\"white-space-collapse: preserve-breaks;\"><b>WIC (</b></span><b style=\"font-family: &quot;Source Sans 3&quot;, -apple-system, sans-serif; font-size: 0.82rem; white-space-collapse: preserve-breaks;\">Special Supplemental Nutrition Program for Women, Infants, and Children)&nbsp;</b></p><p><span style=\"white-space-collapse: preserve-breaks; font-size: 0.82rem;\">supports the health and nutrition of pregnant women, new mothers, infants, and young children. WIC is a federal assistance program that offers nutritious food, nutrition education, breastfeeding support, and access to health care services for eligible families, promoting the well-being of vulnerable populations.</span></p>",
+              "aHTML": "<p><b>SNAP / Food Stamps (</b><b style=\"Source Sans 3&quot;, -apple-system, sans-serif; \">Supplemental Nutrition Assistance Program)</b></p><!--StartFragment--><!--EndFragment--><p>Can help you and your family access healthy food options. SNAP is a federal program that provides financial assistance to eligible individuals and families, helping them purchase groceries.&nbsp;<br><br><span style=\"white-space-collapse: preserve-breaks;\"><b>WIC (</b></span><b style=\"Source Sans 3&quot;, -apple-system, sans-serif;  white-space-collapse: preserve-breaks;\">Special Supplemental Nutrition Program for Women, Infants, and Children)&nbsp;</b></p><p><span style=\"white-space-collapse: preserve-breaks; \">supports the health and nutrition of pregnant women, new mothers, infants, and young children. WIC is a federal assistance program that offers nutritious food, nutrition education, breastfeeding support, and access to health care services for eligible families, promoting the well-being of vulnerable populations.</span></p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get started?",
               "a": "Call or go to one of the listed agencies. Bring with you: Identification, Benefits Card (Medicaid/SNAP), Income Information, Rent/Bill Statements. If you do not have all of these, they may be able to help.",
-              "aHTML": "",
+              "aHTML": "<p>Call or go to one of the listed agencies. Bring with you: Identification, Benefits Card (Medicaid/SNAP), Income Information, Rent/Bill Statements. If you do not have all of these, they may be able to help.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get help to get started?",
               "a": "Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.",
-              "aHTML": "",
+              "aHTML": "<p>Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.</p>",
               "spacing": 0
             },
             {
@@ -736,7 +736,7 @@
               "spacing": 0,
               "q": "Applying for SNAP",
               "a": "Applying for the Supplemental Nutrition Assistance Program (SNAP) in can help you and your family access healthy food options. SNAP is a federal program that provides financial assistance to eligible individuals and families, helping them purchase groceries. Here’s a quick guide to help you understand the process:\nEligibilityTo qualify for SNAP benefits, you must meet certain income and resource guidelines. The program considers household size, income, and expenses such as rent and utilities. Additionally, there are work requirements for able-bodied adults without dependents.\nHow to ApplyOnline Application: The easiest way to apply is through the NY website (mybenefits.ny.gov). It allows you to fill out the application form and submit required documents online.\n\nIn-Person: You can also apply in person at your local Department of Social Services (DSS) office. An appointment might be necessary, so it's advisable to call ahead.\n\nMail or Fax: If you prefer, you can obtain an application form online, print it, and then either mail or fax it to your local DSS office.\n\n\nRequired DocumentsWhen applying, ensure you have the following documents ready:\nProof of identity (e.g., driver's license, passport)\nSocial Security numbers for all household members\nProof of income (e.g., pay stubs, tax returns)\nProof of residency (e.g., utility bills)\nDocumentation of expenses\n\nAfter ApplyingOnce your application is submitted, it will be reviewed, and you might be asked to participate in an interview, either over the phone or in person. If approved, you’ll receive an Electronic Benefit Transfer (EBT) card, which works like a debit card for purchasing eligible food items.\nFor more information or assistance, visit the New York State Office of Temporary and Disability Assistance website or contact your local DSS office. Remember, applying for SNAP is a step towards ensuring your family has access to nutritious food.",
-              "aHTML": "<!--StartFragment--><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">Applying for the Supplemental Nutrition Assistance Program (SNAP) in can help you and your family access healthy food options. SNAP is a federal program that provides financial assistance to eligible individuals and families, helping them purchase groceries. Here’s a quick guide to help you understand the process:</p><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">Eligibility</h4><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">To qualify for SNAP benefits, you must meet certain income and resource guidelines. The program considers household size, income, and expenses such as rent and utilities. Additionally, there are work requirements for able-bodied adults without dependents.</p><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">How to Apply</h4><div style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\"><ol start=\"1\" style=\"padding-left: 24px;\"><li><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0;\"><span style=\"-webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; font-weight: 600;\">Online Application</span>: The easiest way to apply is through the NY website (mybenefits.ny.gov). It allows you to fill out the application form and submit required documents online.</p></li><li><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0;\"><span style=\"-webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; font-weight: 600;\">In-Person</span>: You can also apply in person at your local Department of Social Services (DSS) office. An appointment might be necessary, so it's advisable to call ahead.</p></li><li><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0;\"><span style=\"-webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; font-weight: 600;\">Mail or Fax</span>: If you prefer, you can obtain an application form online, print it, and then either mail or fax it to your local DSS office.</p></li></ol></div><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">Required Documents</h4><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">When applying, ensure you have the following documents ready:</p><div style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\"><ul><li><span style=\"font-size: 0.82rem;\">Proof of identity (e.g., driver's license, passport)</span></li><li><span style=\"font-size: 0.82rem;\">Social Security numbers for all household members</span></li><li><span style=\"font-size: 0.82rem;\">Proof of income (e.g., pay stubs, tax returns)</span></li><li><span style=\"font-size: 0.82rem;\">Proof of residency (e.g., utility bills)</span></li><li><span style=\"font-size: 0.82rem;\">Documentation of expenses</span></li></ul></div><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">After Applying</h4><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">Once your application is submitted, it will be reviewed, and you might be asked to participate in an interview, either over the phone or in person. If approved, you’ll receive an Electronic Benefit Transfer (EBT) card, which works like a debit card for purchasing eligible food items.</p><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">For more information or assistance, visit the New York State Office of Temporary and Disability Assistance website or contact your local DSS office. Remember, applying for SNAP is a step towards ensuring your family has access to nutritious food.</p><!--EndFragment-->",
+              "aHTML": "<!--StartFragment--><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">Applying for the Supplemental Nutrition Assistance Program (SNAP) in can help you and your family access healthy food options. SNAP is a federal program that provides financial assistance to eligible individuals and families, helping them purchase groceries. Here’s a quick guide to help you understand the process:</p><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">Eligibility</h4><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">To qualify for SNAP benefits, you must meet certain income and resource guidelines. The program considers household size, income, and expenses such as rent and utilities. Additionally, there are work requirements for able-bodied adults without dependents.</p><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">How to Apply</h4><div style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\"><ol start=\"1\" style=\"padding-left: 24px;\"><li><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0;\"><span style=\"-webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; font-weight: 600;\">Online Application</span>: The easiest way to apply is through the NY website (mybenefits.ny.gov). It allows you to fill out the application form and submit required documents online.</p></li><li><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0;\"><span style=\"-webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; font-weight: 600;\">In-Person</span>: You can also apply in person at your local Department of Social Services (DSS) office. An appointment might be necessary, so it's advisable to call ahead.</p></li><li><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0;\"><span style=\"-webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; font-weight: 600;\">Mail or Fax</span>: If you prefer, you can obtain an application form online, print it, and then either mail or fax it to your local DSS office.</p></li></ol></div><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">Required Documents</h4><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">When applying, ensure you have the following documents ready:</p><div style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\"><ul><li><span style=\"\">Proof of identity (e.g., driver's license, passport)</span></li><li><span style=\"\">Social Security numbers for all household members</span></li><li><span style=\"\">Proof of income (e.g., pay stubs, tax returns)</span></li><li><span style=\"\">Proof of residency (e.g., utility bills)</span></li><li><span style=\"\">Documentation of expenses</span></li></ul></div><h4 style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; font-variation-settings: &quot;opsz&quot; 0; text-size-adjust: none; white-space-collapse: preserve-breaks;\">After Applying</h4><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">Once your application is submitted, it will be reviewed, and you might be asked to participate in an interview, either over the phone or in person. If approved, you’ll receive an Electronic Benefit Transfer (EBT) card, which works like a debit card for purchasing eligible food items.</p><p style=\"user-select: text; -webkit-font-smoothing: antialiased; overflow-wrap: break-word; text-size-adjust: none; font-variation-settings: &quot;opsz&quot; 0; white-space-collapse: preserve-breaks;\">For more information or assistance, visit the New York State Office of Temporary and Disability Assistance website or contact your local DSS office. Remember, applying for SNAP is a step towards ensuring your family has access to nutritious food.</p><!--EndFragment-->",
               "newPage": false,
               "newCol": false,
               "headerStyle": "banner"
@@ -849,35 +849,35 @@
               "type": "FAQ",
               "q": "What is Legal Aid?",
               "a": "Legal Aid provides free counsel, advice, and legal representation to people who cannot pay for representation. Legal Aid does not support criminal matters, but civil matters, such as: Consumer Rights, Housing/Renter Rights, Eviction/Foreclosure, Bankruptcy, Special Education, Access to Healthcare, Public Benefits, Unemployment, Divorce & Family Court, Domestic Violence, Employment, Disability Advocacy, Fair Hearings, Citizenship and Immigration, Farmworker Law.",
-              "aHTML": "",
+              "aHTML": "<p>Legal Aid provides free counsel, advice, and legal representation to people who cannot pay for representation. Legal Aid does not support criminal matters, but civil matters, such as: Consumer Rights, Housing/Renter Rights, Eviction/Foreclosure, Bankruptcy, Special Education, Access to Healthcare, Public Benefits, Unemployment, Divorce &amp; Family Court, Domestic Violence, Employment, Disability Advocacy, Fair Hearings, Citizenship and Immigration, Farmworker Law.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What are Mediation Services?",
               "a": "Professional Mediators certified by the NYS Unified Court System. Mediators remain impartial. They guide each person to express their concerns and listen to one another. The goal is to reach a mutual agreement.",
-              "aHTML": "",
+              "aHTML": "<p>Professional Mediators certified by the NYS Unified Court System. Mediators remain impartial. They guide each person to express their concerns and listen to one another. The goal is to reach a mutual agreement.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is an Advocate?",
               "a": "An advocate helps you express your views and wishes. They support you in standing up for your rights. They can help explore options and assist in working with the legal system.",
-              "aHTML": "",
+              "aHTML": "<p>An advocate helps you express your views and wishes. They support you in standing up for your rights. They can help explore options and assist in working with the legal system.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is a Public Defender?",
               "a": "A Public Defender is a lawyer. They represent people who are charged with a crime and cannot hire a lawyer.",
-              "aHTML": "",
+              "aHTML": "<p>A Public Defender is a lawyer. They represent people who are charged with a crime and cannot hire a lawyer.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get started?",
               "a": "Call an office that helps with the problem you’re facing. Staff may ask you for contact information, details of the problem, and how you would like them to help you. Sometimes, you can get help right away. Other times, there may be a delay as your request is processed.",
-              "aHTML": "",
+              "aHTML": "<p>Call an office that helps with the problem you’re facing. Staff may ask you for contact information, details of the problem, and how you would like them to help you. Sometimes, you can get help right away. Other times, there may be a delay as your request is processed.</p>",
               "spacing": 0
             },
             {
@@ -1085,28 +1085,28 @@
               "type": "FAQ",
               "q": "Why is a Primary Care Provider important?",
               "a": "A Primary Care Provider, or PCP, advocates for you and your health. As part of your Treatment Team, they work with other healthcare providers. They coordinate care for the whole person. They can teach you skills to protect your health and provide treatment to manage illness.",
-              "aHTML": "",
+              "aHTML": "<p>A Primary Care Provider, or PCP, advocates for you and your health. As part of your Treatment Team, they work with other healthcare providers. They coordinate care for the whole person. They can teach you skills to protect your health and provide treatment to manage illness.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What services can a PCP provide?",
               "a": "A PCP supports your health with a wide variety of services including: Checkups, Physical Exams, Medication, Nutrition & Diet Advice, Smoking Cessation, Blood Work, Preventative Services, Referrals to Specialists, Disease Management, Exercise Advice.",
-              "aHTML": "",
+              "aHTML": "<p>A PCP supports your health with a wide variety of services including: Checkups, Physical Exams, Medication, Nutrition &amp; Diet Advice, Smoking Cessation, Blood Work, Preventative Services, Referrals to Specialists, Disease Management, Exercise Advice.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get started?",
               "a": "Call an office near you and ask staff:\n“Are you taking new patients?”\n“Do you work with my insurance?”\nOffice staff will ask you for your name and other identifying info. They will ask for your address and your insurance info. They may ask if you have concerns about your health. They will schedule you to come into the office and meet your PCP, or add you to a waitlist.",
-              "aHTML": "",
+              "aHTML": "<p>Call an office near you and ask staff:</p><ul><li>“Are you taking new patients?”</li><li>“Do you work with my insurance?”</li><li>Office staff will ask you for your name and other identifying info. They will ask for your address and your insurance info. They may ask if you have concerns about your health. They will schedule you to come into the office and meet your PCP, or add you to a waitlist.</li></ul>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get help to get started?",
               "a": "Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.",
-              "aHTML": "",
+              "aHTML": "<p>Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.</p>",
               "spacing": 0
             },
             {
@@ -1348,7 +1348,7 @@
               "text": "Ask us about how to get connected with an Insurance Navigator at CHBS, in the community, or by phone.  We are committed to supporting everyone, regardless of their ability to pay. Please speak with any staff at CHBS to use our Sliding Fee Scale, which may reduce what you pay for services.",
               "spacing": 0,
               "newPage": false,
-              "textHTML": "<p>Ask us about how to get connected with an Insurance Navigator at CHBS, in the community, or by phone.&nbsp;&nbsp;<span style=\"font-size: 0.82rem;\">We are committed to supporting everyone, regardless of their ability to pay. Please speak with any staff at CHBS to use our Sliding Fee Scale, which may reduce what you pay for services.</span></p>"
+              "textHTML": "<p>Ask us about how to get connected with an Insurance Navigator at CHBS, in the community, or by phone.&nbsp;&nbsp;<span style=\"\">We are committed to supporting everyone, regardless of their ability to pay. Please speak with any staff at CHBS to use our Sliding Fee Scale, which may reduce what you pay for services.</span></p>"
             },
             {
               "type": "NOTFINDING"
@@ -1369,28 +1369,28 @@
               "type": "FAQ",
               "q": "Who is Considered a Veteran?",
               "a": "A veteran is a person who served in the military. Veterans were discharged under conditions other than dishonorable.\nA person with a dishonorable discharge may still have access to some or all resources listed.",
-              "aHTML": "",
+              "aHTML": "<p>A veteran is a person who served in the military. Veterans were discharged under conditions other than dishonorable.</p><p>A person with a dishonorable discharge may still have access to some or all resources listed.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Kinds of Resources are Available?",
               "a": "There are many resources for Veterans, including supports for: Income Stability, Food, Healthcare, Mental Health, Substance Use, Insurance, Housing, Employment, Education, Social Supports, Transportation, and more.",
-              "aHTML": "",
+              "aHTML": "<p>There are many resources for Veterans, including supports for: Income Stability, Food, Healthcare, Mental Health, Substance Use, Insurance, Housing, Employment, Education, Social Supports, Transportation, and more.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get started?",
               "a": "Call an office near you and ask:\n“Can you help me find out if I’m eligible for services?”\nIntake staff will ask you for more information about your military service and your needs. They may ask you to bring documentation like identification cards. If you do not have ID, let the staff know.",
-              "aHTML": "",
+              "aHTML": "<p>Call an office near you and ask:</p><ul><li>“Can you help me find out if I’m eligible for services?”</li><li>Intake staff will ask you for more information about your military service and your needs. They may ask you to bring documentation like identification cards. If you do not have ID, let the staff know.</li></ul>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "NYS Department of Veteran’s Services",
               "a": "There are also resources specific to service through NY: Discharge Upgrade, Incarceration Support, Restoration of Honor, Grant Programs, Sexual Trauma Support, TBI Healthcare, PTSD Treatment, Tax Exemptions, Suicide Prevention.",
-              "aHTML": "",
+              "aHTML": "<p>There are also resources specific to service through NY: Discharge Upgrade, Incarceration Support, Restoration of Honor, Grant Programs, Sexual Trauma Support, TBI Healthcare, PTSD Treatment, Tax Exemptions, Suicide Prevention.</p>",
               "spacing": 0
             },
             {
@@ -1529,35 +1529,35 @@
               "type": "FAQ",
               "q": "What is a Homeless Shelter?",
               "a": "A homeless shelter is a safe place where people without a home can stay. It offers a temporary bed, meals, and support services to help individuals and families get back on their feet. Their goal is to provide comfort, care, and a path to a better, more stable life.",
-              "aHTML": "",
+              "aHTML": "<p>A homeless shelter is a safe place where people without a home can stay. It offers a temporary bed, meals, and support services to help individuals and families get back on their feet. Their goal is to provide comfort, care, and a path to a better, more stable life.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How Can I Get Help if I am Homeless?",
               "a": "Go to your local Department of Social Services (DSS), sometimes called the County Building. Check in and tell the staff that you are seeking shelter.",
-              "aHTML": "",
+              "aHTML": "<p>Go to your local Department of Social Services (DSS), sometimes called the County Building. Check in and tell the staff that you are seeking shelter.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How Do I Know if I am Eligible for Shelter?",
               "a": "To find out if you are eligible for assistance, you will need to fill out an application at your local DSS.\nYou may be asked to spend any money you have available on a hotel before you can be vouchered for shelter for DSS.",
-              "aHTML": "",
+              "aHTML": "<p>To find out if you are eligible for assistance, you will need to fill out an application at your local DSS.</p><p>You may be asked to spend any money you have available on a hotel before you can be vouchered for shelter for DSS.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What if DSS is Closed and I Need Shelter?",
               "a": "Reach out to an agency that is local to you under Shelter After Hours & Weekends. You can call anytime, day or night.\nShare your living situation with them and they’ll do all they can to find you a safe place to stay right away.",
-              "aHTML": "",
+              "aHTML": "<p>Reach out to an agency that is local to you under Shelter After Hours &amp; Weekends. You can call anytime, day or night.</p><p>Share your living situation with them and they’ll do all they can to find you a safe place to stay right away.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Will Happen When I Call?",
               "a": "Some Shelter After-Hours and Weekends lines are just for people seeking shelter. Others are Dispatch lines for local emergency services.\nWhen you call, tell the person: “I need somewhere to stay tonight” or “I need housing tonight”.\nThey will ask you for more information, like where you’ve been staying and what kind of help you need. Then they will connect you with an on-call worker from DSS.",
-              "aHTML": "",
+              "aHTML": "<p>Some Shelter After-Hours and Weekends lines are just for people seeking shelter. Others are Dispatch lines for local emergency services.</p><p>When you call, tell the person: “I need somewhere to stay tonight” or “I need housing tonight”.</p><p>They will ask you for more information, like where you’ve been staying and what kind of help you need. Then they will connect you with an on-call worker from DSS.</p>",
               "spacing": 0
             },
             {
@@ -1750,28 +1750,28 @@
               "type": "FAQ",
               "q": "Why is a Dental Provider important?",
               "a": "Keeping a dentist in your corner is key for a healthy mouth. They're more than just tooth experts, they can spot other potential health issues just by checking your mouth. Plus, they're great coaches for brushing and flossing, helping you to keep that smile shining.\nEveryone deserves to feel great, and taking care of your mouth is part of that!",
-              "aHTML": "",
+              "aHTML": "<p>Keeping a dentist in your corner is key for a healthy mouth. They're more than just tooth experts, they can spot other potential health issues just by checking your mouth. Plus, they're great coaches for brushing and flossing, helping you to keep that smile shining.</p><p>Everyone deserves to feel great, and taking care of your mouth is part of that!</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What services can a Dentist provide?",
               "a": "A dentist helps keep your teeth and mouth healthy with many kinds of care.",
-              "aHTML": "",
+              "aHTML": "<p>A dentist helps keep your teeth and mouth healthy with many kinds of care.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get started?",
               "a": "Call an office near you and ask staff:\n\"Are you taking new patients?\" \"Do you take my insurance?\"\nOffice staff will:\nask you for your name and other identifying info.\nask for your address and your insurance.\nask if you have concerns about your teeth.\nschedule you to come in or add you to a waitlist.",
-              "aHTML": "<p>Call an office near you and ask staff:</p><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><p><span style=\"font-size: 0.82rem;\"><i>\"Are you taking new patients?\" \"Do you take my insurance?\"</i></span></p></blockquote><p>Office staff will:</p><ul><ul><li><span style=\"font-size: 0.82rem;\">ask you for your name and other identifying info.</span></li><li><span style=\"font-size: 0.82rem;\">ask for your address and your insurance.</span></li><li><span style=\"font-size: 0.82rem;\">ask if you have concerns about your teeth.</span></li><li><span style=\"font-size: 0.82rem;\">schedule you to come in or add you to a waitlist.</span></li></ul></ul>",
+              "aHTML": "<p>Call an office near you and ask staff:</p><blockquote style=\"margin: 0 0 0 40px; border: none; padding: 0px;\"><p><span style=\"\"><i>\"Are you taking new patients?\" \"Do you take my insurance?\"</i></span></p></blockquote><p>Office staff will:</p><ul><ul><li><span style=\"\">ask you for your name and other identifying info.</span></li><li><span style=\"\">ask for your address and your insurance.</span></li><li><span style=\"\">ask if you have concerns about your teeth.</span></li><li><span style=\"\">schedule you to come in or add you to a waitlist.</span></li></ul></ul>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I get help to get started?",
               "a": "Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.",
-              "aHTML": "",
+              "aHTML": "<p>Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.</p>",
               "spacing": 0
             },
             {
@@ -1785,7 +1785,7 @@
               "type": "FAQ",
               "q": "What do I do if I'm having a Dental Emergency?",
               "a": "Call your dentist for help, even if it's after regular hours. Many have an after-hours line.\nIf you don't have a dentist, or cannot reach them, go to an urgent care center or your nearest ER.",
-              "aHTML": "",
+              "aHTML": "<p>Call your dentist for help, even if it's after regular hours. Many have an after-hours line.</p><p>If you don't have a dentist, or cannot reach them, go to an urgent care center or your nearest ER.</p>",
               "spacing": 0
             },
             {
@@ -2185,14 +2185,14 @@
               "type": "FAQ",
               "q": "Why is an Eye Doctor Important?",
               "a": "Having an eye doctor is important for your health. They help you see clearly and keep your eyes safe.\nEye doctors can also find early signs of other health problems during an exam.",
-              "aHTML": "",
+              "aHTML": "<p>Having an eye doctor is important for your health. They help you see clearly and keep your eyes safe.</p><p>Eye doctors can also find early signs of other health problems during an exam.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Services Can an Eye Doctor Provide?",
               "a": "Eye doctors can help with: Eye exams, Glasses and contact lenses, Eye infections or injuries, Dry or itchy eyes, Checking for eye diseases.\nMany offices use special tools to check your eyes and catch problems early.",
-              "aHTML": "",
+              "aHTML": "<p>Eye doctors can help with: Eye exams, Glasses and contact lenses, Eye infections or injuries, Dry or itchy eyes, Checking for eye diseases.</p><p>Many offices use special tools to check your eyes and catch problems early.</p>",
               "spacing": 0
             },
             {
@@ -2206,21 +2206,21 @@
               "type": "FAQ",
               "q": "How do I get help to get started?",
               "a": "Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.",
-              "aHTML": "",
+              "aHTML": "<p>Speak with any staff at CHBS. We will address urgent needs as best we can, and/or schedule you to meet with someone who can help.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is an Eye Emergency?",
               "a": "Eye emergencies can include: Sudden vision loss, Bad eye pain, Something stuck in your eye, Eye injury or bleeding, Bright flashes or floaters.\nThese can be serious and need fast care.",
-              "aHTML": "",
+              "aHTML": "<p>Eye emergencies can include: Sudden vision loss, Bad eye pain, Something stuck in your eye, Eye injury or bleeding, Bright flashes or floaters.</p><p>These can be serious and need fast care.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Do I Do in an Eye Emergency?",
               "a": "Call your eye doctor right away.\nIf you cannot reach one, go to urgent care or the ER.\nDo not rub your eye.\nDo not try to remove objects from your eye.",
-              "aHTML": "",
+              "aHTML": "<p>Call your eye doctor right away.</p><p>If you cannot reach one, go to urgent care or the ER.</p><p>Do not rub your eye.</p><p>Do not try to remove objects from your eye.</p>",
               "spacing": 0
             },
             {
@@ -2505,7 +2505,7 @@
               "type": "FAQ",
               "q": "What Is Harm Reduction?",
               "a": "Harm reduction is about keeping people safe and healthy even if they use drugs.\nIt helps with things like: Preventing overdose and sickness, Giving Naloxone (Narcan) to stop overdoses, Giving test strips to check if drugs are dangerous.\nHelping people get support and health care means meeting them where they are and treating them with kindness and respect.",
-              "aHTML": "",
+              "aHTML": "<p>Harm reduction is about keeping people safe and healthy even if they use drugs.</p><p>It helps with things like: Preventing overdose and sickness, Giving Naloxone (Narcan) to stop overdoses, Giving test strips to check if drugs are dangerous.</p><p>Helping people get support and health care means meeting them where they are and treating them with kindness and respect.</p>",
               "spacing": 0
             },
             {
@@ -2584,14 +2584,14 @@
               "type": "FAQ",
               "q": "Why might I need this resource?",
               "a": "You might need help with medicine while you wait for an appointment, start treatment, or pay for your medicine. Below are some resources that may help.",
-              "aHTML": "",
+              "aHTML": "<p>You might need help with medicine while you wait for an appointment, start treatment, or pay for your medicine. Below are some resources that may help.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How a Primary Care Doctor Can Help With Medications",
               "a": "Your PCP is your provider you see for checkups and everyday health needs. They may also be able to help by:\nHelping you find a specialist and keep caring for you while you wait, like for mental health, substance use, pain, or other health needs.\nGiving you medicine that is important while you wait for a specialist, or a small amount so you don't run out.\nCheck in with you while you wait for other appointments.\nMake sure your medications are safe and correct.\nComplete referrals and paperwork.\n\nImportant to know:\nBring a list of medications or pill bottles, pharmacy name and insurance card to appointments.\nThe medicine you get may only last for a short time and might not be refilled, especially strong or controlled medicines.",
-              "aHTML": "",
+              "aHTML": "<p>Your PCP is your provider you see for checkups and everyday health needs. They may also be able to help by:</p><ul><li>Helping you find a specialist and keep caring for you while you wait, like for mental health, substance use, pain, or other health needs.</li><li>Giving you medicine that is important while you wait for a specialist, or a small amount so you don't run out.</li><li>Check in with you while you wait for other appointments.</li><li>Make sure your medications are safe and correct.</li><li>Complete referrals and paperwork.</li></ul><p>Important to know:</p><ul><li>Bring a list of medications or pill bottles, pharmacy name and insurance card to appointments.</li><li>The medicine you get may only last for a short time and might not be refilled, especially strong or controlled medicines.</li></ul>",
               "spacing": 0
             },
             {
@@ -2670,14 +2670,14 @@
               "type": "FAQ",
               "q": "What Are My Rights as a Tenant in Upstate New York?",
               "a": "A right is a protected claim to how a person is treated and the conditions they are subjected to. Every tenant in Upstate New York has housing rights protected by federal, state, and local laws that help keep their home safe and in good condition, and protect them from unfair treatment or harassment by landlords. You have the right to file a complaint with Fair Housing, Codes, etc.",
-              "aHTML": "",
+              "aHTML": "<p>A right is a protected claim to how a person is treated and the conditions they are subjected to. Every tenant in Upstate New York has housing rights protected by federal, state, and local laws that help keep their home safe and in good condition, and protect them from unfair treatment or harassment by landlords. You have the right to file a complaint with Fair Housing, Codes, etc.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "Maintenance & Repairs",
               "a": "Make repair requests in writing. Keep a copy for proof.\nEmergencies should be reported right away if something is dangerous or damaging. Example: frozen or leaking pipes, gas leak, electrical issues. Landlord must respond to an emergency ASAP.\nProblems should be reported as soon as you can. Landlord has one week to respond to regular repairs.",
-              "aHTML": "",
+              "aHTML": "<p>Make repair requests in writing. Keep a copy for proof.</p><p>Emergencies should be reported right away if something is dangerous or damaging. Example: frozen or leaking pipes, gas leak, electrical issues. Landlord must respond to an emergency ASAP.</p><p>Problems should be reported as soon as you can. Landlord has one week to respond to regular repairs.</p>",
               "spacing": 0,
               "headerStyle": "banner"
             },
@@ -2685,14 +2685,14 @@
               "type": "FAQ",
               "q": "If Repairs Aren't Made",
               "a": "Collect photos or videos of the problem, save your repair request and messages, get notes from other tenants, and write down what happened and when. You have the right to file a complaint with Codes or seek counsel with Legal Aid.",
-              "aHTML": "",
+              "aHTML": "<p>Collect photos or videos of the problem, save your repair request and messages, get notes from other tenants, and write down what happened and when. You have the right to file a complaint with Codes or seek counsel with Legal Aid.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What if I have safety concerns where I live now?",
               "a": "Make sure to keep notes on when you've talked to, texted, or emailed your landlord to request repairs. If talking to your landlord isn't working, you have options.",
-              "aHTML": "",
+              "aHTML": "<p>Make sure to keep notes on when you've talked to, texted, or emailed your landlord to request repairs. If talking to your landlord isn't working, you have options.</p>",
               "spacing": 0
             },
             {
@@ -2714,28 +2714,28 @@
               "type": "FAQ",
               "q": "Late or Unpaid Rent",
               "a": "Late Fees can only be added 5 days after due. $50 or 5% of rent, whichever is less.\nLandlords can deliver a 14-day rent demand notice if rent is over 5 days late.\nLandlords can go to court to evict a tenant if the rent is not paid within 14 days after they give a notice. Landlords must follow a legal eviction process. Eviction can take months.",
-              "aHTML": "",
+              "aHTML": "<p>Late Fees can only be added 5 days after due. $50 or 5% of rent, whichever is less.</p><p>Landlords can deliver a 14-day rent demand notice if rent is over 5 days late.</p><p>Landlords can go to court to evict a tenant if the rent is not paid within 14 days after they give a notice. Landlords must follow a legal eviction process. Eviction can take months.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "Legal Action",
               "a": "You have the right to privacy, comfort, and quiet enjoyment of your home. You have the right to file a complaint or seek legal action if your landlord:\nEnters your space without permission\nThreatens to or attempts to forcefully remove you or your belongings from the space\nShuts off utilities like water, heat, or electric",
-              "aHTML": "",
+              "aHTML": "<p>You have the right to privacy, comfort, and quiet enjoyment of your home. You have the right to file a complaint or seek legal action if your landlord:</p><ul><li>Enters your space without permission</li><li>Threatens to or attempts to forcefully remove you or your belongings from the space</li><li>Shuts off utilities like water, heat, or electric</li></ul>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "Fees and Deposits",
               "a": "Background and Credit Checks: Must be $20 or less. You have the right to a copy, or to provide one from within the last 30 days.\nSecurity Deposit: Cannot be more than first month's rent. Last month's rent cannot be collected in advance. Cleaning fees are included in Security Deposit. Must be returned within 14 days of move-out.\nPet Deposit: Must be included in Security Deposit. A monthly fee is allowed. No deposit or fee can be collected for Service Animals.",
-              "aHTML": "",
+              "aHTML": "<p>Background and Credit Checks: Must be $20 or less. You have the right to a copy, or to provide one from within the last 30 days.</p><p>Security Deposit: Cannot be more than first month's rent. Last month's rent cannot be collected in advance. Cleaning fees are included in Security Deposit. Must be returned within 14 days of move-out.</p><p>Pet Deposit: Must be included in Security Deposit. A monthly fee is allowed. No deposit or fee can be collected for Service Animals.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is a Lease?",
               "a": "A lease is a formal agreement between the tenant and the property owner. A lease explains what both the tenant and owner can expect from each other. Once signed, a lease can't be changed until it ends.\nA written lease is best. A spoken agreement may not offer legal protection for you or the property owner.\nA lease should clearly state:\nWho will live there (the tenant)\nThe rent amount and any extra fees\nWhen rent is due and who to pay\nHow long the stay will last\nWhat is allowed and not allowed on the property\nA lease cannot take away or change your tenant rights:\nTo ask for a jury in court if there's a case about someone getting hurt or things being damaged\nTo live with your close family and one other person, along with your children\nTo not use your belongings or furniture as a promise to pay rent\nYou can ask to see repair costs or receipts for any damage caused by you, people who live with you, or your guests before you pay.\nOr take away or change the landlord's responsibilities:\nTo fix things that have worn out or broken due to normal use or that need maintenance. \nHeat, water, cooking appliances should be working.\nWindows and doors should close safely, and lock where needed.\nThere should be no holes in the floor, walls, or ceiling or other safety issues.",
-              "aHTML": "<p>A lease is a formal agreement between the tenant and the property owner. A lease explains what both the tenant and owner can expect from each other. Once signed, a lease can't be changed until it ends.</p><p>A written lease is best. A spoken agreement may not offer legal protection for you or the property owner.</p><p><b>A lease should clearly state:</b></p><ul><li>Who will live there (the tenant)</li><li>The rent amount and any extra fees</li><li>When rent is due and who to pay</li><li>How long the stay will last</li><li>What is allowed and not allowed on the property</li></ul><p style=\"font-size: 0.82rem; display: inline !important;\"><b>A lease cannot take away or change your tenant rights:</b></p><ul style=\"font-size: 0.82rem;\"><li>To ask for a jury in court if there's a case about someone getting hurt or things being damaged</li><li>To live with your close family and one other person, along with your children</li><li>To not use your belongings or furniture as a promise to pay rent</li><li>You can ask to see repair costs or receipts for any damage caused by you, people who live with you, or your guests before you pay.</li></ul><p style=\"font-size: 0.82rem;\"><b>Or take away or change the landlord's responsibilities:</b></p><ul style=\"font-size: 0.82rem;\"><li>To fix things that have worn out or broken due to normal use or that need maintenance.&nbsp;</li><ul><li><span style=\"font-size: 0.82rem;\">Heat, water, cooking appliances should be working.</span></li><li><span style=\"font-size: 0.82rem;\">Windows and doors should close safely, and lock where needed.</span></li><li><span style=\"font-size: 0.82rem;\">There should be no holes in the floor, walls, or ceiling or other safety issues.<br></span></li></ul></ul>",
+              "aHTML": "<p>A lease is a formal agreement between the tenant and the property owner. A lease explains what both the tenant and owner can expect from each other. Once signed, a lease can't be changed until it ends.</p><p>A written lease is best. A spoken agreement may not offer legal protection for you or the property owner.</p><p><b>A lease should clearly state:</b></p><ul><li>Who will live there (the tenant)</li><li>The rent amount and any extra fees</li><li>When rent is due and who to pay</li><li>How long the stay will last</li><li>What is allowed and not allowed on the property</li></ul><p style=\" display: inline !important;\"><b>A lease cannot take away or change your tenant rights:</b></p><ul style=\"\"><li>To ask for a jury in court if there's a case about someone getting hurt or things being damaged</li><li>To live with your close family and one other person, along with your children</li><li>To not use your belongings or furniture as a promise to pay rent</li><li>You can ask to see repair costs or receipts for any damage caused by you, people who live with you, or your guests before you pay.</li></ul><p style=\"\"><b>Or take away or change the landlord's responsibilities:</b></p><ul style=\"\"><li>To fix things that have worn out or broken due to normal use or that need maintenance.&nbsp;</li><ul><li><span style=\"\">Heat, water, cooking appliances should be working.</span></li><li><span style=\"\">Windows and doors should close safely, and lock where needed.</span></li><li><span style=\"\">There should be no holes in the floor, walls, or ceiling or other safety issues.<br></span></li></ul></ul>",
               "spacing": 0,
               "newCol": true
             },
@@ -2743,7 +2743,7 @@
               "type": "FAQ",
               "q": "Eviction",
               "a": "An eviction is the legal process of a landlord forcing a renter to move out. It is a formal court procedure that must follow specific laws.\nNot paying rent: If rent isn't paid, landlords can give a 14-day warning. If the rent still isn't paid after those 14 days, landlords can start the eviction process.\nBreaking rules in the lease: If a tenant breaks a rule in the lease, landlords give a 10-day warning to fix the problem. If it's not fixed, they can then give a 30-day warning before trying to make the tenant leave.\nLease is up: If your lease ends and you stay, the landlord must give you 30, 60, or 90 days' notice, depending on how long you lived there.\n\n\n\nIf you get an Eviction Notice (sometimes called Notice to Quit or similar)\nYou have the right to go to court and tell your side of the story to a judge.\nIf the judge rules against you, a \"warrant of eviction\" will be issued.\nA sheriff, marshal, or constable will enforce the court order.\nOur Legal page can help you find support if you are being evicted.\n\n\nLandlords Must Follow the Process\nA landlord can't just kick you out. Without a court order, they cannot:\nChange the locks or prevent a tenant from entering\n\nShut off utilities like water, heat, or electricity\n\nRemove a tenant's personal belongings\n\nHarass, threaten, or intimidate tenants\n\nRemove a tenant themselves\n\nSeek legal assistance or call the police if ",
-              "aHTML": "<p><!--StartFragment-->An eviction is the legal process of a landlord forcing a renter to move out. It is a formal court procedure that must follow specific laws.<b><br>Not paying rent:</b> If rent isn't paid, landlords can give a 14-day warning. If the rent still isn't paid after those 14 days, landlords can start the eviction process.</p><p><b>Breaking rules in the lease</b>: If a tenant breaks a rule in the lease, landlords give a 10-day warning to fix the problem. If it's not fixed, they can then give a 30-day warning before trying to make the tenant leave.</p><p><b>Lease is up:</b> If your lease ends and you stay, the landlord must give you 30, 60, or 90 days' notice, depending on how long you lived there.<br></p><b><div><b><br></b></div></b><!--StartFragment--><p><b>If you get an Eviction Notice (sometimes called Notice to Quit or similar)</b></p><ul><li>You have the right to go to court and tell your side of the story to a judge.</li><li>If the judge rules against you, a \"warrant of eviction\" will be issued.</li><li>A sheriff, marshal, or constable will enforce the court order.</li><li>Our Legal page can help you find support if you are being evicted.</li></ul><!--EndFragment--><b><div><b><br></b></div>Landlords Must Follow the Process</b><br><span style=\"font-size: 0.82rem;\">A landlord can't just kick you out. Without a court order, they cannot:</span><br><ul><ul><li>Change the locks or prevent a tenant from entering\n</li><li>Shut off utilities like water, heat, or electricity\n</li><li>Remove a tenant's personal belongings\n</li><li>Harass, threaten, or intimidate tenants\n</li><li>Remove a tenant themselves\n</li><li>Seek legal assistance or call the police if&nbsp;</li></ul></ul>",
+              "aHTML": "<p><!--StartFragment-->An eviction is the legal process of a landlord forcing a renter to move out. It is a formal court procedure that must follow specific laws.<b><br>Not paying rent:</b> If rent isn't paid, landlords can give a 14-day warning. If the rent still isn't paid after those 14 days, landlords can start the eviction process.</p><p><b>Breaking rules in the lease</b>: If a tenant breaks a rule in the lease, landlords give a 10-day warning to fix the problem. If it's not fixed, they can then give a 30-day warning before trying to make the tenant leave.</p><p><b>Lease is up:</b> If your lease ends and you stay, the landlord must give you 30, 60, or 90 days' notice, depending on how long you lived there.<br></p><b><div><b><br></b></div></b><!--StartFragment--><p><b>If you get an Eviction Notice (sometimes called Notice to Quit or similar)</b></p><ul><li>You have the right to go to court and tell your side of the story to a judge.</li><li>If the judge rules against you, a \"warrant of eviction\" will be issued.</li><li>A sheriff, marshal, or constable will enforce the court order.</li><li>Our Legal page can help you find support if you are being evicted.</li></ul><!--EndFragment--><b><div><b><br></b></div>Landlords Must Follow the Process</b><br><span style=\"\">A landlord can't just kick you out. Without a court order, they cannot:</span><br><ul><ul><li>Change the locks or prevent a tenant from entering\n</li><li>Shut off utilities like water, heat, or electricity\n</li><li>Remove a tenant's personal belongings\n</li><li>Harass, threaten, or intimidate tenants\n</li><li>Remove a tenant themselves\n</li><li>Seek legal assistance or call the police if&nbsp;</li></ul></ul>",
               "spacing": 0,
               "headerStyle": "banner"
             },
@@ -2789,7 +2789,7 @@
               "type": "FAQ",
               "q": "What Are My Responsibilities as a Tenant?",
               "a": "Responsibilities are the things you are expected to do or take care of. These help ensure that everyone has a safe and pleasant place to live.",
-              "aHTML": "",
+              "aHTML": "<p>Responsibilities are the things you are expected to do or take care of. These help ensure that everyone has a safe and pleasant place to live.</p>",
               "spacing": 0,
               "newPage": true,
               "newCol": false
@@ -2799,7 +2799,7 @@
               "spacing": 0,
               "q": "Being a Good Tenant",
               "a": "Being a good tenant helps protect your housing and your relationship with your landlord. It also protects your rights if problems come up. You don't have to be perfect — just do your best to stay on top of things.\n\nPay Rent on Time\n\nPay your rent by the date in your lease. If you're going to be late, let your landlord know as soon as you can. Keep a record of every payment — a receipt, a money order stub, or a bank statement. This protects you if there's ever a disagreement.\n\nTake Care of Your Space\n\nKeep your home reasonably clean and take out the trash. If something breaks or stops working, report it to your landlord right away. Small problems can turn into big ones if they're not fixed early. You're not expected to fix things yourself — but letting your landlord know is your responsibility.\n\nFollow Your Lease\n\nYour lease is an agreement between you and your landlord. It covers things like how many people can live there, whether pets are allowed, and rules about noise. If you're not sure what's in your lease, read through it or ask someone to help you understand it.\n\nBe a Good Neighbor\n\nKeep noise at a reasonable level, especially at night. Be respectful of shared spaces like hallways, laundry rooms, and parking areas. If you have a problem with a neighbor, try to talk it out calmly or ask your landlord for help.\n\nKnow Your Rights\n\nBeing a good tenant doesn't mean accepting everything. You have the right to a safe, livable home. If your landlord isn't making repairs, entering your space without notice, or treating you unfairly, you can get help. Our Renter/Tenant Rights resource sheet has more information.\n\nAsk for Help if You Need It\n\nIf you're struggling with rent, facing eviction, or not sure what to do, talk to any staff at CHBS. We can help connect you with resources and support.",
-              "aHTML": "<!--StartFragment--><p><span style=\"font-size: 0.82rem;\">Being a good tenant helps protect your housing and your relationship with your landlord. It also protects your rights if problems come up. You don't have to be perfect — just do your best to stay on top of things.</span></p>\n<p><strong>Pay Rent on Time</strong></p>\n<p>Pay your rent by the date in your lease. If you're going to be late, let your landlord know as soon as you can. Keep a record of every payment — a receipt, a money order stub, or a bank statement. This protects you if there's ever a disagreement.</p>\n<p><strong>Take Care of Your Space</strong></p>\n<p>Keep your home reasonably clean and take out the trash. If something breaks or stops working, report it to your landlord <u>right away</u>. Small problems can turn into big ones if they're not fixed early. You're not expected to fix things yourself — but letting your landlord know is your responsibility.</p>\n<p><strong>Follow Your Lease</strong></p>\n<p>Your lease is an agreement between you and your landlord. It covers things like how many people can live there, whether pets are allowed, and rules about noise. If you're not sure what's in your lease, read through it or ask someone to help you understand it.</p>\n<p><strong>Be a Good Neighbor</strong></p>\n<p>Keep noise at a reasonable level, especially at night. Be respectful of shared spaces like hallways, laundry rooms, and parking areas. If you have a problem with a neighbor, try to talk it out calmly or ask your landlord for help.</p>\n<p><strong>Know Your Rights</strong></p>\n<p>Being a good tenant doesn't mean accepting everything. You have the right to a safe, livable home. If your landlord isn't making repairs, entering your space without notice, or treating you unfairly, you can get help. Our Renter/Tenant Rights resource sheet has more information.</p>\n<p><strong>Ask for Help if You Need It</strong></p>\n<p>If you're struggling with rent, facing eviction, or not sure what to do, talk to any staff at CHBS. We can help connect you with resources and support.</p>\n<!--EndFragment-->",
+              "aHTML": "<!--StartFragment--><p><span style=\"\">Being a good tenant helps protect your housing and your relationship with your landlord. It also protects your rights if problems come up. You don't have to be perfect — just do your best to stay on top of things.</span></p>\n<p><strong>Pay Rent on Time</strong></p>\n<p>Pay your rent by the date in your lease. If you're going to be late, let your landlord know as soon as you can. Keep a record of every payment — a receipt, a money order stub, or a bank statement. This protects you if there's ever a disagreement.</p>\n<p><strong>Take Care of Your Space</strong></p>\n<p>Keep your home reasonably clean and take out the trash. If something breaks or stops working, report it to your landlord <u>right away</u>. Small problems can turn into big ones if they're not fixed early. You're not expected to fix things yourself — but letting your landlord know is your responsibility.</p>\n<p><strong>Follow Your Lease</strong></p>\n<p>Your lease is an agreement between you and your landlord. It covers things like how many people can live there, whether pets are allowed, and rules about noise. If you're not sure what's in your lease, read through it or ask someone to help you understand it.</p>\n<p><strong>Be a Good Neighbor</strong></p>\n<p>Keep noise at a reasonable level, especially at night. Be respectful of shared spaces like hallways, laundry rooms, and parking areas. If you have a problem with a neighbor, try to talk it out calmly or ask your landlord for help.</p>\n<p><strong>Know Your Rights</strong></p>\n<p>Being a good tenant doesn't mean accepting everything. You have the right to a safe, livable home. If your landlord isn't making repairs, entering your space without notice, or treating you unfairly, you can get help. Our Renter/Tenant Rights resource sheet has more information.</p>\n<p><strong>Ask for Help if You Need It</strong></p>\n<p>If you're struggling with rent, facing eviction, or not sure what to do, talk to any staff at CHBS. We can help connect you with resources and support.</p>\n<!--EndFragment-->",
               "headerStyle": "banner",
               "newCol": false,
               "newPage": false
@@ -2808,7 +2808,7 @@
               "type": "FAQ",
               "q": "Paying Rent",
               "a": "Paying the full rent on time, as agreed upon in the lease, is super important. Remember, there's a 5-day grace period before it's considered late.\nWays to Pay:\nCashier's check or bank draft — Your bank writes the check, and they make sure the money is taken from your account first. So, no bounce-backs!\nCertified check — Your bank checks that you have enough money before your landlord cashes your check.\nMoney order — You pay the full amount and a small fee. It's safe, secure, and can be purchased at many places like banks, the post office, or even your local grocery store.\nHowever you pay rent, always get a receipt!",
-              "aHTML": "",
+              "aHTML": "<p>Paying the full rent on time, as agreed upon in the lease, is super important. Remember, there's a 5-day grace period before it's considered late.</p><p>Ways to Pay:</p><ul><li>Cashier's check or bank draft — Your bank writes the check, and they make sure the money is taken from your account first. So, no bounce-backs!</li><li>Certified check — Your bank checks that you have enough money before your landlord cashes your check.</li><li>Money order — You pay the full amount and a small fee. It's safe, secure, and can be purchased at many places like banks, the post office, or even your local grocery store.</li><li>However you pay rent, always get a receipt!</li></ul>",
               "spacing": 0,
               "headerStyle": "banner"
             },
@@ -2816,7 +2816,7 @@
               "type": "FAQ",
               "q": "Tips for Keeping Your Space Clean",
               "a": "\nA clean home can help you feel better and stay healthy. You don't have to do it all at once. Pick what you can, when you can.\n\nA Few Habits That Help\n\nTry to clean up a little as you go — it adds up. Washing dishes before bed keeps the kitchen from getting overwhelming. If laundry piles up, try doing a small load when you can. If you have things you don't use, donating them can free up space.\n\nEvery Day (or Most Days)\n\nWash dirty dishes, wipe down counters and the kitchen sink, sweep or vacuum floors you use the most, and put a load of laundry in if needed.\n\nOnce a Week\n\nChange your sheets, throw out old food, wipe down doorknobs and light switches, clean mirrors, vacuum floors and furniture, clean the toilet and bathroom floor, wipe down the stove and kitchen appliances, and scrub the shower or tub.\n\nA Couple Times a Year\n\nWipe down blinds, curtains, vents, light fixtures, and fans. Clean baseboards, shake out rugs, scrub tile or grout, clean inside the fridge and freezer, and clean your coffee maker if you have one.\n\nOnce a Year (When You Can)\n\nClean behind and under big furniture and appliances. Wipe down doors and walls. Clean windows and screens. Clean out the dryer vent. If you're able to, deep clean carpets and upholstery — or ask about getting help with it.",
-              "aHTML": "<p></p><!--StartFragment--><p><span style=\"font-size: 0.82rem;\">A clean home can help you feel better and stay healthy. You don't have to do it all at once. Pick what you can, when you can.</span></p>\n<p><strong>A Few Habits That Help</strong></p>\n<p>Try to clean up a little as you go — it adds up. Washing dishes before bed keeps the kitchen from getting overwhelming. If laundry piles up, try doing a small load when you can. If you have things you don't use, donating them can free up space.</p>\n<p><strong>Every Day (or Most Days)</strong></p>\n<p>Wash dirty dishes, wipe down counters and the kitchen sink, sweep or vacuum floors you use the most, and put a load of laundry in if needed.</p>\n<p><strong>Once a Week</strong></p>\n<p>Change your sheets, throw out old food, wipe down doorknobs and light switches, clean mirrors, vacuum floors and furniture, clean the toilet and bathroom floor, wipe down the stove and kitchen appliances, and scrub the shower or tub.</p>\n<p><strong>A Couple Times a Year</strong></p>\n<p>Wipe down blinds, curtains, vents, light fixtures, and fans. Clean baseboards, shake out rugs, scrub tile or grout, clean inside the fridge and freezer, and clean your coffee maker if you have one.</p>\n<p><strong>Once a Year (When You Can)</strong></p>\n<p>Clean behind and under big furniture and appliances. Wipe down doors and walls. Clean windows and screens. Clean out the dryer vent. If you're able to, deep clean carpets and upholstery — or ask about getting help with it.</p><!--EndFragment--><!--EndFragment-->",
+              "aHTML": "<p></p><!--StartFragment--><p><span style=\"\">A clean home can help you feel better and stay healthy. You don't have to do it all at once. Pick what you can, when you can.</span></p>\n<p><strong>A Few Habits That Help</strong></p>\n<p>Try to clean up a little as you go — it adds up. Washing dishes before bed keeps the kitchen from getting overwhelming. If laundry piles up, try doing a small load when you can. If you have things you don't use, donating them can free up space.</p>\n<p><strong>Every Day (or Most Days)</strong></p>\n<p>Wash dirty dishes, wipe down counters and the kitchen sink, sweep or vacuum floors you use the most, and put a load of laundry in if needed.</p>\n<p><strong>Once a Week</strong></p>\n<p>Change your sheets, throw out old food, wipe down doorknobs and light switches, clean mirrors, vacuum floors and furniture, clean the toilet and bathroom floor, wipe down the stove and kitchen appliances, and scrub the shower or tub.</p>\n<p><strong>A Couple Times a Year</strong></p>\n<p>Wipe down blinds, curtains, vents, light fixtures, and fans. Clean baseboards, shake out rugs, scrub tile or grout, clean inside the fridge and freezer, and clean your coffee maker if you have one.</p>\n<p><strong>Once a Year (When You Can)</strong></p>\n<p>Clean behind and under big furniture and appliances. Wipe down doors and walls. Clean windows and screens. Clean out the dryer vent. If you're able to, deep clean carpets and upholstery — or ask about getting help with it.</p><!--EndFragment--><!--EndFragment-->",
               "spacing": 0,
               "newCol": true,
               "headerStyle": "banner"
@@ -2840,14 +2840,14 @@
               "type": "FAQ",
               "q": "Why is access to child care important?",
               "a": "Access to child care is important because it helps children develop, supports families, and strengthens the economy. Ensuring access to child care and early schooling helps children develop skills for school and life, and it can improve their health and well-being.",
-              "aHTML": "",
+              "aHTML": "<p>Access to child care is important because it helps children develop, supports families, and strengthens the economy. Ensuring access to child care and early schooling helps children develop skills for school and life, and it can improve their health and well-being.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What services can these community resources provide?",
               "a": "Education and Supports to Parents and Families\nAccess to Child Care\nSupport in Navigating Resources\nBridging Gaps to Child Care Needs",
-              "aHTML": "",
+              "aHTML": "<p>Education and Supports to Parents and Families</p><p>Access to Child Care</p><p>Support in Navigating Resources</p><p>Bridging Gaps to Child Care Needs</p>",
               "spacing": 0
             },
             {
@@ -3056,28 +3056,28 @@
               "type": "FAQ",
               "q": "What Kinds of Resources Are There?",
               "a": "Individuals can access various forms of assistance for transportation based on their income.\nCENTRO Bus Half-Fare\nMedicaid Cab\nTransportation Vouchers\nReduced Fare Shuttles\nAssistance with repairs or fuel costs",
-              "aHTML": "",
+              "aHTML": "<p>Individuals can access various forms of assistance for transportation based on their income.</p><p>CENTRO Bus Half-Fare</p><p>Medicaid Cab</p><p>Transportation Vouchers</p><p>Reduced Fare Shuttles</p><p>Assistance with repairs or fuel costs</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "Can I schedule my own Medicaid cab?",
               "a": "Yes, You can schedule your own rides through MAS! All you need to do is create an enrollee account online and you will have access to schedule a ride with your preferred transportation provider.",
-              "aHTML": "",
+              "aHTML": "<p>Yes, You can schedule your own rides through MAS! All you need to do is create an enrollee account online and you will have access to schedule a ride with your preferred transportation provider.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How do I schedule a Medicaid cab?",
               "a": "Call the number listed above to schedule a ride, or go online to https://www.medanswering.com to fill out an enrollee application. You will need to have your Medicaid information on hand to complete registration.",
-              "aHTML": "",
+              "aHTML": "<p>Call the number listed above to schedule a ride, or go online to https://www.medanswering.com to fill out an enrollee application. You will need to have your Medicaid information on hand to complete registration.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What can I do if I forgot to schedule a ride and have a doctors appointment today?",
               "a": "Speak with any staff at CHBS. We will address any urgent needs as best we can, and do our best to get a same-day ride scheduled for you.",
-              "aHTML": "",
+              "aHTML": "<p>Speak with any staff at CHBS. We will address any urgent needs as best we can, and do our best to get a same-day ride scheduled for you.</p>",
               "spacing": 0
             },
             {
@@ -3181,49 +3181,49 @@
               "type": "FAQ",
               "q": "What Does LGBTQIA+ Mean?",
               "a": "LGBTQIA+ is an abbreviation for lesbian, gay, bisexual, transgender, queer or questioning, intersex, asexual, and more. These terms are used to describe a person's sexual orientation or gender identity.",
-              "aHTML": "",
+              "aHTML": "<p>LGBTQIA+ is an abbreviation for lesbian, gay, bisexual, transgender, queer or questioning, intersex, asexual, and more. These terms are used to describe a person's sexual orientation or gender identity.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is Sexual Orientation?",
               "a": "Sexual orientation is about who you are attracted to and who you want to have relationships with. It can include being attracted to the same gender, a different gender, or multiple genders. Everyone's experience is unique, and it's a natural part of who you are.",
-              "aHTML": "",
+              "aHTML": "<p>Sexual orientation is about who you are attracted to and who you want to have relationships with. It can include being attracted to the same gender, a different gender, or multiple genders. Everyone's experience is unique, and it's a natural part of who you are.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is Gender Identity?",
               "a": "Gender identity is a deeply personal sense of who you are as a person in terms of gender. It may be male, female, a blend of both, neither, or something else entirely. It may or may not match the sex you were assigned at birth. Your gender identity reflects how you feel inside and how you want to express yourself to the world.",
-              "aHTML": "",
+              "aHTML": "<p>Gender identity is a deeply personal sense of who you are as a person in terms of gender. It may be male, female, a blend of both, neither, or something else entirely. It may or may not match the sex you were assigned at birth. Your gender identity reflects how you feel inside and how you want to express yourself to the world.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What is Gender-Affirming Care?",
               "a": "Gender-affirming care is a supportive form of healthcare that respects and acknowledges a person's gender identity. It includes medical, psychological, and social services that help individuals transition and live as their true selves. This care is tailored to each person's needs and aims to improve their overall well-being and quality of life.",
-              "aHTML": "",
+              "aHTML": "<p>Gender-affirming care is a supportive form of healthcare that respects and acknowledges a person's gender identity. It includes medical, psychological, and social services that help individuals transition and live as their true selves. This care is tailored to each person's needs and aims to improve their overall well-being and quality of life.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "What Does it Mean to be an Ally?",
               "a": "Being an ally to the LGBTQIA+ community means standing up for equality, respect, and dignity for everyone, regardless of their sexual orientation or gender identity. It involves listening, learning, and offering support. Allies use their voices to challenge discrimination and promote inclusion, ensuring that all individuals feel safe, valued, and understood.",
-              "aHTML": "",
+              "aHTML": "<p>Being an ally to the LGBTQIA+ community means standing up for equality, respect, and dignity for everyone, regardless of their sexual orientation or gender identity. It involves listening, learning, and offering support. Allies use their voices to challenge discrimination and promote inclusion, ensuring that all individuals feel safe, valued, and understood.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How Can I Find an LGBTQIA+ Friendly Provider?",
               "a": "Look for providers openly supporting the community on their websites. Seek recommendations from friends, community centers, online directories, and reviews. Call providers to inquire about their LGBTQIA+ care approach. You deserve a provider who respects and supports you.",
-              "aHTML": "",
+              "aHTML": "<p>Look for providers openly supporting the community on their websites. Seek recommendations from friends, community centers, online directories, and reviews. Call providers to inquire about their LGBTQIA+ care approach. You deserve a provider who respects and supports you.</p>",
               "spacing": 0
             },
             {
               "type": "FAQ",
               "q": "How Can I Keep Myself Safe Online?",
               "a": "Keep yourself safe online with these tips:\nKeep personal information private\nBe cautious when clicking on links\nVerify online friends\nReport any suspicious or harmful behavior\nThink before you post\nRespect others and follow guidelines\nBe aware of scams\nSeek support if you feel unsafe or uncomfortable\nMake healthy choices & trust your instincts",
-              "aHTML": "",
+              "aHTML": "<p>Keep yourself safe online with these tips:</p><ul><li>Keep personal information private</li><li>Be cautious when clicking on links</li><li>Verify online friends</li><li>Report any suspicious or harmful behavior</li><li>Think before you post</li><li>Respect others and follow guidelines</li><li>Be aware of scams</li><li>Seek support if you feel unsafe or uncomfortable</li><li>Make healthy choices &amp; trust your instincts</li></ul>",
               "spacing": 0,
               "newPage": false
             },
@@ -3330,5 +3330,28 @@
         }
       ]
     }
+  },
+  "siteInfo": {
+    "offices": [
+      {
+        "label": "Utica",
+        "address": "1002 Oswego Street , Utica 13502"
+      },
+      {
+        "label": "Rome",
+        "address": "207 W. Dominick Street, Rome 13440"
+      },
+      {
+        "label": "Herkimer",
+        "address": "235 N. Prospect Street., Herkimer 13350"
+      }
+    ],
+    "hours": "Mon–Fri 8am – 4:30pm",
+    "phone": "315-798-8868",
+    "fax": "315-733-7105",
+    "crisisAddress": "1002 Oswego St., Utica 13502",
+    "crisisPhone": "315-520-7802",
+    "crisisHours": "24/7/365",
+    "announcements": "Our offices in Utica, Rome, and Herkimer will be closed on Monday, Febrjune 25th. Crisis Stabilization will remain open. "
   }
 }
