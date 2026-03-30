@@ -200,7 +200,7 @@ function insertLine(editorId){
       parent=p;
     }
     parent.style.display='flex';
-    parent.style.alignItems='baseline';
+    parent.style.alignItems='flex-end';
     parent.style.flexWrap='wrap';
     parent.style.gap='0 4px';
   }
