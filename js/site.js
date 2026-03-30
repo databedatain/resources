@@ -46,11 +46,17 @@
         var ol = document.getElementById('loading-overlay');
         if (ol) ol.remove();
         if (homePage) homePage.style.display = '';
-        renderSidebar();
-        renderHome();
-        handleRoute();
+        // Render inside try/catch so fetch errors and render errors are separate
+        try {
+          renderSidebar();
+          renderHome();
+          handleRoute();
+        } catch (renderErr) {
+          console.error('Render error:', renderErr);
+        }
       })
       .catch(function (err) {
+        console.error('Load error:', err);
         var ol = document.getElementById('loading-overlay');
         if (ol) ol.innerHTML = '<h2 style="color:var(--p4);font-family:\'Barlow Condensed\',sans-serif;margin-bottom:.5rem">Unable to load resources</h2><p style="color:rgba(255,255,255,.5)">' + esc(err.message) + '</p><button onclick="location.reload()" style="margin-top:1rem;padding:.5rem 1.5rem;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;border-radius:6px;cursor:pointer;font-family:\'Barlow\',sans-serif;font-weight:600">Retry</button>';
       });
