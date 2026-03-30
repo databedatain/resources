@@ -105,6 +105,9 @@ function renderBlockCard(slug,block,idx){
             <div class="sep"></div>
             <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-left-${block.id}')" title="Indent">→ In</button>
             <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-left-${block.id}')" title="Outdent">← Out</button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();insertCheckbox('rt-col-left-${block.id}')" title="Insert Checkbox">☐</button>
+            <button onmousedown="event.preventDefault();insertLine('rt-col-left-${block.id}')" title="Insert Blank Line">── Line</button>
           </div>
           <div class="rt-editor" id="rt-col-left-${block.id}" contenteditable="true"
             oninput="updateColText('${slug}',${idx},'colLeft','rt-col-left-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
@@ -121,6 +124,9 @@ function renderBlockCard(slug,block,idx){
             <div class="sep"></div>
             <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-right-${block.id}')" title="Indent">→ In</button>
             <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-right-${block.id}')" title="Outdent">← Out</button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();insertCheckbox('rt-col-right-${block.id}')" title="Insert Checkbox">☐</button>
+            <button onmousedown="event.preventDefault();insertLine('rt-col-right-${block.id}')" title="Insert Blank Line">── Line</button>
           </div>
           <div class="rt-editor" id="rt-col-right-${block.id}" contenteditable="true"
             oninput="updateColText('${slug}',${idx},'colRight','rt-col-right-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
@@ -140,6 +146,9 @@ function renderBlockCard(slug,block,idx){
         <div class="sep"></div>
         <button onmousedown="event.preventDefault();rtCmd('indent','${block.id}')" title="Indent">→ In</button>
         <button onmousedown="event.preventDefault();rtCmd('outdent','${block.id}')" title="Outdent">← Out</button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();insertCheckbox('rt-editor-${block.id}')" title="Insert Checkbox">☐</button>
+        <button onmousedown="event.preventDefault();insertLine('rt-editor-${block.id}')" title="Insert Blank Line">── Line</button>
         <div class="sep"></div>
         <button onmousedown="event.preventDefault();clearFormatting('${block.id}')" title="Clear Formatting">✕ Clear</button>
       </div>
@@ -163,6 +172,9 @@ function renderBlockCard(slug,block,idx){
             <button onmousedown="event.preventDefault();rtCmdCol('insertUnorderedList','rt-col-left-${block.id}')" title="Bullet List">• List</button>
             <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-left-${block.id}')" title="Indent">→ In</button>
             <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-left-${block.id}')" title="Outdent">← Out</button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();insertCheckbox('rt-col-left-${block.id}')" title="Insert Checkbox">☐</button>
+            <button onmousedown="event.preventDefault();insertLine('rt-col-left-${block.id}')" title="Insert Blank Line">── Line</button>
           </div>
           <div class="rt-editor" id="rt-col-left-${block.id}" contenteditable="true"
             oninput="updateColText('${slug}',${idx},'colLeft','rt-col-left-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
@@ -177,6 +189,9 @@ function renderBlockCard(slug,block,idx){
             <button onmousedown="event.preventDefault();rtCmdCol('insertUnorderedList','rt-col-right-${block.id}')" title="Bullet List">• List</button>
             <button onmousedown="event.preventDefault();rtCmdCol('indent','rt-col-right-${block.id}')" title="Indent">→ In</button>
             <button onmousedown="event.preventDefault();rtCmdCol('outdent','rt-col-right-${block.id}')" title="Outdent">← Out</button>
+            <div class="sep"></div>
+            <button onmousedown="event.preventDefault();insertCheckbox('rt-col-right-${block.id}')" title="Insert Checkbox">☐</button>
+            <button onmousedown="event.preventDefault();insertLine('rt-col-right-${block.id}')" title="Insert Blank Line">── Line</button>
           </div>
           <div class="rt-editor" id="rt-col-right-${block.id}" contenteditable="true"
             oninput="updateColText('${slug}',${idx},'colRight','rt-col-right-${block.id}')" style="min-height:60px;border-radius:0 0 4px 4px"></div>
@@ -196,6 +211,9 @@ function renderBlockCard(slug,block,idx){
         <div class="sep"></div>
         <button onmousedown="event.preventDefault();rtCmd('indent','${block.id}')" title="Indent">→ In</button>
         <button onmousedown="event.preventDefault();rtCmd('outdent','${block.id}')" title="Outdent">← Out</button>
+        <div class="sep"></div>
+        <button onmousedown="event.preventDefault();insertCheckbox('rt-editor-${block.id}')" title="Insert Checkbox">☐</button>
+        <button onmousedown="event.preventDefault();insertLine('rt-editor-${block.id}')" title="Insert Blank Line">── Line</button>
         <div class="sep"></div>
         <button onmousedown="event.preventDefault();clearFormatting('${block.id}')" title="Clear Formatting">✕ Clear</button>
       </div>
