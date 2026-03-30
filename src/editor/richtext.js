@@ -98,7 +98,7 @@ function stripPastedStyles(html){
   // Remove class attributes (Word/Google Docs add tons)
   div.querySelectorAll('[class]').forEach(el=>{
     // Keep our own classes
-    if(!el.className.includes('two-col-block')) el.removeAttribute('class');
+    if(!el.className.includes('two-col-block')&&!el.className.includes('fill-line')) el.removeAttribute('class');
   });
   // Remove spans that are now empty wrappers
   div.querySelectorAll('span').forEach(sp=>{
@@ -161,7 +161,7 @@ function insertCheckbox(editorId){
 function insertLine(editorId){
   const editor=document.getElementById(editorId);
   editor.focus();
-  document.execCommand('insertHTML',false,'<span style="display:inline-block;border-bottom:1px solid #888;min-width:100%;height:1em;margin:2px 0">&nbsp;</span>');
+  document.execCommand('insertHTML',false,'<span class="fill-line">&nbsp;</span>');
 }
 
 function clearFormatting(blockId){

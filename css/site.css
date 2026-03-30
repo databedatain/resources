@@ -139,6 +139,11 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 .sheet-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 3px; }
 .sheet-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
 
+/* Fill lines (worksheet blanks) */
+.fill-line { display: inline-block; border-bottom: 1px solid rgba(255,255,255,.3); flex: 1; min-width: 1in; height: 1em; }
+.s-faq p:has(.fill-line), .s-faq div:not(.two-col-block):has(.fill-line),
+.s-callout p:has(.fill-line), .s-callout div:has(.fill-line) { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 4px; }
+
 /* Screen-view block styles */
 .s-faq { margin-bottom: .75rem; }
 .s-faq h3 { font-family: 'Barlow', sans-serif; font-weight: 700; font-size: .95rem; color: var(--p4); margin-bottom: .2rem; }
@@ -254,6 +259,11 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
   .footer-col h4 { font-size: 6.2pt; font-weight: 700; color: var(--gd); margin-bottom: 0; }
   .footer-col p { font-size: 5.8pt; opacity: .8; line-height: 1.25; }
   .resource-column { overflow: hidden; }
+
+  /* Fill lines (worksheet blanks) */
+  .fill-line { display: inline-block; border-bottom: 1px solid #888; flex: 1; min-width: .5in; height: 1em; }
+  .faq-block p:has(.fill-line), .faq-block div:not(.two-col-block):has(.fill-line),
+  .chbs-callout p:has(.fill-line), .chbs-callout div:has(.fill-line) { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 3px; }
 
   /* Print FAQ blocks */
   .faq-block { margin-bottom: .065in; font-family: 'Karla', sans-serif; font-size: 7.5pt; line-height: 1.32; color: var(--g700); }
