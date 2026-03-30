@@ -23,8 +23,16 @@
   // DATA LOADING
   // =========================================================
   function loadData() {
+    // Add a loading overlay without destroying the existing DOM elements
     var container = document.getElementById('main-content');
-    container.innerHTML = '<div class="loading-overlay"><div class="spinner"></div><p>Loading resources\u2026</p></div>';
+    var overlay = document.createElement('div');
+    overlay.className = 'loading-overlay';
+    overlay.id = 'loading-overlay';
+    overlay.innerHTML = '<div class="spinner"></div><p>Loading resources\u2026</p>';
+    // Hide home page content while loading
+    var homePage = document.getElementById('home-page');
+    if (homePage) homePage.style.display = 'none';
+    container.appendChild(overlay);
 
     fetch('data/published.json')
       .then(function (r) {
@@ -34,12 +42,17 @@
       .then(function (json) {
         DATA = json;
         SEARCH_INDEX = buildIndex();
+        // Remove loading overlay and restore home page
+        var ol = document.getElementById('loading-overlay');
+        if (ol) ol.remove();
+        if (homePage) homePage.style.display = '';
         renderSidebar();
         renderHome();
         handleRoute();
       })
       .catch(function (err) {
-        container.innerHTML = '<div class="load-error"><h2>Unable to load resources</h2><p>' + esc(err.message) + '</p><button onclick="location.reload()">Retry</button></div>';
+        var ol = document.getElementById('loading-overlay');
+        if (ol) ol.innerHTML = '<h2 style="color:var(--p4);font-family:\'Barlow Condensed\',sans-serif;margin-bottom:.5rem">Unable to load resources</h2><p style="color:rgba(255,255,255,.5)">' + esc(err.message) + '</p><button onclick="location.reload()" style="margin-top:1rem;padding:.5rem 1.5rem;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;border-radius:6px;cursor:pointer;font-family:\'Barlow\',sans-serif;font-weight:600">Retry</button>';
       });
   }
 
@@ -356,10 +369,10 @@
   // NAVIGATION
   // =========================================================
   function showSheet(k) {
-    if (!DATA.sheets[k]) return;
+    if (!DATA || !DATA.sheets[k]) return;
     if (location.hash !== '#/' + k) history.pushState(null, null, '#/' + k);
-    document.getElementById('home-page').classList.remove('active');
-    document.getElementById('sidebar-ann').style.display = 'none';
+    var hp = document.getElementById('home-page'); if (hp) hp.classList.remove('active');
+    var ann = document.getElementById('sidebar-ann'); if (ann) ann.style.display = 'none';
     renderSheetNav(k);
     var sh = DATA.sheets[k], sc = document.getElementById('sheet-container');
     sc.className = '';
@@ -372,12 +385,11 @@
 
   function goHome() {
     if (location.hash) history.pushState(null, null, location.pathname + location.search);
-    document.getElementById('home-page').classList.add('active');
-    document.getElementById('sheet-container').innerHTML = '';
-    document.getElementById('sheet-container').className = '';
-    document.getElementById('sheet-nav').style.display = 'none';
-    document.getElementById('sidebar-ann').style.display = '';
-    document.querySelector('.main-content').scrollTop = 0;
+    var hp = document.getElementById('home-page'); if (hp) hp.classList.add('active');
+    var sc = document.getElementById('sheet-container'); if (sc) { sc.innerHTML = ''; sc.className = ''; }
+    var nav = document.getElementById('sheet-nav'); if (nav) nav.style.display = 'none';
+    var ann = document.getElementById('sidebar-ann'); if (ann) ann.style.display = '';
+    var mc = document.querySelector('.main-content'); if (mc) mc.scrollTop = 0;
     document.title = 'CHBS Resource Hub';
     var si = document.getElementById('search-input');
     if (si) { si.value = ''; handleSearch(); }
