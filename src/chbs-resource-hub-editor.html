@@ -52,11 +52,12 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .sheet-list-item .sli-info{flex:1;min-width:0}
 .sheet-list-item .sli-title{font-weight:700;font-size:.88rem}
 .sheet-list-item .sli-meta{font-size:.72rem;color:var(--g500)}
-.sheet-list-item .sli-status{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:10px;background:var(--success-light);color:var(--success);cursor:pointer;user-select:none;transition:all .15s}
-.sheet-list-item .sli-status:hover{opacity:.8}
-.sheet-list-item .sli-status.coming-soon{background:#fef3e2;color:#b8860b}
-.sheet-list-item .sli-status.in-progress{background:#e3f2fd;color:#1565c0}
-.sheet-list-item .sli-status.pending{background:#fce4ec;color:#c62828}
+.sheet-list-item .sli-status-select{font-size:.68rem;font-weight:700;padding:2px 6px;border-radius:6px;border:1px solid var(--g200);cursor:pointer;transition:all .15s;font-family:inherit;background:var(--success-light);color:var(--success)}
+.sheet-list-item .sli-status-select:focus{outline:none;box-shadow:0 0 0 2px rgba(46,100,148,.2)}
+.sheet-list-item .sli-status-select.coming-soon{background:#fef3e2;color:#b8860b;border-color:#f0d48a}
+.sheet-list-item .sli-status-select.in-progress{background:#e3f2fd;color:#1565c0;border-color:#90caf9}
+.sheet-list-item .sli-status-select.pending{background:#fce4ec;color:#c62828;border-color:#ef9a9a}
+.sheet-list-item .sli-status-select.live{background:var(--success-light);color:var(--success);border-color:#a5d6a7}
 .sheet-list-item .drag-handle{cursor:grab;color:var(--g300,#bbb);font-size:1.1rem;padding:2px 6px;border-radius:3px;transition:color .15s,background .15s}
 .sheet-list-item .drag-handle:hover{color:var(--g700);background:var(--g100)}
 .sheet-list-item.dragging{opacity:.4;border-style:dashed}
@@ -311,8 +312,11 @@ input,textarea,select{font-family:inherit;font-size:inherit}
     <button onclick="saveGhToken()">Connect</button>
     <button onclick="clearGhToken()">Clear</button>
   </div>
+  <button class="action-btn" id="undo-btn" onclick="doUndo()" title="Undo (Ctrl+Z)" disabled>↩ Undo</button>
+  <button class="action-btn" id="redo-btn" onclick="doRedo()" title="Redo (Ctrl+Shift+Z)" disabled>↪ Redo</button>
+  <div class="sep"></div>
   <button class="action-btn" onclick="ghLoad()">Load</button>
-  <button class="action-btn" onclick="ghSave()">Save</button>
+  <button class="action-btn" onclick="ghSave()" title="Save to GitHub (Ctrl+S)">Save</button>
   <div class="sep"></div>
   <button class="action-btn" onclick="importJSON()" title="Load from local file">Import JSON</button>
   <button class="action-btn" onclick="exportJSON()" title="Save to local file">Export JSON</button>
@@ -320,7 +324,7 @@ input,textarea,select{font-family:inherit;font-size:inherit}
   <button class="action-btn" onclick="importExcel()">Import Excel/CSV</button>
   <button class="action-btn" onclick="exportCSV()">Export CSV</button>
   <div class="sep"></div>
-  <button class="action-btn primary" onclick="ghPublish()">Publish</button>
+  <button class="action-btn primary" onclick="ghPublish()" title="Publish (Ctrl+Shift+P)">Publish</button>
   <span class="status" id="submit-reminder" style="display:none;color:var(--gd);font-size:.68rem;font-weight:600"></span>
   <input type="file" id="json-input" accept=".json" style="display:none">
   <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" style="display:none">
@@ -555,7 +559,7 @@ async function ghSave(){
   }
 }
 
-// --- Publish: admin promotes working → published + generates index.html ---
+// --- Publish: admin promotes working → published.json (site loads it dynamically) ---
 async function ghPublish(){
   if(!ghToken){toggleGhToken();toast('Enter a GitHub token first');return;}
   if(!dataLoaded){toast('Load data first');return;}
@@ -574,17 +578,15 @@ async function ghPublish(){
     return;
   }
   for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
+  prepareDataForExport();
   const content=JSON.stringify(DATA,null,2);
   updateGhStatus('publishing');
   try{
-    // Save to published.json
+    // Save to published.json — the live site fetches this dynamically
     await ghPutFile(GH_PUBLISHED,content,'Promote working to published');
     // Also save working.json
     await ghPutFile(GH_WORKING,content,'Sync working.json on publish');
     lastSavedJSON=content;
-    // Generate and save index.html
-    const htmlContent=generatePublishedHTML();
-    await ghPutFile('index.html',htmlContent,'Publish site update');
     updateGhStatus('connected');
     toast('Published successfully!');
   }catch(err){
@@ -706,6 +708,10 @@ function unflattenBlocks(blocks, sheetMeta){
 function initBlocks(){
   sheetBlocks={};
   for(const [slug,sheet] of Object.entries(DATA.sheets)) sheetBlocks[slug]=flattenSheet(sheet);
+  // Capture initial state for undo
+  undoStack = [JSON.stringify(DATA)];
+  redoStack = [];
+  updateUndoButtons();
 }
 
 function syncSheetFromBlocks(slug){
@@ -738,7 +744,9 @@ function renderSheetList(){
         <div class="sli-title">${esc(entry.title)}</div>
         <div class="sli-meta">${pC} pg · ${fC} FAQ · ${sC} sec · ${rC} res${qC?' · '+qC+' QR':''}${entry.owner?' · <span class="owner-badge">'+esc(entry.owner)+'</span>':''}</div>
       </div>
-      <span class="sli-status ${entry.status||'live'}" onclick="event.stopPropagation();cycleStatus(${i})" title="Click to change status">${statusLabel(entry.status)}</span>
+      <select class="sli-status-select ${entry.status||'live'}" onclick="event.stopPropagation()" onchange="setStatus(${i},this.value)" title="Change status">
+        ${STATUSES.map(s=>'<option value="'+s+'"'+(s===(entry.status||'live')?' selected':'')+'>'+statusLabel(s)+'</option>').join('')}
+      </select>
     </div>`;
   });
   html+='</div><div style="margin-top:12px;text-align:center"><button class="add-resource-btn" onclick="addNewSheet()" style="max-width:300px;margin:0 auto">+ Add New Sheet</button></div>';
@@ -1331,7 +1339,7 @@ function editSheetIcon(slug){
 
 var STATUSES=['live','in-progress','pending','coming-soon'];
 function statusLabel(s){return{'live':'Live','in-progress':'In Progress','pending':'Pending','coming-soon':'Coming Soon'}[s||'live']||'Live'}
-function cycleStatus(idx){var e=DATA.home[idx];var cur=e.status||'live';var ni=(STATUSES.indexOf(cur)+1)%STATUSES.length;e.status=STATUSES[ni];var slug=slugify(e.sheetName);if(DATA.sheets[slug])DATA.sheets[slug].status=STATUSES[ni];renderSheetList();refreshPreview();toast(esc(e.title)+' → '+statusLabel(STATUSES[ni]))}
+function setStatus(idx,newStatus){var e=DATA.home[idx];e.status=newStatus;var slug=slugify(e.sheetName);if(DATA.sheets[slug])DATA.sheets[slug].status=newStatus;renderSheetList();refreshPreview();toast(esc(e.title)+' → '+statusLabel(newStatus))}
 
 function uploadSheetIcon(slug){
   document.getElementById('icon-upload-'+slug).click();
@@ -1860,7 +1868,7 @@ function showModal(title,message,buttons){
 function dismissModal(){document.getElementById('modal-root').innerHTML=''}
 
 // ===================================================================
-// EXPORT HTML (Published)
+// DATA CLEANUP FOR EXPORT
 // ===================================================================
 function prepareDataForExport(){
   for(const slug in sheetBlocks)syncSheetFromBlocks(slug);
@@ -1899,7 +1907,12 @@ function prepareDataForExport(){
   }
 }
 
-function generatePublishedHTML(){
+// generatePublishedHTML removed — index.html is now a static shell
+// that fetches data/published.json dynamically via js/site.js.
+// Publishing only needs to push published.json.
+
+// Kept for backward compat: export a standalone HTML file for offline use
+function generateStandaloneHTML(){
   prepareDataForExport();
   const si=getSiteInfo();
   const dj=JSON.stringify(DATA);
@@ -2315,11 +2328,77 @@ if(location.hash&&location.hash.length>2)handleRoute();
 }
 
 function exportHTML(){
-  const html=generatePublishedHTML();
+  const html=generateStandaloneHTML();
   const blob=new Blob([html],{type:'text/html'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='chbs-resource-hub.html';a.click();
-  toast('Published HTML exported!');
+  toast('Standalone HTML exported!');
 }
+
+// ===================================================================
+// UNDO / REDO
+// ===================================================================
+const UNDO_MAX = 50;
+let undoStack = [];
+let redoStack = [];
+let _undoTimer = null;
+
+function captureSnapshot(){
+  for(const slug in sheetBlocks) syncSheetFromBlocks(slug);
+  return JSON.stringify(DATA);
+}
+
+function pushUndo(){
+  // Debounce: don't push if called too rapidly
+  clearTimeout(_undoTimer);
+  _undoTimer = setTimeout(()=>{
+    const snap = captureSnapshot();
+    if(undoStack.length > 0 && undoStack[undoStack.length-1] === snap) return;
+    undoStack.push(snap);
+    if(undoStack.length > UNDO_MAX) undoStack.shift();
+    redoStack = [];
+    updateUndoButtons();
+  }, 300);
+}
+
+function doUndo(){
+  if(undoStack.length < 2) return; // need at least current + previous
+  const current = undoStack.pop();
+  redoStack.push(current);
+  const prev = undoStack[undoStack.length - 1];
+  DATA = JSON.parse(prev);
+  initBlocks();
+  rerenderCurrentView();
+  updateUndoButtons();
+  toast('Undo');
+}
+
+function doRedo(){
+  if(redoStack.length === 0) return;
+  const snap = redoStack.pop();
+  undoStack.push(snap);
+  DATA = JSON.parse(snap);
+  initBlocks();
+  rerenderCurrentView();
+  updateUndoButtons();
+  toast('Redo');
+}
+
+function rerenderCurrentView(){
+  if(currentView === 'sheets') { renderSheetList(); refreshPreview(); }
+  else if(currentView === 'siteinfo') { renderSiteInfo(); refreshPreview(); }
+  else { renderSheetEditor(currentView); refreshPreview(currentView); }
+}
+
+function updateUndoButtons(){
+  const ubtn = document.getElementById('undo-btn');
+  const rbtn = document.getElementById('redo-btn');
+  if(ubtn) ubtn.disabled = undoStack.length < 2;
+  if(rbtn) rbtn.disabled = redoStack.length === 0;
+}
+
+// Hook into syncSheetFromBlocks to auto-capture undo snapshots
+const _origSyncForUndo = syncSheetFromBlocks;
+syncSheetFromBlocks = function(slug){ _origSyncForUndo(slug); pushUndo(); };
 
 // ===================================================================
 // UNSAVED CHANGES WARNING
@@ -2332,9 +2411,29 @@ window.addEventListener('beforeunload',function(e){
 // KEYBOARD SHORTCUTS
 // ===================================================================
 document.addEventListener('keydown',function(e){
+  // Ctrl/Cmd+S — Save to GitHub (or export JSON if no token)
   if((e.ctrlKey||e.metaKey)&&e.key==='s'){
     e.preventDefault();
-    if(dataLoaded) exportJSON();
+    if(!dataLoaded) return;
+    if(ghToken) ghSave(); else exportJSON();
+  }
+  // Ctrl/Cmd+Z — Undo
+  if((e.ctrlKey||e.metaKey)&&e.key==='z'&&!e.shiftKey){
+    // Only intercept if not in a contenteditable
+    if(document.activeElement&&document.activeElement.getAttribute('contenteditable')==='true') return;
+    e.preventDefault();
+    doUndo();
+  }
+  // Ctrl/Cmd+Shift+Z or Ctrl/Cmd+Y — Redo
+  if((e.ctrlKey||e.metaKey)&&(e.key==='y'||(e.key==='z'&&e.shiftKey))){
+    if(document.activeElement&&document.activeElement.getAttribute('contenteditable')==='true') return;
+    e.preventDefault();
+    doRedo();
+  }
+  // Ctrl/Cmd+P — Publish (admin)
+  if((e.ctrlKey||e.metaKey)&&e.key==='p'&&e.shiftKey){
+    e.preventDefault();
+    if(dataLoaded) ghPublish();
   }
 });
 
