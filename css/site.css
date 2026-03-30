@@ -104,7 +104,7 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 .home-card:hover { background: rgba(255,255,255,.1); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.2); }
 .home-card:hover::after { transform: scaleX(1); }
 .home-card .card-icon { font-size: 1.3rem; margin-bottom: .15rem; }
-.home-card .card-icon img { width: 28px; height: 28px; object-fit: contain; stroke: #fff;}
+.home-card .card-icon img { filter: brightness(0) invert(1); }
 .home-card .card-title { font-family: 'Barlow', sans-serif; font-weight: 600; font-size: .78rem; color: var(--p1-40); }
 .home-card.coming-soon { opacity: .45; cursor: default; }
 .home-card.coming-soon:hover { background: rgba(255,255,255,.06); transform: none; box-shadow: none; }
@@ -170,7 +170,7 @@ body { font-family: 'Karla', sans-serif; color: #fff; background: var(--p2); }
 .s-entry .e-web { color: var(--p1-60); text-decoration: none; font-weight: 600; margin-left: auto; }
 
 /* Shared icon */
-.ico { width: .9em; height: .9em; vertical-align: -.1em; display: inline-block; flex-shrink: 0; stroke: #fff}
+.ico { width: .9em; height: .9em; vertical-align: -.1em; display: inline-block; flex-shrink: 0;}
 
 /* QR Banners (screen) */
 .qr-banner { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; border-radius: 6px; margin-bottom: .4rem; }
