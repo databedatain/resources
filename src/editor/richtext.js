@@ -167,7 +167,7 @@ function insertLine(editorId){
   range.deleteContents();
   // Create the line span with inline styles (no class dependency)
   const span=document.createElement('span');
-  span.style.cssText='display:inline-block;border-bottom:1px solid #888;flex:1;min-width:1in;height:1em';
+  span.style.cssText='display:inline-block;border-bottom:1px solid #888;flex:1;min-width:1in;height:.2in';
   span.innerHTML='\u00a0';
   range.insertNode(span);
   // Move cursor after the span
