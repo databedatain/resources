@@ -161,7 +161,42 @@ function insertCheckbox(editorId){
 function insertLine(editorId){
   const editor=document.getElementById(editorId);
   editor.focus();
-  document.execCommand('insertHTML',false,'<span class="fill-line">&nbsp;</span>');
+  const marker='fl-'+Date.now();
+  document.execCommand('insertHTML',false,'<span class="fill-line" id="'+marker+'">\u00a0</span>');
+  const span=document.getElementById(marker);
+  if(span){
+    span.removeAttribute('id');
+    // Make the parent block a flex row so the line fills remaining space
+    let parent=span.parentElement;
+    if(parent===editor){
+      // Text is directly in editor — wrap this line in a <p>
+      // Collect siblings on the same "line" (all nodes between previous/next block element)
+      const p=document.createElement('p');
+      const nodes=[];
+      let sib=span;
+      while(sib.previousSibling&&sib.previousSibling.nodeType!==1||(sib.previousSibling&&sib.previousSibling.nodeType===1&&!['P','DIV','UL','OL','H3','HR'].includes(sib.previousSibling.tagName))){
+        sib=sib.previousSibling;
+      }
+      let cur=sib;
+      while(cur){
+        const next=cur.nextSibling;
+        nodes.push(cur);
+        if(cur===span) break;
+        cur=next;
+      }
+      if(nodes.length){
+        editor.insertBefore(p,nodes[0]);
+        nodes.forEach(n=>p.appendChild(n));
+      }
+      parent=p;
+    }
+    if(parent&&parent!==editor){
+      parent.style.display='flex';
+      parent.style.alignItems='baseline';
+      parent.style.flexWrap='wrap';
+      parent.style.gap='0 4px';
+    }
+  }
 }
 
 function clearFormatting(blockId){
