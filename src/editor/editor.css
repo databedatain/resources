@@ -257,7 +257,7 @@ input,textarea,select{font-family:inherit;font-size:inherit}
 .footer-col h4{font-size:6.2pt;font-weight:700;color:var(--gd);margin-bottom:0}
 .footer-col p{font-size:5.8pt;opacity:.8;line-height:1.25}
 .footer-col b{font-weight:700}
-.fill-line{display:inline-block;border-bottom:1px solid #888;flex:1;min-width:.5in;height:.2in!important}
+.fill-line{display:inline-block;border-bottom:1px solid #888;flex:1;min-width:.5in;height:.12in!important}
 .faq-block span[style*="border-bottom"],.chbs-callout span[style*="border-bottom"]{height:.2in!important}
 .faq-block p:has(.fill-line),.faq-block div:not(.two-col-block):has(.fill-line),.chbs-callout p:has(.fill-line),.chbs-callout div:has(.fill-line){display:flex;align-items:baseline;flex-wrap:wrap;gap:0 3px}
 .faq-block{margin-bottom:.065in;font-family:'Source Sans 3',-apple-system,sans-serif;font-size:7.5pt;color:var(--g700);line-height:1.32}
